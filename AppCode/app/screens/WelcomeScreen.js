@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import colors from '../config/colors';
+import AppButton from '../components/AppButton';
 
 function WelcomeScreen(props) {
     return (
@@ -14,16 +15,15 @@ function WelcomeScreen(props) {
             <Text style={styles.tagLine}>Music As Language</Text>
         </View>       
         <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-                style={styles.loginButton} 
+            <AppButton 
+                title="Login" 
                 onPress={() => console.log("Login button tapped.")}>
-                    <Text style={styles.text}>{"Login"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={styles.registerButton} 
+            </AppButton>
+            <AppButton 
+                title="Register" 
+                color="secondary" 
                 onPress={() => console.log("Register button tapped.")}>
-                    <Text style={styles.text}>{"Register"}</Text>
-            </TouchableOpacity>
+            </AppButton>
         </View>
     </ImageBackground>
     );
@@ -53,24 +53,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         padding: 15,
         width: '100%',
-    },
-    loginButton: {
-        backgroundColor: colors.primary,
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 15,
-        width: '100%',
-        marginVertical: 10,
-    },
-    registerButton: {
-        backgroundColor: colors.secondary,
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 15,
-        width: '100%',
-        marginVertical: 10,
     },
     text: {
         color: colors.white,
