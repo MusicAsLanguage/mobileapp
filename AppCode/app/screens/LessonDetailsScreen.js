@@ -4,12 +4,14 @@ import { View, Image, StyleSheet } from 'react-native';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
 
-function Lesson1DetailsScreen(props) {
+function LessonDetailsScreen({ route }) {
+    const lesson = route.params;
+
     return (
         <View style={styles.detailsContainer}>
-            <Image style={styles.image} source={require('../assets/welcome_background.jpg')} />
-            <AppText style={styles.title}>Lesson 1</AppText>
-            <AppText style={styles.description}>lesson description</AppText>
+            <Image style={styles.image} source={lesson.image} />
+            <AppText style={styles.title}>{lesson.title}</AppText>
+            <AppText style={styles.description}>{lesson.description}</AppText>
         </View>
     );
 }
@@ -36,4 +38,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Lesson1DetailsScreen;
+export default LessonDetailsScreen;
