@@ -9,14 +9,14 @@ import routes from '../navigation/routes';
 const listings = [
     {
         id: 1,
-        title: 'Lesson1',
-        description: 'lesson1 description',
+        title: 'Introduction',
+        description: 'Introduction of Music of Language',
         image: require('../assets/welcome_background.jpg')
     },
     {
         id: 2,
-        title: 'Lesson2',
-        description: 'lesson2 description',
+        title: 'Lesson1',
+        description: 'lesson1 description',
         image: require('../assets/children-singing.jpg')
     },
 ]

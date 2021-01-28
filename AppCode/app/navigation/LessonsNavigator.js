@@ -9,8 +9,7 @@ const Stack = createStackNavigator();
 
 const LessonsNavigator = () => (
     <Stack.Navigator 
-        //mode="modal"  // common iOS pattern: make the screens slide in from the bottom
-        headerMode="screen"
+        mode="modal"  // common iOS pattern: make the screens slide in from the bottom
         screenOptions={{
             headerStyle: {
                 backgroundColor: colors.primary, 
