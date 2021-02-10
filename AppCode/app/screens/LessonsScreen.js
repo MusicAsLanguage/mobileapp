@@ -11,13 +11,15 @@ const listings = [
         id: 1,
         title: 'Introduction',
         description: 'Introduction of Music of Language',
-        image: require('../assets/welcome_background.jpg')
+        image: require('../assets/welcome_background.jpg'),
+        video: require('../assets/sample_video.mp4')
     },
     {
         id: 2,
         title: 'Lesson1',
         description: 'lesson1 description',
-        image: require('../assets/children-singing.jpg')
+        image: require('../assets/children-singing.jpg'),
+        video: require('../assets/sample_video.mp4')
     },
 ]
 

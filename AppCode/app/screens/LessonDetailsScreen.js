@@ -14,7 +14,7 @@ function LessonDetailsScreen({ route }) {
             <AppText style={styles.title}>{lesson.title}</AppText>
             <AppText style={styles.description}>{lesson.description}</AppText>
             <Video
-              source={require('../assets/sample_video.mp4')}
+              source={lesson.video}
               shouldPlay
               resizeMode="cover"
               useNativeControls
