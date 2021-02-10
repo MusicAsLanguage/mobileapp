@@ -11,7 +11,7 @@ function ListItem({
     IconComponent, 
     onPress}) {
     return (
-        <TouchableHighlight underlayColor={colors.lightgrey} onPress={onPress}>
+        <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
             <View style={styles.container}>
                 {IconComponent}
                 {image && <Image style={styles.image} source={image} />}
