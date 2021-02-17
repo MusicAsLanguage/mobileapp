@@ -10,7 +10,6 @@ function LessonDetailsScreen({ route }) {
 
     return (
         <View style={styles.detailsContainer}>
-            <Image style={styles.image} source={lesson.image} />
             <AppText style={styles.title}>{lesson.title}</AppText>
             <AppText style={styles.description}>{lesson.description}</AppText>
             <Video
@@ -20,11 +19,18 @@ function LessonDetailsScreen({ route }) {
               useNativeControls
               style={styles.video}
             />
+            <AppText style={styles.title}>Activities</AppText>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    description: {
+        color: colors.secondary,
+        fontWeight: "bold",
+        fontSize: 20,
+        marginVertical: 10,
+    },
     detailsContainer: {
         padding: 20,
     },
@@ -37,15 +43,10 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         marginTop: 10,
     },
-    description: {
-        color: colors.secondary,
-        fontWeight: "bold",
-        fontSize: 20,
-        marginVertical: 10,
-    },
     video: {
         width: "100%",
-        height: 200
+        height: 200,
+        marginBottom: 20
     }
 })
 
