@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         marginLeft: 10
     },
-    title: {
-        fontWeight: "600"
-    },
     subTitle: {
         color: colors.medium
+    },
+    title: {
+        fontWeight: "600"
     },
 })
 

@@ -13,7 +13,7 @@ const LessonsNavigator = () => (
         screenOptions={{
             headerStyle: {
                 backgroundColor: colors.primary, 
-                height: 90},
+                height: 70},
             headerTintColor: colors.white,
             headerTitleAlign: "center",
         }}

@@ -35,24 +35,24 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         alignItems: "center",
     },
-    logoContainer: {
-        position: 'absolute',
-        top: 50,
-        alignItems: 'center',
+    buttonContainer: {
+        padding: 15,
+        width: '100%',
     },
     logo: {
         width: 100,
         height: 100,
+    },
+    logoContainer: {
+        position: 'absolute',
+        top: 50,
+        alignItems: 'center',
     },
     tagLine: {
         fontSize: 20,
         paddingVertical: 10,
         color: colors.white,
         fontWeight: 'bold',
-    },
-    buttonContainer: {
-        padding: 15,
-        width: '100%',
     },
     text: {
         color: colors.white,
