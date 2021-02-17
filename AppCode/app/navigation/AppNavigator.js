@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AccountScreen from '../screens/AccountScreen';
 import LessonsNavigator from './LessonsNavigator';
+import ToolboxScreen from '../screens/ToolboxScreen';
 import colors from '../config/colors';
 
 const Tab = createBottomTabNavigator();
@@ -22,6 +23,14 @@ const AppNavigator = () => (
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <MaterialCommunityIcons name="book-music" color={color} size={size} /> 
+            }}
+        />
+        <Tab.Screen 
+            name="Toolbox" 
+            component={ToolboxScreen} 
+            options={{
+                tabBarIcon: ({ color, size }) =>
+                    <MaterialCommunityIcons name="briefcase-download" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 
