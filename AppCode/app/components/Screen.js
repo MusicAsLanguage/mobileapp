@@ -15,7 +15,6 @@ function Screen({ children, style }) {
 
 const styles = StyleSheet.create({
     screen: {
-        backgroundColor: colors.light,
         paddingTop: Constants.statusBarHeight,
         flex: 1
     }
