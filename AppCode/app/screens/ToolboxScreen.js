@@ -9,32 +9,24 @@ import colors from '../config/colors';
 
 const menuItems =[
     {
-        title: "Lessons",
+        title: "Musics",
         icon: {
-            name: "format-list-bulleted",
+            name: "music-box-multiple",
             backgroudColor: colors.primary
         }
     },
     {
-        title: "Messages",
+        title: "Metronome",
         icon: {
-            name: "email",
+            name: "metronome",
             backgroudColor: colors.secondary
         }
     }
 ]
 
-function AccountScreen(props) {
+function ToolboxScreen(props) {
     return (
         <Screen style={styles.screen}>
-            <View style={styles.container}>
-                <ListItem
-                    title='Shuo Zhang'
-                    subTitle='shuzha@microsoft.com'
-                    image={require("../assets/portrait.jpg")}
-                >
-                </ListItem>
-            </View>
             <View style={styles.container}>
                 <FlatList 
                     data={menuItems}
@@ -52,11 +44,6 @@ function AccountScreen(props) {
                     }
                 />
             </View>
-            <ListItem
-            title="Log Out"
-            IconComponent={
-                <Icon name="logout" backgroudColor="#ffe66d" />
-            } />
         </Screen>
     );
 }
@@ -70,4 +57,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AccountScreen;
+export default ToolboxScreen;
