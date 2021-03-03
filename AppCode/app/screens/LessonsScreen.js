@@ -35,6 +35,19 @@ const lessons = [
             LengthInSeconds: 30
         },
     },
+    {
+        ID: 3,
+        Name: 'Lesson2',
+        Description: 'lesson2 description',
+        ImageUrl: require('../assets/children-singing.jpg'),
+        IntroVideo: {
+            ID: 1,
+            Name: "Stats about NonVerbal",
+            Description: "Stats about NonVerbal disability among childrens.",
+            Url: require('../assets/sample_video.mp4'),
+            LengthInSeconds: 30
+        },
+    },
 ]
 
 function LessonsScreen({ navigation }) {
