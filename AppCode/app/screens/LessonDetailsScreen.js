@@ -1,53 +1,136 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Video } from 'expo-av'
+import React from "react";
+import { useEffect } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
+import { Video } from "expo-av";
 
-import AppText from '../components/AppText';
-import colors from '../config/colors';
+import AppText from "../components/AppText";
+import ActivityListItem from "../components/ActivityListItem";
+import ListItemSeparator from "../components/ListItemSeparator";
+import colors from "../config/colors";
+import routes from "../navigation/routes";
 
-function LessonDetailsScreen({ route }) {
-    const lesson = route.params;
+const activities = [
+  {
+    title: "Activity 1",
+    name: "Jaw Exercise",
+    description: "10-20 min",
+    backgroudColor: colors.primary,
+    thumbnail: require("../assets/jaw_exercise.jpg"),
+    video: require("../assets/jaw_exercise.mov"),
+    status: "Completed",
+  },
+  {
+    title: "Activity 2",
+    name: "Vowels",
+    description: "10-20 min",
+    backgroudColor: colors.primary,
+    thumbnail: require("../assets/vowels.jpg"),
+    video: require("../assets/vowels.mov"),
+    status: "Not Completed",
+  },
+  {
+    title: "Activity 3",
+    name: "Breathing",
+    description: "10-20 min",
+    backgroudColor: colors.primary,
+    thumbnail: require("../assets/breathing.jpg"),
+    video: require("../assets/breathing.mov"),
+    statys: "Not Completed",
+  },
+];
 
-    return (
-        <View style={styles.detailsContainer}>
-            <AppText style={styles.title}>{lesson.title}</AppText>
-            <AppText style={styles.description}>{lesson.description}</AppText>
-            <Video
-              source={lesson.video}
-              shouldPlay
-              resizeMode="cover"
-              useNativeControls
-              style={styles.video}
+function LessonDetailsScreen({ navigation, route }) {
+  const lesson = route.params;
+
+  // Need to pause the video when navigate away to a new screen
+  const player = React.useRef(null);
+
+  useEffect(() => {
+    const blur = navigation.addListener("blur", () => {
+      player?.current.pauseAsync();
+    });
+
+    const focus = navigation.addListener("focus", () => {
+      player?.current.playAsync();
+    });
+
+    return blur, focus;
+  }, [navigation]); // only rerun the effect if navigation changes
+
+  return (
+    <View>
+      <View style={styles.detailsContainer}>
+        <AppText style={styles.title}>{lesson.title}</AppText>
+        <AppText style={styles.description}>{lesson.description}</AppText>
+        <Video
+          source={lesson.video}
+          ref={player}
+          shouldPlay
+          resizeMode="cover"
+          useNativeControls
+          style={styles.video}
+        />
+      </View>
+      <ListItemSeparator />
+      <View style={styles.activityContainer}>
+        <FlatList
+          data={activities}
+          key={activities.title}
+          numColumns={2}
+          columnWrapperStyle={styles.activity}
+          keyExtractor={(activities) => activities.title}
+          renderItem={({ item }) => (
+            <ActivityListItem
+              title={item.title}
+              name={item.name}
+              description={item.description}
+              thumbnail={item.thumbnail}
+              video={item.video}
+              status={item.status}
+              onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
             />
-            <AppText style={styles.title}>Activities</AppText>
-        </View>
-    );
+          )}
+        />
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    description: {
-        color: colors.secondary,
-        fontWeight: "bold",
-        fontSize: 20,
-        marginVertical: 10,
-    },
-    detailsContainer: {
-        padding: 20,
-    },
-    image: {
-        width: '100%',
-        height: 150
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "500",
-        marginTop: 10,
-    },
-    video: {
-        width: "100%",
-        height: 200,
-        marginBottom: 20
-    }
-})
+  description: {
+    color: colors.secondary,
+    fontWeight: "bold",
+    fontSize: 20,
+    marginVertical: 10,
+  },
+  detailsContainer: {
+    padding: 20,
+  },
+  image: {
+    width: "100%",
+    height: 150,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "500",
+    marginTop: 10,
+  },
+  video: {
+    width: "100%",
+    height: 200,
+    marginBottom: 20,
+  },
+  activityContainer: {
+    padding: 10,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  activity: {
+    justifyContent: "space-between",
+  },
+  space: {
+    marginBottom: 10,
+  },
+});
 
 export default LessonDetailsScreen;
