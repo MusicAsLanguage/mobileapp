@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import Screen from "../components/Screen";
@@ -6,8 +7,6 @@ import Card from "../components/Card";
 import colors from '../config/colors';
 import getLessons from '../api/lessons';
 import routes from '../navigation/routes';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const lessons = [
     {
@@ -39,24 +38,24 @@ const lessons = [
 ]
 
 function LessonsScreen({ navigation }) {
-    const [programs, setLessons] = useState([]);
+    // const [programs, setLessons] = useState([]);
 
-    useEffect(() => {
-        loadLessons();
-    },[]);
+    // useEffect(() => {
+    //     loadLessons();
+    // },[]);
 
-    const loadLessons = async() => {
-        const response = await getLessons();
-        setLessons(response.data);
-        console.log(response.data);
-        console.log(response.ok);
-    };
+    // const loadLessons = async() => {
+    //     const response = await getLessons();
+    //     setLessons(response.data);
+    //     console.log(response.data);
+    //     console.log(response.ok);
+    // };
 
     return (
         <Screen style={styles.screen}>
             <FlatList 
                 //data={programs[0].Phases[0].Lessons}
-                data={programs}
+                data={lessons}
                 keyExtractor={lesson => lesson.ID.toString()}
                 renderItem={({item}) =>
                     <Card
