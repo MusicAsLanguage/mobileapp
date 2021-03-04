@@ -51,18 +51,22 @@ const lessons = [
 ]
 
 function LessonsScreen({ navigation }) {
-    // const [programs, setLessons] = useState([]);
+    /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
+    const [programs, setLessons] = useState([]);
 
-    // useEffect(() => {
-    //     loadLessons();
-    // },[]);
+    useEffect(() => {
+        loadLessons();
+    },[]);
 
-    // const loadLessons = async() => {
-    //     const response = await getLessons();
-    //     setLessons(response.data);
-    //     console.log(response.data);
-    //     console.log(response.ok);
-    // };
+    const loadLessons = async() => {
+        const response = await getLessons();
+        setLessons(response.data);
+        console.log("Loaded json data:", response.data);
+        if (!response.ok){
+            console.log(response.problem);
+        }
+    };
+    /// <End> To replace with downloaded json file, uncommon below line 'data={programs[0].Phases[0].Lessons}', instead of 'data={lessons}'.
 
     return (
         <Screen style={styles.screen}>
