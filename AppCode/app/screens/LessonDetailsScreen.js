@@ -60,10 +60,10 @@ function LessonDetailsScreen({ navigation, route }) {
   return (
     <View>
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>{lesson.title}</AppText>
-        <AppText style={styles.description}>{lesson.description}</AppText>
+        <AppText style={styles.title}>{lesson.Name}</AppText>
+        <AppText style={styles.description}>{lesson.Description}</AppText>
         <Video
-          source={lesson.video}
+          source={lesson.IntroVideo.Url}
           ref={player}
           shouldPlay
           resizeMode="cover"
