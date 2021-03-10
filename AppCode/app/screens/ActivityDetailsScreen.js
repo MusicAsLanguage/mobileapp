@@ -1,14 +1,31 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 
-function ActivityScreen({ route }) {
+function ActivityScreen({ navigation, route }) {
   const activity = route.params;
+  const player = React.useRef(null);
+
+  useEffect(() => {
+    // Workaround to hide the status bar & the tab bar to make video full screen
+    const parent = navigation.dangerouslyGetParent();
+    parent.setOptions({
+      tabBarVisible: false,
+    });
+
+    StatusBar.setHidden(true, "none");
+
+    return () =>
+      parent.setOptions({
+        tabBarVisible: true,
+      });
+  }, []); // Run only once at mount
 
   return (
     <View style={styles.container}>
       <Video
         source={activity.video}
+        ref={player}
         shouldPlay
         resizeMode="cover"
         useNativeControls

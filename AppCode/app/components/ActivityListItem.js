@@ -1,12 +1,33 @@
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AppText from "./AppText";
+import Status from "./Status";
 
-function ActivityListItem({ title, name, description, thumbnail, onPress }) {
+function ActivityListItem({
+  title,
+  name,
+  description,
+  thumbnail,
+  status,
+  onPress,
+}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress} style={styles.thumbnail}>
-        <Image style={styles.image} source={thumbnail} />
+      <TouchableOpacity onPress={onPress} style={styles.video}>
+        {thumbnail && (
+          <ImageBackground
+            style={styles.thumbnail}
+            source={thumbnail}
+            imageStyle={styles.imageStyle}
+          >
+            {status && <Status name={status} />}
+          </ImageBackground>
+        )}
       </TouchableOpacity>
       <View style={styles.detail}>
         <AppText style={styles.title}>{title}</AppText>
@@ -24,16 +45,20 @@ const styles = StyleSheet.create({
     width: "50%",
     paddingBottom: 20,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 10,
+  video: {
+    alignItems: "center",
+    flex: 1,
   },
-  name: {
-    fontSize: 14,
+  thumbnail: {
+    width: "100%",
+    height: "90%",
+    alignItems: "center",
+    justifyContent: "center",
+    aspectRatio: 1.5,
+    borderRadius: 5,
   },
-  description: {
-    fontSize: 14,
+  imageStyle: {
+    borderRadius: 6,
   },
   detail: {
     paddingLeft: 30,
@@ -41,18 +66,16 @@ const styles = StyleSheet.create({
     textAlign: "left",
     textAlignVertical: "top",
   },
-  image: {
-    flex: 0.5,
-    height: 150,
-    borderRadius: 5,
-    aspectRatio: 1,
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 10,
   },
-  thumbnail: {
-    alignItems: "center",
+  description: {
+    fontSize: 14,
   },
-  vdeo: {
-    width: "100%",
-    height: "100%",
+  name: {
+    fontSize: 14,
   },
 });
 
