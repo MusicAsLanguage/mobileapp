@@ -1,6 +1,5 @@
-import React from "react";
-import { useEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { SafeAreaView, View, FlatList, StyleSheet } from "react-native";
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
@@ -44,21 +43,18 @@ function LessonDetailsScreen({ navigation, route }) {
 
   // Need to pause the video when navigate away to a new screen
   const player = React.useRef(null);
+  const [lastState, setLastState] = useState();
 
   useEffect(() => {
     const blur = navigation.addListener("blur", () => {
-      player?.current.pauseAsync();
+      player?.current?.pauseAsync();
     });
 
-    const focus = navigation.addListener("focus", () => {
-      player?.current.playAsync();
-    });
-
-    return blur, focus;
+    return blur;
   }, [navigation]); // only rerun the effect if navigation changes
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{lesson.Name}</AppText>
         <AppText style={styles.description}>{lesson.Description}</AppText>
@@ -72,7 +68,7 @@ function LessonDetailsScreen({ navigation, route }) {
         />
       </View>
       <ListItemSeparator />
-      <View style={styles.activityContainer}>
+      <SafeAreaView style={styles.activityContainer}>
         <FlatList
           data={activities}
           key={activities.title}
@@ -91,12 +87,15 @@ function LessonDetailsScreen({ navigation, route }) {
             />
           )}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   description: {
     color: colors.secondary,
     fontWeight: "bold",
@@ -127,9 +126,6 @@ const styles = StyleSheet.create({
   },
   activity: {
     justifyContent: "space-between",
-  },
-  space: {
-    marginBottom: 10,
   },
 });
 
