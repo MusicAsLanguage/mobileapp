@@ -2,7 +2,7 @@
 Mobile app code for the project.
 
 
-## Set Up Development Environment
+## Setting Up Development Environment
 - React Native and Emulator
   1. Install JDK: https://docs.oracle.com/en/java/javase/11/install/installation-jdk-microsoft-windows-platforms.html#GUID-A7E27B90-A28D-4237-9383-A58B416071CA
   2. Install Android Studio: https://docs.expo.io/workflow/android-studio-emulator/
