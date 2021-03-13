@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
+import { useContext } from 'react';
 
 import Screen from '../components/Screen';
 import ListItem from '../components/ListItem';
 import ListItemSeparatorComponent from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
+import AuthContext from '../auth/context';
+
 
 const menuItems =[
     {
@@ -25,12 +28,14 @@ const menuItems =[
 ]
 
 function AccountScreen(props) {
+    const { user, setUser} = useContext(AuthContext);
+
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title='Shuo Zhang'
-                    subTitle='shuzha@microsoft.com'
+                    title='Music Lover'
+                    subTitle='shengyfu@microsoft.com'
                     image={require("../assets/portrait.jpg")}
                 >
                 </ListItem>
@@ -53,10 +58,10 @@ function AccountScreen(props) {
                 />
             </View>
             <ListItem
-            title="Log Out"
-            IconComponent={
-                <Icon name="logout" backgroudColor="#ffe66d" />
-            } />
+                title="Log Out"
+                IconComponent={<Icon name="logout" backgroudColor="#ffe66d" />}
+                onPress={() => setUser(null)} 
+            />
         </Screen>
     );
 }

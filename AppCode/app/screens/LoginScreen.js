@@ -6,8 +6,7 @@ import jwtDecode from 'jwt-decode';
 import Screen from '../components/Screen';
 import {AppForm, AppFormField, SubmitButton, ErrorMessage} from '../components/forms';
 import authApi from '../api/auth';
-import { useState } from 'react';
-import { useContext } from 'react/cjs/react.production.min';
+import { useState, useContext } from 'react';
 import AuthContext from '../auth/context';
 
 const validationSchema = Yup.object().shape({
@@ -16,16 +15,15 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
-    //const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
     const [loginFailed, setLoginFailed] = useState(false);
 
     const handleSubmit = async (userInfo) => {
         const result = await authApi.login(userInfo);
         if (!result.ok) return setLoginFailed(true);
         setLoginFailed(false);
-        //const user = jwtDecode(result.data);
         console.log(result.data);
-        //authContext.setUser(result.data);
+        authContext.setUser(result.data.token);
     };
 
     return (
