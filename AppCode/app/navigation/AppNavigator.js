@@ -22,7 +22,7 @@ const AppNavigator = () => (
             component={LessonsNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="book-music" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="music" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 
@@ -30,7 +30,7 @@ const AppNavigator = () => (
             component={ToolboxScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="briefcase-download" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="briefcase-download-outline" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 
@@ -38,7 +38,7 @@ const AppNavigator = () => (
             component={AccountScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="account" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="home" color={color} size={size} /> 
             }}
         />
     </Tab.Navigator>
