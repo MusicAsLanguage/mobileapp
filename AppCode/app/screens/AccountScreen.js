@@ -35,7 +35,7 @@ function AccountScreen(props) {
             <View style={styles.container}>
                 <ListItem
                     title='Music Lover'
-                    subTitle='shengyfu@microsoft.com'
+                    subTitle='musiclover@gmail.com'
                     image={require("../assets/portrait.jpg")}
                 >
                 </ListItem>

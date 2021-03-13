@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import * as Yup from 'yup';
-import jwtDecode from 'jwt-decode';
 
 import Screen from '../components/Screen';
 import {AppForm, AppFormField, SubmitButton, ErrorMessage} from '../components/forms';
