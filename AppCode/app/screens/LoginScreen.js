@@ -22,7 +22,9 @@ function LoginScreen(props) {
         if (!result.ok) return setLoginFailed(true);
         setLoginFailed(false);
         console.log(result.data);
-        authContext.setUser(result.data.token);
+        console.log(JSON.parse(result.data.user).name);
+        console.log(JSON.parse(result.data.user).email);
+        authContext.setUser(result.data);
     };
 
     return (

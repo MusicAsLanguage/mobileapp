@@ -34,8 +34,8 @@ function AccountScreen(props) {
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title='Music Lover'
-                    subTitle='musiclover@gmail.com'
+                    title={JSON.parse(user.user).name}
+                    subTitle={JSON.parse(user.user).email}
                     image={require("../assets/portrait.jpg")}
                 >
                 </ListItem>
