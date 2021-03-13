@@ -59,7 +59,7 @@ function LessonDetailsScreen({ navigation, route }) {
         <AppText style={styles.title}>{lesson.Name}</AppText>
         <AppText style={styles.description}>{lesson.Description}</AppText>
         <Video
-          source={lesson.IntroVideo.Url}
+          source={{uri: lesson.IntroVideo.Url}}
           ref={player}
           shouldPlay
           resizeMode="cover"
@@ -67,27 +67,36 @@ function LessonDetailsScreen({ navigation, route }) {
           style={styles.video}
         />
       </View>
-      <ListItemSeparator />
+      {/* <ListItemSeparator />
       <SafeAreaView style={styles.activityContainer}>
         <FlatList
-          data={activities}
-          key={activities.title}
+          data={lesson.Activities}
+          key={activities._id}
           numColumns={2}
           columnWrapperStyle={styles.activity}
-          keyExtractor={(activities) => activities.title}
+          keyExtractor={(activities) => activities._id}
           renderItem={({ item }) => (
-            <ActivityListItem
-              title={item.title}
-              name={item.name}
-              description={item.description}
-              thumbnail={item.thumbnail}
-              video={item.video}
-              status={item.status}
-              onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
-            />
+            // <ActivityListItem
+            //   title={item.Name}
+            //   name={item.Name}
+            //   description={item.Description}
+            //   thumbnail={item.thumbnail}
+            //   video={item.Videos[0]}
+            //   status={"item.status"}
+            //   onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
+            // />            
+          //   <ActivityListItem
+          //   title={"Title"}
+          //   name={item.Name}
+          //   description={"Description"}
+          //   thumbnail={item.thumbnail}
+          //   video={item.Videos[0]}
+          //   status={"item.status"}
+          //   onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
+          // />
           )}
         />
-      </SafeAreaView>
+      </SafeAreaView> */}
     </View>
   );
 }
