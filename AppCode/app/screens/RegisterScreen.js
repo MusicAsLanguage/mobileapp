@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
 function RegisterScreen() {
     return (
         <Screen style={styles.container}>
-            <Image style={styles.logo} source={require("../assets/favicon.png")} />
+            <Image style={styles.logo} source={require("../assets/logo-red.png")} />
 
             <AppForm
                 initialValues={{ name: "", email: "", password: "" }}

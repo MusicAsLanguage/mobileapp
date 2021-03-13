@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppNavigator from './app/navigation/AppNavigator';
+import AuthNavigator from './app/navigation/AuthNavigator';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import AccountScreen from './app/screens/AccountScreen';
 import LessonsScreen from './app/screens/LessonsScreen';
@@ -11,14 +12,10 @@ import navigationTheme from './app/navigation/navigationTheme';
 
 
 export default function App() {
-  //return <WelcomeScreen />;
-  //return <LessonsScreen />;
-  //return <AccountScreen />;
-  //return <LoginScreen />;
-  //return <RegisterScreen />;
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
+      <AuthNavigator />
+      {/* <AppNavigator /> */}
     </NavigationContainer>
-  )
+  );
 }
