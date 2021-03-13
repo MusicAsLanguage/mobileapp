@@ -1,7 +1,7 @@
 import client from './client';
 
 const signupEndpoint = '/auth/signup';
-const loginEndpoint = '/auth/signup';
+const loginEndpoint = '/auth/login';
 
 //signupJson should look like:
 //{"name": "Jane Doe", "email":"janedoe@microsoft.com", "password":"xxxx"}
@@ -17,7 +17,7 @@ const signup = () => client.post(
 
 //loginJson should look like:
 //{"email":"janedoe@microsoft.com", "password":"xxxx"}
-const login = () => client.post(
+const login = (loginJson) => client.post(
     loginEndpoint,
     loginJson,
     {
@@ -27,5 +27,7 @@ const login = () => client.post(
     }
     );
 
-export default signup;
-export default login;
+export default {
+    login,
+    signup,
+}
