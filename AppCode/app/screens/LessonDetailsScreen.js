@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { SafeAreaView, View, ScrollView, FlatList, StyleSheet } from "react-native";
+import { SafeAreaView, View, FlatList, StyleSheet } from "react-native";
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
