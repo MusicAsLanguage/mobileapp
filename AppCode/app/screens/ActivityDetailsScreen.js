@@ -24,7 +24,7 @@ function ActivityScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Video
-        source={activity.video}
+        source={{uri: activity.Videos[0].Url}}
         ref={player}
         shouldPlay
         resizeMode="cover"
