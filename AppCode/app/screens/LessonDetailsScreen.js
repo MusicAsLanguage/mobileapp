@@ -8,36 +8,6 @@ import ListItemSeparator from "../components/ListItemSeparator";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
 
-const activities = [
-  {
-    title: "Activity 1",
-    name: "Jaw Exercise",
-    description: "10-20 min",
-    backgroudColor: colors.primary,
-    thumbnail: require("../assets/jaw_exercise.jpg"),
-    video: require("../assets/jaw_exercise.mov"),
-    status: "Completed",
-  },
-  {
-    title: "Activity 2",
-    name: "Vowels",
-    description: "10-20 min",
-    backgroudColor: colors.primary,
-    thumbnail: require("../assets/vowels.jpg"),
-    video: require("../assets/vowels.mov"),
-    status: "Not Completed",
-  },
-  {
-    title: "Activity 3",
-    name: "Breathing",
-    description: "10-20 min",
-    backgroudColor: colors.primary,
-    thumbnail: require("../assets/breathing.jpg"),
-    video: require("../assets/breathing.mov"),
-    statys: "Not Completed",
-  },
-];
-
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
 
@@ -67,36 +37,25 @@ function LessonDetailsScreen({ navigation, route }) {
           style={styles.video}
         />
       </View>
-      {/* <ListItemSeparator />
+      <ListItemSeparator />
       <SafeAreaView style={styles.activityContainer}>
         <FlatList
           data={lesson.Activities}
-          key={activities._id}
+          key={lesson.Activities._id}
           numColumns={2}
           columnWrapperStyle={styles.activity}
           keyExtractor={(activities) => activities._id}
           renderItem={({ item }) => (
-            // <ActivityListItem
-            //   title={item.Name}
-            //   name={item.Name}
-            //   description={item.Description}
-            //   thumbnail={item.thumbnail}
-            //   video={item.Videos[0]}
-            //   status={"item.status"}
-            //   onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
-            // />            
-          //   <ActivityListItem
-          //   title={"Title"}
-          //   name={item.Name}
-          //   description={"Description"}
-          //   thumbnail={item.thumbnail}
-          //   video={item.Videos[0]}
-          //   status={"item.status"}
-          //   onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
-          // />
-          )}
+            <ActivityListItem
+            title={item.Name}
+            description={item.Description}
+            thumbnail={{uri: item.ImageUrl}}
+            status={"status"} // TODO: need to get actual status here
+            onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
+         />
+         )}
         />
-      </SafeAreaView> */}
+      </SafeAreaView>
     </View>
   );
 }

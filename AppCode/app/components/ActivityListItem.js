@@ -10,7 +10,6 @@ import Status from "./Status";
 
 function ActivityListItem({
   title,
-  name,
   description,
   thumbnail,
   status,
@@ -34,7 +33,6 @@ function ActivityListItem({
         {description && (
           <AppText style={styles.description}>{description}</AppText>
         )}
-        {name && <AppText style={styles.name}>{name}</AppText>}
       </View>
     </View>
   );
@@ -61,20 +59,17 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   detail: {
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 5,
+    paddingRight: 5,
     textAlign: "left",
     textAlignVertical: "top",
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 10,
+    marginTop: 0,
   },
   description: {
-    fontSize: 14,
-  },
-  name: {
     fontSize: 14,
   },
 });
