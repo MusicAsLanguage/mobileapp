@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
+import jwt_decode from 'jwt-decode';
 import * as Yup from 'yup';
 
 import Screen from '../components/Screen';
 import {AppForm, AppFormField, SubmitButton, ErrorMessage} from '../components/forms';
-import authApi from '../api/auth';
+import {login} from '../api/auth';
 import { useState, useContext } from 'react';
 import AuthContext from '../auth/context';
 
@@ -13,26 +14,29 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(6).label("Password")
 });
 
+
 function LoginScreen(props) {
     const authContext = useContext(AuthContext);
     const [loginFailed, setLoginFailed] = useState(false);
 
     const handleSubmit = async (userInfo) => {
-        const result = await authApi.login(userInfo);
+        const result = await login(userInfo);
         if (!result.ok) return setLoginFailed(true);
         setLoginFailed(false);
-        console.log(result.data);
-        console.log(JSON.parse(result.data.user).name);
-        console.log(JSON.parse(result.data.user).email);
-        authContext.setUser(result.data);
+        const decodedToken = JSON.parse(jwt_decode(result.data.token).sub);
+
+        console.log(decodedToken.name);
+        console.log(decodedToken.email);
+        authContext.setUser(decodedToken);
     };
 
+    
     return (
         <Screen style={styles.container}>
             <Image style={styles.logo} source={require("../assets/logo-red.png")} />
             
             <AppForm
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ email: 'jane.doe@mal.com', password: 'Mal123!' }}
                 onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
@@ -45,6 +49,7 @@ function LoginScreen(props) {
                     name="email"
                     placeholder="Email"
                     textContentType="emailAddress"
+                    defaultValue="jane.doe@mal.com"
                     />
                 <AppFormField
                     autoCapitalize="none"
@@ -54,6 +59,7 @@ function LoginScreen(props) {
                     placeholder="Password"
                     secureTextEntry={true}
                     textContentType="password"
+                    defaultValue="Mal123!"
                     />
                 <SubmitButton title="Login" />
             </AppForm>
