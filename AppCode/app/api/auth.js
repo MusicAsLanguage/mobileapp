@@ -1,33 +1,17 @@
 import client from './client';
 
+const headers =  {
+    'Content-Type': 'application/json'             
+}
 const signupEndpoint = '/auth/signup';
+
+const signup = (input) => client.post(signupEndpoint, input, {headers: headers});
+
 const loginEndpoint = '/auth/login';
+const login = (input) => client.post(loginEndpoint, input, {headers: headers});
 
-//signupJson should look like:
-//{"name": "Jane Doe", "email":"janedoe@microsoft.com", "password":"xxxx"}
-const signup = () => client.post(
-    signupEndpoint,
-    signupJson,
-    {
-        headers: {
-            'Content-Type': 'application/json'             
-        }
-    }
-    );
 
-//loginJson should look like:
-//{"email":"janedoe@microsoft.com", "password":"xxxx"}
-const login = (loginJson) => client.post(
-    loginEndpoint,
-    loginJson,
-    {
-        headers: {
-            'Content-Type': 'application/json'             
-        }
-    }
-    );
-
-export default {
-    login,
+export {
     signup,
+    login
 }
