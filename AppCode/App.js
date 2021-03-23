@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode'; 
 
 import AppNavigator from './app/navigation/AppNavigator';
 import AuthNavigator from './app/navigation/AuthNavigator';
@@ -13,16 +12,13 @@ import authStorage from './app/auth/storage';
 export default function App() {
   const [user, setUser] = useState();
 
-  const restoreToken = async () => {
-    const token = await authStorage.getToken();
-    if (!token) return;
-    const user = JSON.parse(jwtDecode(token).sub);
-    console.log(user);
-    setUser(user);
+  const restoreUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
   }
 
   useEffect(() => {
-    restoreToken();
+    restoreUser();
   }, []);
 
   // To Login: use this existing account for demo:
