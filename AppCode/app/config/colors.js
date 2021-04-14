@@ -1,4 +1,7 @@
 export default {
+    magenta: "#ff00ff",
+    deepskyblue: "#00bfff",
+    yellowgreen: "#9acd32",
     primary: "#fc5c65",
     secondary: "#4ecdc4",
     black: "#000",
@@ -7,4 +10,5 @@ export default {
     lightgrey: "#eee",
     medium: "#6e6969",
     white: "#fff",
+    grey: "#808080",
 }
