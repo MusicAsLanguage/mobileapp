@@ -45,7 +45,7 @@ function LessonsScreen({ navigation }) {
 const styles = StyleSheet.create({
     screen: {
         padding: 10,
-        backgroundColor:colors.light
+        backgroundColor:colors.white
     }
 })
 

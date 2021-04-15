@@ -7,41 +7,22 @@ import ListItemSeparatorComponent from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
 
-const menuItems =[
-    {
-        title: "Musics",
-        icon: {
-            name: "music-box-multiple",
-            backgroudColor: colors.primary
-        }
-    },
-    {
-        title: "Metronome",
-        icon: {
-            name: "metronome",
-            backgroudColor: colors.secondary
-        }
-    }
-]
 
 function ToolboxScreen(props) {
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
-                <FlatList 
-                    data={menuItems}
-                    keyExtractor={(menuItem) => menuItem.title}
-                    ItemSeparatorComponent={ListItemSeparatorComponent}
-                    renderItem={({ item }) => 
-                        <ListItem
-                            title={item.title}
-                            IconComponent={
-                                <Icon 
-                                    name={item.icon.name} 
-                                    backgroudColor={item.icon.backgroudColor} />
-                            }
-                        />
-                    }
+                <ListItem
+                    title="Musics"
+                    IconComponent={<Icon name="music-box-multiple" backgroudColor={colors.magenta} />}
+                    onPress={() => logOut()} 
+                />
+            </View>
+            <View style={styles.container}>
+                <ListItem
+                    title="Metronome"
+                    IconComponent={<Icon name="metronome" backgroudColor={colors.yellowgreen} />}
+                    onPress={() => logOut()} 
                 />
             </View>
         </Screen>
@@ -50,10 +31,10 @@ function ToolboxScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 20,
+        marginTop: 20,
     },
     screen: {
-        backgroundColor: colors.light
+        backgroundColor: colors.white
     }
 })
 
