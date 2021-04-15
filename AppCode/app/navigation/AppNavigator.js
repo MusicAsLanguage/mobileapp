@@ -12,10 +12,13 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
     <Tab.Navigator
         tabBarOptions={{
-            activeBackgroundColor: colors.primary,
-            activeTintColor: colors.white,
+            activeBackgroundColor: colors.white,
+            activeTintColor: colors.deepskyblue,
             inactiveBackgroundColor: colors.white,
-            inactiveTintColor: colors.primary,
+            inactiveTintColor: colors.grey,
+            labelStyle: {
+                fontSize: 11,
+            },
         }}>
         <Tab.Screen 
             name="Lessons" 

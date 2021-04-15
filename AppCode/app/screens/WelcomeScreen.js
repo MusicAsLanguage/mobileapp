@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Image, ImageBackground, StyleSheet, View, Text } from 'react-native';
 
 import colors from '../config/colors';
 import AppButton from '../components/AppButton';
@@ -9,12 +9,12 @@ function WelcomeScreen({ navigation }) {
     return (
     <ImageBackground 
         style={styles.background}
-        source={require('../assets/welcome_background.jpg')}
+        source={require('../assets/signin_background.png')}
     >
-        {/* <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require('../assets/logo-red.png')} />
-            <Text style={styles.tagLine}>Music As Language</Text>
-        </View>        */}
+        <View style={styles.logoContainer}>       
+            <Text style={styles.tagLine}>#MusicAsLanguage</Text>
+            <Image style={styles.logo} source={require('../assets/MAL_logo.png')} />
+        </View>       
         <View style={styles.buttonContainer}>
             <AppButton 
                 title="Login" 
@@ -22,7 +22,6 @@ function WelcomeScreen({ navigation }) {
             </AppButton>
             <AppButton 
                 title="Register" 
-                color="secondary" 
                 onPress={() => navigation.navigate(routes.REGISTER)}>
             </AppButton>
         </View>
@@ -39,20 +38,21 @@ const styles = StyleSheet.create({
     buttonContainer: {
         padding: 15,
         width: '100%',
+        marginBottom: 25,
     },
     logo: {
-        width: 80,
-        height: 80,
+        width: 120,
+        height: 120,
     },
     logoContainer: {
         position: 'absolute',
-        top: 50,
+        top: 280,
         alignItems: 'center',
     },
     tagLine: {
-        fontSize: 25,
+        fontSize: 20,
         paddingVertical: 10,
-        color: colors.white,
+        color: colors.black,
         fontWeight: 'bold',
     },
     text: {

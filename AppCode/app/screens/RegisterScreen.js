@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ImageBackground, Text, Image } from "react-native";
 import { useState } from 'react';
 import * as Yup from "yup";
 
@@ -7,6 +7,9 @@ import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton, ErrorMessage } from "../components/forms";
 import { login, signup } from '../api/auth';
 import useAuth from '../auth/useAuth';
+import colors from '../config/colors';
+import BackButton from '../components/BackButton';
+import routes from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required().label("Name"),
@@ -14,7 +17,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(6).label("Password"),
 });
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }) {
     const auth = useAuth();
     const [error, setError] = useState();
 
@@ -39,54 +42,81 @@ function RegisterScreen() {
     };
 
     return (
-        <Screen style={styles.container}>
-            <AppForm
-                initialValues={{ name: "", email: "", password: "" }}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-            >
-                <ErrorMessage error={error} visible={error} />
-                <AppFormField
-                    autoCorrect={false}
-                    icon="account"
-                    name="name"
-                    placeholder="Name"
-                />
-                <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    icon="email"
-                    keyboardType="email-address"
-                    name="email"
-                    placeholder="Email"
-                    textContentType="emailAddress"
-                />
-                <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    icon="lock"
-                    name="password"
-                    placeholder="Password"
-                    secureTextEntry
-                    textContentType="password"
-                />
-                <SubmitButton title="Register" />
-            </AppForm>
-        </Screen>
+        <ImageBackground 
+        style={styles.background}
+        source={require('../assets/signin_background.png')}
+        >
+            <Screen style={styles.container}>
+                <BackButton onPress={() => navigation.navigate(routes.WELCOME)} />
+                <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Text style={styles.hello}>Hello.</Text>
+                <Text style={styles.hello}>Create An Account</Text>
+
+                <AppForm
+                    initialValues={{ name: "", email: "", password: "" }}
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}
+                >
+                    <ErrorMessage error={error} visible={error} />
+                    <Text style={styles.text}>NAME</Text>
+                    <AppFormField
+                        autoCorrect={false}
+                        icon="account"
+                        name="name"
+                        placeholder=""
+                    />
+                    <Text style={styles.text}>EMAIL</Text>
+                    <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        icon="email"
+                        keyboardType="email-address"
+                        name="email"
+                        placeholder=""
+                        textContentType="emailAddress"
+                    />
+                    <Text style={styles.text}>PASSWORD</Text>
+                    <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        icon="lock"
+                        name="password"
+                        placeholder=""
+                        secureTextEntry
+                        textContentType="password"
+                    />
+                    <SubmitButton title="Register" />
+                </AppForm>
+            </Screen>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        justifyContent: "flex-start",
+    },
     container: {
-        padding: 10,
+        padding: 15,
+    },
+    hello: {
+        fontSize: 25,
+        paddingVertical: 5,
+        color: colors.black,
+        fontWeight: 'bold',
     },
     logo: {
-        width: 80,
-        height: 80,
-        alignSelf: "center",
-        marginTop: 50,
-        marginBottom: 20,
+        width: 60,
+        height: 60,
+        alignSelf: 'auto',
+        marginLeft: 270
     },
+    text: {
+        fontSize: 15,
+        color: colors.black,
+        paddingTop: 25,
+    }
 });
 
 export default RegisterScreen;

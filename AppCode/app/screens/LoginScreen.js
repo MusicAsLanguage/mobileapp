@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, ImageBackground, Text } from 'react-native';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -7,6 +7,9 @@ import Screen from '../components/Screen';
 import {AppForm, AppFormField, SubmitButton, ErrorMessage} from '../components/forms';
 import {login} from '../api/auth';
 import useAuth from '../auth/useAuth';
+import colors from '../config/colors';
+import BackButton from '../components/BackButton';
+import routes from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -14,7 +17,7 @@ const validationSchema = Yup.object().shape({
 });
 
 
-function LoginScreen(props) {
+function LoginScreen({ navigation }) {
     const { logIn } = useAuth();
     const [loginFailed, setLoginFailed] = useState(false);
 
@@ -26,51 +29,73 @@ function LoginScreen(props) {
     };
     
     return (
-        <Screen style={styles.container}>
-            <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-            
-            <AppForm
-                initialValues={{ email: 'jane.doe@mal.com', password: 'Mal123!' }}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-            >
-                <ErrorMessage error="Invalid email and/or password." visible={loginFailed}/>
-                <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    icon="email"
-                    keyboardType="email-address"
-                    name="email"
-                    placeholder="Email"
-                    textContentType="emailAddress"
-                    defaultValue="jane.doe@mal.com"
+        <ImageBackground 
+        style={styles.background}
+        source={require('../assets/signin_background.png')}
+        >
+            <Screen style={styles.container}>
+                <BackButton onPress={() => navigation.navigate(routes.WELCOME)} />
+                <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Text style={styles.hello}>Hello.</Text>
+                <Text style={styles.hello}>Welcome Back!</Text>
+                
+                <AppForm
+                    initialValues={{ email: 'jane.doe@mal.com', password: 'Mal123!' }}
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}
+                >
+                    <ErrorMessage error="Invalid email and/or password." visible={loginFailed}/>
+                    <Text style={styles.text}>EMAIL</Text>
+                    <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        icon="email"
+                        keyboardType="email-address"
+                        name="email"
+                        placeholder=""
+                        textContentType="emailAddress"
                     />
-                <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    icon="lock"
-                    name="password"
-                    placeholder="Password"
-                    secureTextEntry={true}
-                    textContentType="password"
-                    defaultValue="Mal123!"
-                    />
-                <SubmitButton title="Login" />
-            </AppForm>
-        </Screen>
+                    <Text style={styles.text}>PASSWORD</Text>
+                    <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        icon="lock"
+                        name="password"
+                        placeholder=""
+                        secureTextEntry={true}
+                        textContentType="password"
+                        />
+                    <SubmitButton title="Login" />
+                </AppForm>
+            </Screen>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        justifyContent: "flex-start",
+    },
     container: {
-        padding: 10
+        padding: 15,
+    },
+    hello: {
+        fontSize: 25,
+        paddingVertical: 5,
+        color: colors.black,
+        fontWeight: 'bold',
     },
     logo: {
-        width: 80,
-        height: 80,
-        alignSelf: 'center',
-        marginTop: 50,
-        marginBottom: 20
+        width: 60,
+        height: 60,
+        alignSelf: 'auto',
+        marginLeft: 270
+    },
+    text: {
+        fontSize: 15,
+        color: colors.black,
+        paddingTop: 25,
     }
 })
 

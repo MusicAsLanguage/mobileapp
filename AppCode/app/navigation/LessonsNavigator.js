@@ -26,7 +26,11 @@ const LessonsNavigator = () => {
         component={LessonsScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="LessonDetails" component={LessonDetailsScreen} />
+      <Stack.Screen 
+        name="LessonDetails" 
+        component={LessonDetailsScreen}
+        options={{ headerShown: false }} 
+      />
       <Stack.Screen
         name="Activity"
         component={ActivityScreen}
