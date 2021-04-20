@@ -7,8 +7,9 @@ import ActivityListItem from "../components/ActivityListItem";
 import ListItemSeparator from "../components/ListItemSeparator";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
-import BackButton from '../components/BackButton';
-import Screen from '../components/Screen';
+import BackButton from "../components/BackButton";
+import Screen from "../components/Screen";
+import Icon from "../components/Icon";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -25,39 +26,62 @@ function LessonDetailsScreen({ navigation, route }) {
     return blur;
   }, [navigation]); // only rerun the effect if navigation changes
 
+  const lessonDuration = lesson.IntroVideo.LengthInSeconds / 60;
+
   return (
     <Screen style={styles.container}>
-      <View style={styles.container}>
-        <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
-        <View style={styles.detailsContainer}>       
-          <Video
-            source={{uri: lesson.IntroVideo.Url}}
-            ref={player}
-            shouldPlay
-            resizeMode="cover"
-            useNativeControls
-            style={styles.video}
-          />
-          <AppText style={styles.title}>{lesson.Name}</AppText>
-          <AppText style={styles.description}>{lesson.Description}</AppText>
+      <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
+      <View style={styles.lessonContainer}>
+        <Video
+          source={{ uri: lesson.IntroVideo.Url }}
+          ref={player}
+          shouldPlay
+          resizeMode="cover"
+          useNativeControls
+          style={styles.lessonVideo}
+        />
+        <View style={styles.lessonDetail}>
+          <View style={styles.lessonDescSect}>
+            <AppText style={styles.lessonName}>{lesson.Name}</AppText>
+            <AppText style={styles.lessonDescription}>
+              {lesson.Description}
+            </AppText>
+          </View>
+          <View style={styles.lessonDurationSect}>
+            <Icon
+              name="volume-medium"
+              backgroudColor="transparent"
+              iconColor="skyblue"
+            />
+            <AppText style={styles.lessonDuration}>
+              {lessonDuration} minutes
+            </AppText>
+          </View>
         </View>
-        <ListItemSeparator />
-        <SafeAreaView style={styles.activityContainer}>
+      </View>
+      <ListItemSeparator />
+      <View style={styles.activityContainer}>
+        <AppText style={styles.activitySectionTitle}>Activities</AppText>
+        <SafeAreaView>
           <FlatList
             data={lesson.Activities}
             key={lesson.Activities._id}
             numColumns={2}
-            columnWrapperStyle={styles.activity}
+            columnWrapperStyle={styles.activityItem}
             keyExtractor={(activities) => activities._id}
             renderItem={({ item }) => (
               <ActivityListItem
-              title={item.Name}
-              description={item.Description}
-              thumbnail={{uri: item.ImageUrl}}
-              status={"status"} // TODO: need to get actual status here
-              onPress={() => navigation.navigate(routes.ACTIVITI_DETAILS, item)}
-          />
-          )}
+                id={item._id}
+                name={item.Name}
+                description={item.Description}
+                duration={item.Videos[0].LengthInSeconds}
+                thumbnail={{ uri: item.ImageUrl }}
+                status={"status"} // TODO: need to get actual status here
+                onPress={() =>
+                  navigation.navigate(routes.ACTIVITI_DETAILS, item)
+                }
+              />
+            )}
           />
         </SafeAreaView>
       </View>
@@ -68,37 +92,58 @@ function LessonDetailsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
-  description: {
-    color: colors.black,
-    fontSize: 15,
-    marginVertical: 10,
+  lessonContainer: {
+    flex: 1,
+    padding: 10,
   },
-  detailsContainer: {
-    padding: 20,
+  lessonDetail: {
+    flexDirection: "row",
   },
-  image: {
-    width: "100%",
-    height: 150,
-  },
-  title: {
+  lessonName: {
     fontSize: 24,
     fontWeight: "500",
-    marginTop: 10,
     color: colors.magenta,
     fontWeight: "bold",
   },
-  video: {
+  lessonDescription: {
+    color: colors.black,
+    fontSize: 14,
+  },
+  lessonDescSect: {
+    flex: 0.7,
+    flexDirection: "column",
+  },
+  lessonDurationSect: {
+    flex: 0.3,
+    flexDirection: "row",
+  },
+  lessonDuration: {
+    color: colors.black,
+    fontSize: 12,
+    textAlign: "right",
+    alignSelf: "center",
+    height: "50%",
+  },
+  lessonVideo: {
     width: "100%",
-    height: 200,
+    height: "80%",
     marginBottom: 10,
+    borderRadius: 10,
   },
   activityContainer: {
+    flex: 1,
     padding: 10,
-    marginTop: 20,
-    alignItems: "center",
+    marginBottom: 20,
   },
-  activity: {
+  activitySectionTitle: {
+    textAlign: "left",
+    fontSize: 12,
+    fontWeight: "bold",
+    paddingBottom: 10,
+  },
+  activityItem: {
     justifyContent: "space-between",
   },
 });

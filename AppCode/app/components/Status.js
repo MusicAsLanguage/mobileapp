@@ -12,9 +12,9 @@ function Status({ name }) {
       item = (
         <Icon
           name={completed}
-          iconColor="orange"
+          iconColor="green"
           backgroudColor="transparent"
-          size={60}
+          size={80}
           style={styles.status}
         />
       );
@@ -23,9 +23,9 @@ function Status({ name }) {
       item = (
         <Icon
           name={notcompleted}
-          iconColor="lightcyan"
+          iconColor="deepskyblue"
           backgroudColor="transparent"
-          size={60}
+          size={80}
           style={styles.status}
         />
       );

@@ -9,12 +9,16 @@ import AppText from "./AppText";
 import Status from "./Status";
 
 function ActivityListItem({
-  title,
+  id,
+  name,
   description,
+  duration,
   thumbnail,
   status,
   onPress,
 }) {
+  const durationMin = duration / 60;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.video}>
@@ -29,10 +33,15 @@ function ActivityListItem({
         )}
       </TouchableOpacity>
       <View style={styles.detail}>
-        <AppText style={styles.title}>{title}</AppText>
-        {description && (
-          <AppText style={styles.description}>{description}</AppText>
-        )}
+        <View style={styles.descSect}>
+          <AppText style={styles.id}>{id}</AppText>
+          {description && <AppText style={styles.name}>{name}</AppText>}
+        </View>
+        <View style={styles.durationSect}>
+          {duration && (
+            <AppText style={styles.duration}>{durationMin} mins</AppText>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -40,7 +49,7 @@ function ActivityListItem({
 
 const styles = StyleSheet.create({
   container: {
-    width: "50%",
+    width: "47%",
     paddingBottom: 20,
   },
   video: {
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     width: "100%",
-    height: "90%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     aspectRatio: 1.5,
@@ -59,18 +68,29 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   detail: {
-    paddingLeft: 5,
-    paddingRight: 5,
-    textAlign: "left",
     textAlignVertical: "top",
+    flexDirection: "row",
+    marginTop: 10,
   },
-  title: {
-    fontSize: 16,
+  name: {
+    fontSize: 12,
     fontWeight: "bold",
-    marginTop: 0,
   },
-  description: {
-    fontSize: 14,
+  id: {
+    fontSize: 12,
+    fontWeight: "bold",
+    paddingRight: 5,
+  },
+  duration: {
+    fontSize: 12,
+    textAlign: "right",
+  },
+  descSect: {
+    flex: 0.7,
+    flexDirection: "row",
+  },
+  durationSect: {
+    flex: 0.3,
   },
 });
 
