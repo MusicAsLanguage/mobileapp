@@ -26,64 +26,66 @@ function LessonDetailsScreen({ navigation, route }) {
     return blur;
   }, [navigation]); // only rerun the effect if navigation changes
 
-  const lessonDuration = lesson.IntroVideo.LengthInSeconds / 60;
+  const lessonDuration = Math.round(lesson.IntroVideo.LengthInSeconds / 60);
 
   return (
     <Screen style={styles.container}>
-      <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
       <View style={styles.lessonContainer}>
-        <Video
-          source={{ uri: lesson.IntroVideo.Url }}
-          ref={player}
-          shouldPlay
-          resizeMode="cover"
-          useNativeControls
-          style={styles.lessonVideo}
-        />
-        <View style={styles.lessonDetail}>
-          <View style={styles.lessonDescSect}>
-            <AppText style={styles.lessonName}>{lesson.Name}</AppText>
-            <AppText style={styles.lessonDescription}>
-              {lesson.Description}
-            </AppText>
-          </View>
-          <View style={styles.lessonDurationSect}>
-            <Icon
-              name="volume-medium"
-              backgroudColor="transparent"
-              iconColor="skyblue"
-            />
-            <AppText style={styles.lessonDuration}>
-              {lessonDuration} minutes
-            </AppText>
+        <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
+        <View style={styles.lessonVideoContainer}>
+          <Video
+            source={{ uri: lesson.IntroVideo.Url }}
+            ref={player}
+            shouldPlay
+            resizeMode="cover"
+            useNativeControls
+            style={styles.lessonVideo}
+          />
+          <View style={styles.lessonDetail}>
+            <View style={styles.lessonNameDescSect}>
+              <AppText style={styles.lessonName}>{lesson.Name}</AppText>
+              <AppText numberOfLines={1} style={styles.lessonDescription}>
+                {lesson.Description}
+              </AppText>
+            </View>
+            <View style={styles.lessonDurationSect}>
+              <Icon
+                name="volume-medium"
+                backgroudColor="transparent"
+                iconColor="skyblue"
+              />
+              <AppText style={styles.lessonDuration}>
+                {lessonDuration} minutes
+              </AppText>
+            </View>
           </View>
         </View>
-      </View>
-      <ListItemSeparator />
-      <View style={styles.activityContainer}>
-        <AppText style={styles.activitySectionTitle}>Activities</AppText>
-        <SafeAreaView>
-          <FlatList
-            data={lesson.Activities}
-            key={lesson.Activities._id}
-            numColumns={2}
-            columnWrapperStyle={styles.activityItem}
-            keyExtractor={(activities) => activities._id}
-            renderItem={({ item }) => (
-              <ActivityListItem
-                id={item._id}
-                name={item.Name}
-                description={item.Description}
-                duration={item.Videos[0].LengthInSeconds}
-                thumbnail={{ uri: item.ImageUrl }}
-                status={"status"} // TODO: need to get actual status here
-                onPress={() =>
-                  navigation.navigate(routes.ACTIVITI_DETAILS, item)
-                }
-              />
-            )}
-          />
-        </SafeAreaView>
+        <ListItemSeparator />
+        <View style={styles.activityContainer}>
+          <AppText style={styles.activitySectionTitle}>Activities</AppText>
+          <SafeAreaView>
+            <FlatList
+              data={lesson.Activities}
+              key={lesson.Activities._id}
+              numColumns={2}
+              columnWrapperStyle={styles.activityItem}
+              keyExtractor={(activities) => activities._id}
+              renderItem={({ item }) => (
+                <ActivityListItem
+                  id={item._id}
+                  name={item.Name}
+                  description={item.Description}
+                  duration={item.Videos[0].LengthInSeconds}
+                  thumbnail={{ uri: item.ImageUrl }}
+                  status={"status"} // TODO: need to get actual status here
+                  onPress={() =>
+                    navigation.navigate(routes.ACTIVITI_DETAILS, item)
+                  }
+                />
+              )}
+            />
+          </SafeAreaView>
+        </View>
       </View>
     </Screen>
   );
@@ -93,13 +95,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    justifyContent: "space-evenly",
   },
   lessonContainer: {
     flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  lessonVideoContainer: {
+    flex: 2,
     padding: 10,
   },
   lessonDetail: {
     flexDirection: "row",
+    height: "20%",
+    marginTop: 5,
   },
   lessonName: {
     fontSize: 24,
@@ -111,31 +121,35 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 14,
   },
-  lessonDescSect: {
-    flex: 0.7,
+  lessonNameDescSect: {
+    width: "70%",
     flexDirection: "column",
+    paddingLeft: 5,
+    justifyContent: "flex-start",
   },
   lessonDurationSect: {
-    flex: 0.3,
+    width: "30%",
     flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingRight: 5,
+    height: "100%",
+    alignItems: "baseline",
   },
   lessonDuration: {
     color: colors.black,
     fontSize: 12,
     textAlign: "right",
     alignSelf: "center",
-    height: "50%",
   },
   lessonVideo: {
     width: "100%",
     height: "80%",
-    marginBottom: 10,
     borderRadius: 10,
   },
   activityContainer: {
-    flex: 1,
+    flex: 3,
     padding: 10,
-    marginBottom: 20,
+    justifyContent: "flex-start",
   },
   activitySectionTitle: {
     textAlign: "left",

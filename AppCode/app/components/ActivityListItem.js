@@ -17,7 +17,7 @@ function ActivityListItem({
   status,
   onPress,
 }) {
-  const durationMin = duration / 60;
+  const durationMin = Math.round(duration / 60);
 
   return (
     <View style={styles.container}>
@@ -49,7 +49,7 @@ function ActivityListItem({
 
 const styles = StyleSheet.create({
   container: {
-    width: "47%",
+    width: "48%",
     paddingBottom: 20,
   },
   video: {
@@ -74,11 +74,9 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 12,
-    fontWeight: "bold",
   },
   id: {
     fontSize: 12,
-    fontWeight: "bold",
     paddingRight: 5,
   },
   duration: {
@@ -86,11 +84,11 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   descSect: {
-    flex: 0.7,
+    flex: 1.5,
     flexDirection: "row",
   },
   durationSect: {
-    flex: 0.3,
+    flex: 1,
   },
 });
 
