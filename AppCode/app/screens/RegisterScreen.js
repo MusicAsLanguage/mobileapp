@@ -47,7 +47,7 @@ function RegisterScreen({ navigation }) {
         source={require('../assets/signin_background.png')}
         >
             <Screen style={styles.container}>
-                <BackButton onPress={() => navigation.navigate(routes.WELCOME)} />
+                <BackButton onPress={() => navigation.navigate(routes.LOGIN)} />
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
                 <Text style={styles.hello}>Hello.</Text>
                 <Text style={styles.hello}>Create An Account</Text>
@@ -85,7 +85,7 @@ function RegisterScreen({ navigation }) {
                         secureTextEntry
                         textContentType="password"
                     />
-                    <SubmitButton title="Register" />
+                    <SubmitButton title="Sign Up" />
                 </AppForm>
             </Screen>
         </ImageBackground>

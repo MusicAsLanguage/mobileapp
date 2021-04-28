@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         width: '100%',
-        marginVertical: 10,
+        marginTop: 60,
         shadowColor: colors.lightgrey,
         shadowOpacity: 0.8,
         elevation: 6,

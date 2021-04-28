@@ -4,5 +4,4 @@ export default Object.freeze({
   ACTIVITI_DETAILS: "Activity",
   LOGIN: "Login",
   REGISTER: "Register",
-  WELCOME: "Welcome",
 });

@@ -8,7 +8,6 @@ import {AppForm, AppFormField, SubmitButton, ErrorMessage} from '../components/f
 import {login} from '../api/auth';
 import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
-import BackButton from '../components/BackButton';
 import routes from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
@@ -34,10 +33,8 @@ function LoginScreen({ navigation }) {
         source={require('../assets/signin_background.png')}
         >
             <Screen style={styles.container}>
-                <BackButton onPress={() => navigation.navigate(routes.WELCOME)} />
+                <Text style={styles.tagLine}>#MusicAsLanguage</Text>
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
-                <Text style={styles.hello}>Hello.</Text>
-                <Text style={styles.hello}>Welcome Back!</Text>
                 
                 <AppForm
                     initialValues={{ email: 'jane.doe@mal.com', password: 'Mal123!' }}
@@ -66,6 +63,10 @@ function LoginScreen({ navigation }) {
                         textContentType="password"
                         />
                     <SubmitButton title="Login" />
+                    <Text style={styles.shallowText}>
+                        Don't have an account yet?{' '}
+                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.REGISTER)}>Create Account</Text>
+                    </Text>
                 </AppForm>
             </Screen>
         </ImageBackground>
@@ -86,11 +87,28 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontWeight: 'bold',
     },
+    hyperlinkStyle: {
+        color: colors.darkblue,
+    },
     logo: {
-        width: 60,
-        height: 60,
-        alignSelf: 'auto',
-        marginLeft: 270
+        width: 110,
+        height: 110,
+        alignSelf: 'center',
+        marginBottom: 80,
+    },
+    shallowText: {
+        fontSize: 13,
+        color: colors.dark,
+        alignSelf: 'center',
+        marginTop: 20,
+    },
+    tagLine: {
+        fontSize: 15,
+        paddingVertical: 10,
+        color: colors.black,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 50,
     },
     text: {
         fontSize: 15,
