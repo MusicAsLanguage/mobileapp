@@ -21,11 +21,11 @@ const AppNavigator = () => (
             },
         }}>
         <Tab.Screen 
-            name="Lessons" 
+            name="Home" 
             component={LessonsNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="music" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="home" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 
@@ -37,11 +37,11 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen 
-            name="Account" 
+            name="Help" 
             component={AccountScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="home" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="help-circle-outline" color={color} size={size} /> 
             }}
         />
     </Tab.Navigator>

@@ -15,7 +15,7 @@ function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
 
   // Need to pause the video when navigate away to a new screen
-  const player = React.useRef(null);
+  const player = useRef(null);
   const [lastState, setLastState] = useState();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function LessonDetailsScreen({ navigation, route }) {
   return (
     <Screen style={styles.container}>
       <View style={styles.lessonContainer}>
-        <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
+        <BackButton onPress={() => navigation.navigate(routes.HOME)} />
         <View style={styles.lessonVideoContainer}>
           <Video
             source={{ uri: lesson.IntroVideo.Url }}
