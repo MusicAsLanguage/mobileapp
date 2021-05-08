@@ -21,9 +21,6 @@ export default function App() {
     restoreUser();
   }, []);
 
-  // To Login: use this existing account for demo:
-  // email: shengyfu@microsoft.com
-  // password: Mal123!
   return (
     <AuthContext.Provider value={{user, setUser}}>
       <NavigationContainer theme={navigationTheme}>
@@ -32,7 +29,7 @@ export default function App() {
     </AuthContext.Provider>
   );
 
-  // Comment out above code to directly go to LessonsScreen.
+  // Comment out above code to directly go to HomeScreen.
   return (
     <NavigationContainer theme={navigationTheme}>
       <AuthNavigator />

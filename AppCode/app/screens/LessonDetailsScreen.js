@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   lessonDescription: {
     color: colors.black,
     fontSize: 14,
-    marginTop: 3,
+    marginTop: 2,
   },
   lessonDetail: {
     flexDirection: "row",
