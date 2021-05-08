@@ -92,6 +92,20 @@ function LessonDetailsScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  activityContainer: {
+    flex: 5,
+    padding: 10,
+    justifyContent: "flex-start",
+  },
+  activityItem: {
+    justifyContent: "space-between",
+  },
+  activitySectionTitle: {
+    textAlign: "left",
+    fontSize: 12,
+    fontWeight: "bold",
+    paddingBottom: 10,
+  },
   container: {
     flex: 1,
     padding: 10,
@@ -102,30 +116,21 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  lessonVideoContainer: {
-    flex: 2,
-    padding: 10,
+  lessonDescription: {
+    color: colors.black,
+    fontSize: 14,
+    marginTop: 4,
   },
   lessonDetail: {
     flexDirection: "row",
     height: "20%",
-    marginTop: 5,
+    marginVertical: 10,
   },
-  lessonName: {
-    fontSize: 24,
-    fontWeight: "500",
-    color: colors.magenta,
-    fontWeight: "bold",
-  },
-  lessonDescription: {
+  lessonDuration: {
     color: colors.black,
-    fontSize: 14,
-  },
-  lessonNameDescSect: {
-    width: "70%",
-    flexDirection: "column",
-    paddingLeft: 5,
-    justifyContent: "flex-start",
+    fontSize: 12,
+    textAlign: "right",
+    alignSelf: "center",
   },
   lessonDurationSect: {
     width: "30%",
@@ -135,30 +140,27 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "baseline",
   },
-  lessonDuration: {
-    color: colors.black,
-    fontSize: 12,
-    textAlign: "right",
-    alignSelf: "center",
+  lessonName: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: colors.magenta,
+    fontWeight: "bold",
+  },
+  lessonNameDescSect: {
+    width: "70%",
+    flexDirection: "column",
+    paddingLeft: 5,
+    justifyContent: "flex-start",
   },
   lessonVideo: {
     width: "100%",
     height: "80%",
     borderRadius: 10,
   },
-  activityContainer: {
-    flex: 3,
+  lessonVideoContainer: {
+    flex: 4,
     padding: 10,
-    justifyContent: "flex-start",
-  },
-  activitySectionTitle: {
-    textAlign: "left",
-    fontSize: 12,
-    fontWeight: "bold",
-    paddingBottom: 10,
-  },
-  activityItem: {
-    justifyContent: "space-between",
+    marginBottom: 20,
   },
 });
 
