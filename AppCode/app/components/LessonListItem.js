@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ProgressCircle from 'react-native-progress-circle';
 
 import colors from '../config/colors';
 import AppText from './AppText';
@@ -10,6 +11,7 @@ function LessonListItem({
     title, 
     subTitle, 
     image, 
+    progress,
     onPress}) {
     return (
         <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
@@ -21,6 +23,17 @@ function LessonListItem({
                         <MaterialCommunityIcons name="clock-time-three" color={colors.purple} size={15} style={styles.icon} /> 
                         {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
                     </View>
+                </View>
+                <View style={styles.progressCircleContainer}>
+                    <ProgressCircle 
+                        percent={progress}
+                        radius={22}
+                        borderWidth={10}
+                        color={colors.deepskyblue}
+                        shadowColor={colors.lightgrey}
+                    >
+                        <Text style={{ fontSize: 10 }}>{progress}%</Text>  
+                    </ProgressCircle>
                 </View>
             </View>
         </TouchableHighlight>
@@ -49,7 +62,12 @@ const styles = StyleSheet.create({
         width: 70,
         height: 50,
         borderRadius: 5,
-        marginLeft: 1,
+        marginLeft: 5,
+    },
+    progressCircleContainer: {
+        position: 'absolute',
+        right: 20,
+        marginTop: 7,
     },
     subTitle: {
         fontSize: 13,

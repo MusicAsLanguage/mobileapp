@@ -65,14 +65,9 @@ function HomeScreen({ navigation }) {
                                 title={item.Name}
                                 subTitle="10 min"              // subTitle={item.CourseDuration}
                                 image={require('../assets/breathing.jpg')}   // image={{uri: item.ImageUrl}}
+                                progress={30}                  // some API to get course progress (0-100)
                                 onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
                             />
-                            // <Card
-                            // title={item.Name}
-                            // subTitle={item.Description}
-                            // image={{uri: item.ImageUrl}}                     
-                            // onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
-                            // />
                         }
                     />
                 </View>
