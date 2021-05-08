@@ -93,7 +93,7 @@ function LessonDetailsScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   activityContainer: {
-    flex: 5,
+    flex: 4,
     padding: 10,
     justifyContent: "flex-start",
   },
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
+    padding: 6,
     justifyContent: "space-evenly",
   },
   lessonContainer: {
@@ -119,12 +119,12 @@ const styles = StyleSheet.create({
   lessonDescription: {
     color: colors.black,
     fontSize: 14,
-    marginTop: 4,
+    marginTop: 3,
   },
   lessonDetail: {
     flexDirection: "row",
     height: "20%",
-    marginVertical: 10,
+    marginVertical: 8,
   },
   lessonDuration: {
     color: colors.black,
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
   },
   lessonVideo: {
     width: "100%",
-    height: "80%",
+    height: "82%",
     borderRadius: 10,
   },
   lessonVideoContainer: {
-    flex: 4,
+    flex: 3,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 15,
   },
 });
 
