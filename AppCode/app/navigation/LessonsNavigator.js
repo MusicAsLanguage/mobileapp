@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import LessonsScreen from "../screens/LessonsScreen";
+import HomeScreen from "../screens/HomeScreen";
 import LessonDetailsScreen from "../screens/LessonDetailsScreen";
 import ActivityScreen from "../screens/ActivityDetailsScreen";
 import colors from "../config/colors";
@@ -22,8 +22,8 @@ const LessonsNavigator = () => {
       }}
     >
       <Stack.Screen
-        name="Lessons"
-        component={LessonsScreen}
+        name="Home"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen 

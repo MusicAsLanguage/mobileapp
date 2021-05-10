@@ -15,7 +15,7 @@ function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
 
   // Need to pause the video when navigate away to a new screen
-  const player = React.useRef(null);
+  const player = useRef(null);
   const [lastState, setLastState] = useState();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function LessonDetailsScreen({ navigation, route }) {
   return (
     <Screen style={styles.container}>
       <View style={styles.lessonContainer}>
-        <BackButton onPress={() => navigation.navigate(routes.LESSONS)} />
+        <BackButton onPress={() => navigation.navigate(routes.HOME)} />
         <View style={styles.lessonVideoContainer}>
           <Video
             source={{ uri: lesson.IntroVideo.Url }}
@@ -92,9 +92,23 @@ function LessonDetailsScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  activityContainer: {
+    flex: 4,
+    padding: 10,
+    justifyContent: "flex-start",
+  },
+  activityItem: {
+    justifyContent: "space-between",
+  },
+  activitySectionTitle: {
+    textAlign: "left",
+    fontSize: 12,
+    fontWeight: "bold",
+    paddingBottom: 10,
+  },
   container: {
     flex: 1,
-    padding: 10,
+    padding: 6,
     justifyContent: "space-evenly",
   },
   lessonContainer: {
@@ -102,30 +116,21 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  lessonVideoContainer: {
-    flex: 2,
-    padding: 10,
+  lessonDescription: {
+    color: colors.black,
+    fontSize: 14,
+    marginTop: 2,
   },
   lessonDetail: {
     flexDirection: "row",
     height: "20%",
-    marginTop: 5,
+    marginVertical: 8,
   },
-  lessonName: {
-    fontSize: 24,
-    fontWeight: "500",
-    color: colors.magenta,
-    fontWeight: "bold",
-  },
-  lessonDescription: {
+  lessonDuration: {
     color: colors.black,
-    fontSize: 14,
-  },
-  lessonNameDescSect: {
-    width: "70%",
-    flexDirection: "column",
-    paddingLeft: 5,
-    justifyContent: "flex-start",
+    fontSize: 12,
+    textAlign: "right",
+    alignSelf: "center",
   },
   lessonDurationSect: {
     width: "30%",
@@ -135,30 +140,27 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "baseline",
   },
-  lessonDuration: {
-    color: colors.black,
-    fontSize: 12,
-    textAlign: "right",
-    alignSelf: "center",
+  lessonName: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: colors.magenta,
+    fontWeight: "bold",
+  },
+  lessonNameDescSect: {
+    width: "70%",
+    flexDirection: "column",
+    paddingLeft: 5,
+    justifyContent: "flex-start",
   },
   lessonVideo: {
     width: "100%",
-    height: "80%",
+    height: "82%",
     borderRadius: 10,
   },
-  activityContainer: {
+  lessonVideoContainer: {
     flex: 3,
     padding: 10,
-    justifyContent: "flex-start",
-  },
-  activitySectionTitle: {
-    textAlign: "left",
-    fontSize: 12,
-    fontWeight: "bold",
-    paddingBottom: 10,
-  },
-  activityItem: {
-    justifyContent: "space-between",
+    marginBottom: 15,
   },
 });
 

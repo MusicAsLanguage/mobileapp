@@ -2,6 +2,7 @@ export default {
     magenta: "#ff00ff",
     deepskyblue: "#00bfff",
     darkblue: "#004dcf",
+    purple: "#5300eb",
     yellowgreen: "#9acd32",
     primary: "#fc5c65",
     secondary: "#4ecdc4",

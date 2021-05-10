@@ -1,5 +1,5 @@
 export default Object.freeze({
-  LESSONS: "Lessons",
+  HOME: "Home",
   LESSON_DETAILS: "LessonDetails",
   ACTIVITI_DETAILS: "Activity",
   LOGIN: "Login",
