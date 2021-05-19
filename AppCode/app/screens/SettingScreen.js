@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import Screen from '../components/Screen';
-import ListItem from '../components/ListItem';
+import SettingListItem from '../components/SettingListItem';
 import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
 import AppText from "../components/AppText";
@@ -18,26 +17,53 @@ function SettingScreen(props) {
 
             <View style={styles.container1}>
                 <View style={styles.itemContainer}>
-                    <AppText style={styles.subtitle}>Account Details</AppText>
+                    <SettingListItem
+                        height={80}
+                        text="Account Detail"
+                        backgroundColor='purple1'
+                        onPress={() => console.log('Navigate to future Account Detial screen.')} 
+                    />
                 </View>
                 <View style={styles.container2}>
                     <View style={styles.itemContainer}>
-                        <AppText style={styles.subtitle}>Notifications</AppText>
+                        <SettingListItem
+                            height={80}
+                            text="Notifications"
+                            backgroundColor='purple2'
+                            onPress={() => console.log('Navigate to future Notifications screen.')} 
+                        />
                     </View>
                     <View style={styles.container3}>
                         <View style={styles.itemContainer}>
-                            <AppText style={styles.subtitle}>Language</AppText>
+                            <SettingListItem
+                                height={80}
+                                text="Language"
+                                backgroundColor='purple3'
+                                onPress={() => console.log('Navigate to future Language screen.')} 
+                            />
                         </View>
                         <View style={styles.container4}>
                             <View style={styles.itemContainer}>
-                                <AppText style={styles.subtitle}>Term & Conditions</AppText>
+                                <SettingListItem
+                                    height={80}
+                                    text="Term & Condition"
+                                    backgroundColor='purple4'
+                                    onPress={() => console.log('Navigate to future Term & Condition screen.')} 
+                                />
                             </View>  
                             <View style={styles.container5}>
                                 <View style={styles.itemContainer}>
-                                    <AppText style={styles.subtitle}>Privacy Policy</AppText>
+                                    <SettingListItem
+                                        height={80}
+                                        text="Privacy Policy"
+                                        backgroundColor='purple5'
+                                        onPress={() => console.log('Navigate to future Provacy Policy screen.')} 
+                                    />
                                 </View>  
                                 <View style={styles.container6}>
-                                    <Text style={styles.logoutText} onPress={() => logOut()}>Log Out</Text>
+                                    <TouchableOpacity onPress={() => logOut()}>                               
+                                        <Text style={styles.logoutText}>Log Out</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
@@ -108,8 +134,7 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
     itemContainer: {
-        flexDirection: "row",
-        marginVertical: 25,
+        width: '100%',
     },
     logoutText: {
         fontSize: 20,
@@ -125,7 +150,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colors.white,
         alignSelf: 'center',
-        marginTop: 20,
+        marginTop: 25,
     },
     subtitle: {
         fontSize: 20,
