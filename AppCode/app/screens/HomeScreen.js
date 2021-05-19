@@ -5,7 +5,6 @@ import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
 import Screen from "../components/Screen";
-import Card from "../components/Card";
 import LessonListItem from "../components/LessonListItem";
 import colors from '../config/colors';
 import getLessons from '../api/lessons';

@@ -1,10 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 import AccountScreen from '../screens/AccountScreen';
 import LessonsNavigator from './LessonsNavigator';
 import ToolboxScreen from '../screens/ToolboxScreen';
+import SettingScreen from '../screens/SettingScreen';
 import colors from '../config/colors';
 
 const Tab = createBottomTabNavigator();
@@ -42,6 +43,14 @@ const AppNavigator = () => (
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <MaterialCommunityIcons name="help-circle-outline" color={color} size={size} /> 
+            }}
+        />
+        <Tab.Screen 
+            name="Setting" 
+            component={SettingScreen} 
+            options={{
+                tabBarIcon: ({ color, size }) =>
+                    <AntDesign name="setting" color={color} size={size} /> 
             }}
         />
     </Tab.Navigator>
