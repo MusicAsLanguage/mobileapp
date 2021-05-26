@@ -5,7 +5,7 @@ import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import AccountScreen from '../screens/AccountScreen';
 import LessonsNavigator from './LessonsNavigator';
 import ToolboxScreen from '../screens/ToolboxScreen';
-import SettingScreen from '../screens/SettingScreen';
+import SettingsNavigator from './SettingsNavigator';
 import colors from '../config/colors';
 
 const Tab = createBottomTabNavigator();
@@ -47,7 +47,7 @@ const AppNavigator = () => (
         />
         <Tab.Screen 
             name="Setting" 
-            component={SettingScreen} 
+            component={SettingsNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <AntDesign name="setting" color={color} size={size} /> 
