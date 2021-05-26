@@ -6,9 +6,10 @@ import SettingListItem from '../components/SettingListItem';
 import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
 import AppText from "../components/AppText";
+import routes from "../navigation/routes";
 
 
-function SettingScreen(props) {
+function SettingScreen({ navigation }) {
     const { user, logOut } = useAuth();
 
     return (
@@ -21,7 +22,8 @@ function SettingScreen(props) {
                         height={80}
                         text="Account Detail"
                         backgroundColor='purple1'
-                        onPress={() => console.log('Navigate to future Account Detial screen.')} 
+                        onPress={() =>
+                            navigation.navigate(routes.ACCOUNT_DETAILS)}
                     />
                 </View>
                 <View style={styles.container2}>
@@ -30,8 +32,9 @@ function SettingScreen(props) {
                             height={80}
                             text="Notifications"
                             backgroundColor='purple2'
-                            onPress={() => console.log('Navigate to future Notifications screen.')} 
-                        />
+                            onPress={() =>
+                                navigation.navigate(routes.NOTIFICATIONS)}
+                    />
                     </View>
                     <View style={styles.container3}>
                         <View style={styles.itemContainer}>
@@ -39,8 +42,9 @@ function SettingScreen(props) {
                                 height={80}
                                 text="Language"
                                 backgroundColor='purple3'
-                                onPress={() => console.log('Navigate to future Language screen.')} 
-                            />
+                                onPress={() =>
+                                    navigation.navigate(routes.LANGUAGE)}
+                        />
                         </View>
                         <View style={styles.container4}>
                             <View style={styles.itemContainer}>
@@ -48,7 +52,8 @@ function SettingScreen(props) {
                                     height={80}
                                     text="Term & Condition"
                                     backgroundColor='purple4'
-                                    onPress={() => console.log('Navigate to future Term & Condition screen.')} 
+                                    onPress={() =>
+                                        navigation.navigate(routes.TERMS_AND_CONDITIONS)}
                                 />
                             </View>  
                             <View style={styles.container5}>
@@ -57,8 +62,9 @@ function SettingScreen(props) {
                                         height={80}
                                         text="Privacy Policy"
                                         backgroundColor='purple5'
-                                        onPress={() => console.log('Navigate to future Provacy Policy screen.')} 
-                                    />
+                                        onPress={() =>
+                                            navigation.navigate(routes.PRIVACY_POLICY)}
+                                        />
                                 </View>  
                                 <View style={styles.container6}>
                                     <TouchableOpacity onPress={() => logOut()}>                               

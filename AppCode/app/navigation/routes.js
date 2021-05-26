@@ -4,4 +4,10 @@ export default Object.freeze({
   ACTIVITI_DETAILS: "Activity",
   LOGIN: "Login",
   REGISTER: "Register",
+  SETTINGS: "Settings",  
+  ACCOUNT_DETAILS: "AccountDetails",
+  NOTIFICATIONS: "Notifications",
+  LANGUAGE: "Language",
+  TERMS_AND_CONDITIONS: "TermsAndConditions",
+  PRIVACY_POLICY: "PrivacyPolicy",
 });
