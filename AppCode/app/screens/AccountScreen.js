@@ -6,6 +6,7 @@ import ListItem from '../components/ListItem';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
+import uistrings from '../config/uistrings'
 
 
 function AccountScreen(props) {
@@ -21,21 +22,21 @@ function AccountScreen(props) {
 
             <View style={styles.container}>
                 <ListItem
-                    title="Lessons"
+                    title={uistrings.Lessons}
                     IconComponent={<Icon name="format-list-bulleted" backgroudColor={colors.magenta} />}
                     onPress={() => logOut()} 
                 />
             </View>
             <View style={styles.container}>
                 <ListItem
-                    title="Messages"
+                    title={uistrings.Messages}
                     IconComponent={<Icon name="email" backgroudColor={colors.yellowgreen} />}
                     onPress={() => logOut()} 
                 />
             </View>
             <View style={styles.container}>
                 <ListItem
-                    title="Log Out"
+                    title={uistrings.LogOut}
                     IconComponent={<Icon name="logout" backgroudColor={colors.deepskyblue} />}
                     onPress={() => logOut()} 
                 />

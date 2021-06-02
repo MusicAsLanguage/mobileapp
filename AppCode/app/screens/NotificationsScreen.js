@@ -6,17 +6,18 @@ import colors from '../config/colors';
 import routes from "../navigation/routes";
 import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
+import uistrings from '../config/uistrings';
 
 
 function NotificationsScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <BackButton onPress={() => navigation.navigate(routes.SETTINGS)} />
-            <AppText style={styles.screenTitle}>Notifications</AppText>
+            <AppText style={styles.screenTitle}>{uistrings.Notifications}</AppText>
             <ScrollView>
             {/* TODO: Get actual notifications here */}
             <AppText style={styles.detailsText}>
-            No notifications at this time.
+            {uistrings.NoNotifications}
             </AppText>
             </ScrollView>
         </Screen>

@@ -6,20 +6,21 @@ import colors from '../config/colors';
 import routes from "../navigation/routes";
 import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
+import uistrings from '../config/uistrings';
 
 
 function PrivacyPolicyScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <BackButton onPress={() => navigation.navigate(routes.SETTINGS)} />
-            <AppText style={styles.screenTitle}>Privacy Policy</AppText>
+            <AppText style={styles.screenTitle}>{uistrings.PrivacyPolicy}</AppText>
             <ScrollView>
             {/* TODO: Get actual privacy policy text here */}
             <AppText style={styles.detailsText}>
-            Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text 
+                {uistrings.PrivacyPolicyText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text 
+                {uistrings.PrivacyPolicyText}
             </AppText>
             </ScrollView>
         </Screen>

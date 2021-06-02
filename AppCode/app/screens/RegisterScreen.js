@@ -10,6 +10,7 @@ import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
 import BackButton from '../components/BackButton';
 import routes from "../navigation/routes";
+import uistrings from '../config/uistrings';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required().label("Name"),
@@ -49,8 +50,8 @@ function RegisterScreen({ navigation }) {
             <Screen style={styles.container}>
                 <BackButton onPress={() => navigation.navigate(routes.LOGIN)} />
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
-                <Text style={styles.hello}>Hello.</Text>
-                <Text style={styles.hello}>Create An Account</Text>
+                <Text style={styles.hello}>{uistrings.Hello}</Text>
+                <Text style={styles.hello}>{uistrings.CreateAnAccount}</Text>
 
                 <AppForm
                     initialValues={{ name: "", email: "", password: "" }}
@@ -58,14 +59,14 @@ function RegisterScreen({ navigation }) {
                     validationSchema={validationSchema}
                 >
                     <ErrorMessage error={error} visible={error} />
-                    <Text style={styles.text}>NAME</Text>
+                    <Text style={styles.text}>{uistrings.Name}</Text>
                     <AppFormField
                         autoCorrect={false}
                         icon="account"
                         name="name"
                         placeholder=""
                     />
-                    <Text style={styles.text}>EMAIL</Text>
+                    <Text style={styles.text}>{uistrings.Email}</Text>
                     <AppFormField
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -75,7 +76,7 @@ function RegisterScreen({ navigation }) {
                         placeholder=""
                         textContentType="emailAddress"
                     />
-                    <Text style={styles.text}>PASSWORD</Text>
+                    <Text style={styles.text}>{uistrings.Password}</Text>
                     <AppFormField
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -85,7 +86,7 @@ function RegisterScreen({ navigation }) {
                         secureTextEntry
                         textContentType="password"
                     />
-                    <SubmitButton title="Sign Up" />
+                    <SubmitButton title={uistrings.SignUp} />
                 </AppForm>
             </Screen>
         </ImageBackground>

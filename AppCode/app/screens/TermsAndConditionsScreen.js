@@ -6,32 +6,33 @@ import colors from '../config/colors';
 import routes from "../navigation/routes";
 import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
+import uistrings from '../config/uistrings';
 
 
 function TermsAndConditionsScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <BackButton onPress={() => navigation.navigate(routes.SETTINGS)} />
-            <AppText style={styles.screenTitle}>Terms and Conditions</AppText>
+            <AppText style={styles.screenTitle}>{uistrings.TermsAndConditions}</AppText>
             <ScrollView>
             {/* TODO: Get actual terms and conditions text here */}
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+                {uistrings.TermsAndConditionsText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+            {uistrings.TermsAndConditionsText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+            {uistrings.TermsAndConditionsText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+            {uistrings.TermsAndConditionsText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+            {uistrings.TermsAndConditionsText}
             </AppText>
             <AppText style={styles.detailsText}>
-            Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text 
+            {uistrings.TermsAndConditionsText}
             </AppText>
             </ScrollView>
         </Screen>

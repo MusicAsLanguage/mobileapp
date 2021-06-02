@@ -10,6 +10,7 @@ import routes from "../navigation/routes";
 import BackButton from "../components/BackButton";
 import Screen from "../components/Screen";
 import Icon from "../components/Icon";
+import uistrings from "../config/uistrings";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -55,7 +56,7 @@ function LessonDetailsScreen({ navigation, route }) {
                 iconColor="skyblue"
               />
               <AppText style={styles.lessonDuration}>
-                {lessonDuration} minutes
+                {lessonDuration} {uistrings.Minutes}
               </AppText>
             </View>
           </View>
