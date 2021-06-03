@@ -6,6 +6,7 @@ import ListItem from '../components/ListItem';
 import ListItemSeparatorComponent from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
+import uistrings from '../config/uistrings';
 
 
 function ToolboxScreen(props) {
@@ -13,14 +14,14 @@ function ToolboxScreen(props) {
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title="Musics"
+                    title={uistrings.Music}
                     IconComponent={<Icon name="music-box-multiple" backgroudColor={colors.magenta} />}
                     onPress={() => logOut()} 
                 />
             </View>
             <View style={styles.container}>
                 <ListItem
-                    title="Metronome"
+                    title={uistrings.Metronome}
                     IconComponent={<Icon name="metronome" backgroudColor={colors.yellowgreen} />}
                     onPress={() => logOut()} 
                 />

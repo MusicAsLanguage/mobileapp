@@ -6,17 +6,18 @@ import colors from '../config/colors';
 import routes from "../navigation/routes";
 import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
+import uistrings from '../config/uistrings';
 
 
 function LanguageScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <BackButton onPress={() => navigation.navigate(routes.SETTINGS)} />
-            <AppText style={styles.screenTitle}>Language</AppText>
+            <AppText style={styles.screenTitle}>{uistrings.Language}</AppText>
             <ScrollView>
             {/* TODO: Get actual language info here */}
             <AppText style={styles.detailsText}>
-                Language: English
+               {uistrings.Language}: {uistrings.English}
             </AppText>
             </ScrollView>
         </Screen>

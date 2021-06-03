@@ -7,6 +7,7 @@ import LessonsNavigator from './LessonsNavigator';
 import ToolboxScreen from '../screens/ToolboxScreen';
 import SettingsNavigator from './SettingsNavigator';
 import colors from '../config/colors';
+import uistrings from '../config/uistrings';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const AppNavigator = () => (
             },
         }}>
         <Tab.Screen 
-            name="Home" 
+            name={uistrings.Home}
             component={LessonsNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>
@@ -30,7 +31,7 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen 
-            name="Toolbox" 
+            name={uistrings.Toolbox} 
             component={ToolboxScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
@@ -38,7 +39,7 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen 
-            name="Help" 
+            name={uistrings.Help} 
             component={AccountScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
@@ -46,7 +47,7 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen 
-            name="Setting" 
+            name={uistrings.Settings} 
             component={SettingsNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>

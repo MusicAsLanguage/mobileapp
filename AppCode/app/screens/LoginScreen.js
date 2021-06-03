@@ -9,6 +9,7 @@ import {login} from '../api/auth';
 import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
 import routes from "../navigation/routes";
+import uistrings from '../config/uistrings';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -33,7 +34,7 @@ function LoginScreen({ navigation }) {
         source={require('../assets/signin_background.png')}
         >
             <Screen style={styles.container}>
-                <Text style={styles.tagLine}>#MusicAsLanguage</Text>
+                <Text style={styles.tagLine}>{uistrings.TagLine}</Text>
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
                 
                 <AppForm
@@ -41,8 +42,8 @@ function LoginScreen({ navigation }) {
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
-                    <ErrorMessage error="Invalid email and/or password." visible={loginFailed}/>
-                    <Text style={styles.text}>EMAIL</Text>
+                    <ErrorMessage error={uistrings.ErrInvalidLogin} visible={loginFailed}/>
+                    <Text style={styles.text}>{uistrings.Email}</Text>
                     <AppFormField
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -52,7 +53,7 @@ function LoginScreen({ navigation }) {
                         placeholder=""
                         textContentType="emailAddress"
                     />
-                    <Text style={styles.text}>PASSWORD</Text>
+                    <Text style={styles.text}>{uistrings.Password}</Text>
                     <AppFormField
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -62,10 +63,10 @@ function LoginScreen({ navigation }) {
                         secureTextEntry={true}
                         textContentType="password"
                         />
-                    <SubmitButton title="Login" />
+                    <SubmitButton title={uistrings.LogIn} />
                     <Text style={styles.shallowText}>
-                        Don't have an account yet?{' '}
-                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.REGISTER)}>Create Account</Text>
+                        {uistrings.NoAccount}{' '}
+                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.REGISTER)}>{uistrings.CreateAccount}</Text>
                     </Text>
                 </AppForm>
             </Screen>

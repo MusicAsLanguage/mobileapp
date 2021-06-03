@@ -7,6 +7,7 @@ import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
 import AppText from "../components/AppText";
 import routes from "../navigation/routes";
+import uistrings from '../config/uistrings';
 
 
 function SettingScreen({ navigation }) {
@@ -14,13 +15,13 @@ function SettingScreen({ navigation }) {
 
     return (
         <Screen style={styles.screen}>   
-            <AppText style={styles.screenTitle}>Settings</AppText>
+            <AppText style={styles.screenTitle}>{uistrings.Settings}</AppText>
 
             <View style={styles.container1}>
                 <View style={styles.itemContainer}>
                     <SettingListItem
                         height={80}
-                        text="Account Detail"
+                        text={uistrings.AccountDetails}
                         backgroundColor='purple1'
                         onPress={() =>
                             navigation.navigate(routes.ACCOUNT_DETAILS)}
@@ -30,7 +31,7 @@ function SettingScreen({ navigation }) {
                     <View style={styles.itemContainer}>
                         <SettingListItem
                             height={80}
-                            text="Notifications"
+                            text={uistrings.Notifications}
                             backgroundColor='purple2'
                             onPress={() =>
                                 navigation.navigate(routes.NOTIFICATIONS)}
@@ -40,7 +41,7 @@ function SettingScreen({ navigation }) {
                         <View style={styles.itemContainer}>
                             <SettingListItem
                                 height={80}
-                                text="Language"
+                                text={uistrings.Language}
                                 backgroundColor='purple3'
                                 onPress={() =>
                                     navigation.navigate(routes.LANGUAGE)}
@@ -50,7 +51,7 @@ function SettingScreen({ navigation }) {
                             <View style={styles.itemContainer}>
                                 <SettingListItem
                                     height={80}
-                                    text="Term & Condition"
+                                    text={uistrings.TermsAndConditions}
                                     backgroundColor='purple4'
                                     onPress={() =>
                                         navigation.navigate(routes.TERMS_AND_CONDITIONS)}
@@ -60,7 +61,7 @@ function SettingScreen({ navigation }) {
                                 <View style={styles.itemContainer}>
                                     <SettingListItem
                                         height={80}
-                                        text="Privacy Policy"
+                                        text={uistrings.PrivacyPolicy}
                                         backgroundColor='purple5'
                                         onPress={() =>
                                             navigation.navigate(routes.PRIVACY_POLICY)}
@@ -68,7 +69,7 @@ function SettingScreen({ navigation }) {
                                 </View>  
                                 <View style={styles.container6}>
                                     <TouchableOpacity onPress={() => logOut()}>                               
-                                        <Text style={styles.logoutText}>Log Out</Text>
+                                        <Text style={styles.logoutText}>{uistrings.logOut}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
