@@ -2,6 +2,7 @@ export default Object.freeze({
   HOME: "Home",
   LESSON_DETAILS: "LessonDetails",
   ACTIVITI_DETAILS: "Activity",
+  INTRO: "Intro",
   LOGIN: "Login",
   REGISTER: "Register",
   SETTINGS: "Settings",  

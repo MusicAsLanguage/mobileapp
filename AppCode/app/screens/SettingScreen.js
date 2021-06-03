@@ -69,7 +69,7 @@ function SettingScreen({ navigation }) {
                                 </View>  
                                 <View style={styles.container6}>
                                     <TouchableOpacity onPress={() => logOut()}>                               
-                                        <Text style={styles.logoutText}>{uistrings.logOut}</Text>
+                                        <Text style={styles.logoutText}>{uistrings.LogOut}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
