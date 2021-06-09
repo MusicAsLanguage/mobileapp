@@ -68,6 +68,10 @@ function LoginScreen({ navigation }) {
                         {uistrings.NoAccount}{' '}
                         <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.REGISTER)}>{uistrings.CreateAccount}</Text>
                     </Text>
+                    <Text style={styles.shallowText}>
+                        {uistrings.ForgotPassword}{' '}
+                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.PASSWORDRESET)}>{uistrings.ResetPassword}</Text>
+                    </Text>
                 </AppForm>
             </Screen>
         </ImageBackground>
