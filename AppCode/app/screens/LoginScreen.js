@@ -65,12 +65,9 @@ function LoginScreen({ navigation }) {
                         />
                     <SubmitButton title={uistrings.LogIn} />
                     <Text style={styles.shallowText}>
-                        {uistrings.NoAccount}{' '}
+                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.PASSWORDRESET)}>{uistrings.ForgotPassword}</Text>
+                        {'   |   '}
                         <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.REGISTER)}>{uistrings.CreateAccount}</Text>
-                    </Text>
-                    <Text style={styles.shallowText}>
-                        {uistrings.ForgotPassword}{' '}
-                        <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.PASSWORDRESET)}>{uistrings.ResetPassword}</Text>
                     </Text>
                 </AppForm>
             </Screen>
