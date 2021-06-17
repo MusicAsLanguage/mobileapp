@@ -12,12 +12,14 @@ import Screen from "../components/Screen";
 import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
 
+import { getStatus } from "../api/status";
+
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
 
   // Need to pause the video when navigate away to a new screen
   const player = useRef(null);
-  const [lastState, setLastState] = useState();
+  const [activityStatus, setActivityStatus] = useState();
 
   useEffect(() => {
     const blur = navigation.addListener("blur", () => {
@@ -27,7 +29,65 @@ function LessonDetailsScreen({ navigation, route }) {
     return blur;
   }, [navigation]); // only rerun the effect if navigation changes
 
-  const lessonDuration = Math.round(lesson.IntroVideo.LengthInSeconds / 60);
+  useEffect(() => {
+    const focus = navigation.addListener("focus", () => {
+      // Workaround to delay GET call so the POST call happens first
+      setTimeout(() => {
+        getStatus().then((response) => {
+          const data = response.data;
+          setActivityStatus(data);
+        });
+      }, 100);
+    });
+
+    return focus;
+  });
+
+  const getPlayState = (lessonId, activityId) => {
+    try {
+      let completionStatus = 0;
+
+      if (activityStatus == undefined) return;
+
+      const activity = activityStatus.filter(
+        (item) => item.ActivityId == activityId && item.LessonId == lessonId
+      );
+
+      completionStatus =
+        activity[0]?.CompletionStatus == null
+          ? 0
+          : activity[0].CompletionStatus;
+
+      return completionStatus;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const lessonLength = Math.round(lesson.IntroVideo.LengthInSeconds / 60);
+
+  const renderItem = (item) => {
+    const state = getPlayState(lesson._id, item._id);
+
+    return (
+      <ActivityListItem
+        id={item._id}
+        name={item.Name}
+        description={item.Description}
+        duration={item.Videos[0].LengthInSeconds}
+        thumbnail={{ uri: item.ImageUrl }}
+        status={state}
+        onPress={() =>
+          navigation.navigate(routes.ACTIVITI_DETAILS, {
+            lessonId: lesson._id,
+            activityId: item._id,
+            activityVideo: item.Videos[0],
+            activityPlayState: state,
+          })
+        }
+      />
+    );
+  };
 
   return (
     <Screen style={styles.container}>
@@ -55,8 +115,8 @@ function LessonDetailsScreen({ navigation, route }) {
                 backgroudColor="transparent"
                 iconColor="skyblue"
               />
-              <AppText style={styles.lessonDuration}>
-                {lessonDuration} {uistrings.Minutes}
+              <AppText style={styles.lessonLength}>
+                {lessonLength} {uistrings.Minutes}
               </AppText>
             </View>
           </View>
@@ -71,19 +131,7 @@ function LessonDetailsScreen({ navigation, route }) {
               numColumns={2}
               columnWrapperStyle={styles.activityItem}
               keyExtractor={(activities) => activities._id}
-              renderItem={({ item }) => (
-                <ActivityListItem
-                  id={item._id}
-                  name={item.Name}
-                  description={item.Description}
-                  duration={item.Videos[0].LengthInSeconds}
-                  thumbnail={{ uri: item.ImageUrl }}
-                  status={"status"} // TODO: need to get actual status here
-                  onPress={() =>
-                    navigation.navigate(routes.ACTIVITI_DETAILS, item)
-                  }
-                />
-              )}
+              renderItem={({ item }) => renderItem(item)}
             />
           </SafeAreaView>
         </View>
