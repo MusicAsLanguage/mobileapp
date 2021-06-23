@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
-import AccountScreen from '../screens/AccountScreen';
+import AccountNavigator from './AccountNavigator';
 import LessonsNavigator from './LessonsNavigator';
 import ToolboxScreen from '../screens/ToolboxScreen';
 import SettingsNavigator from './SettingsNavigator';
@@ -40,7 +40,7 @@ const AppNavigator = () => (
         />
         <Tab.Screen 
             name={uistrings.Help} 
-            component={AccountScreen} 
+            component={AccountNavigator} 
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <MaterialCommunityIcons name="help-circle-outline" color={color} size={size} /> 
