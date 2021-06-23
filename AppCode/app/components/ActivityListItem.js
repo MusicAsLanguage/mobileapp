@@ -28,7 +28,7 @@ function ActivityListItem({
             source={thumbnail}
             imageStyle={styles.imageStyle}
           >
-            {status && <Status name={status} />}
+            {<Status value={status} />}
           </ImageBackground>
         )}
       </TouchableOpacity>

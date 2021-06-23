@@ -2,17 +2,19 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import Icon from "./Icon";
 
-function Status({ name }) {
+function Status({ value }) {
   const completed = "checkbox-marked-circle";
   const notcompleted = "play-circle";
   let item = null;
 
-  switch (name) {
-    case "Completed":
+  const val = parseInt(value);
+
+  switch (val) {
+    case 10:
       item = (
         <Icon
           name={completed}
-          iconColor="green"
+          iconColor="lime"
           backgroudColor="transparent"
           size={80}
           style={styles.status}
