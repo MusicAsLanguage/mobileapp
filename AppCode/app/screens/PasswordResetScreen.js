@@ -5,6 +5,7 @@ import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton, ErrorMessage } from "../components/forms";
+import { pwdReset } from '../api/auth';
 import colors from '../config/colors';
 import BackButton from '../components/BackButton';
 import routes from "../navigation/routes";
@@ -16,6 +17,17 @@ const validationSchema = Yup.object().shape({
 
 function PasswordResetScreen({ navigation }) {
     const [error, setError] = useState();
+
+    const popupSuccessAlert = () => {
+    Alert.alert("SUCCESS", "Check your email. We sent you a link to recover your password.", [
+        {text: "OK", onPress: () => navigation.navigate(routes.LOGIN)}
+    ])};
+
+    const handleSubmit = async (userInfo) => {
+        const result = await pwdReset(userInfo);
+        if (!result.ok) return setError(result.data.message);
+        popupSuccessAlert();
+    };
 
     return (
         <ImageBackground 
@@ -32,10 +44,7 @@ function PasswordResetScreen({ navigation }) {
 
                 <AppForm
                     initialValues={{ email: "" }}
-                    onSubmit={() =>
-                        Alert.alert("SUCCESS", "Check your email. We sent you a link to recover your password.", [
-                            {text: "OK", onPress: () => navigation.navigate(routes.LOGIN)}
-                        ])}
+                    onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
                     <ErrorMessage error={error} visible={error} />
