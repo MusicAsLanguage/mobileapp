@@ -6,10 +6,11 @@ import ListItem from '../components/ListItem';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
+import routes from "../navigation/routes";
 import uistrings from '../config/uistrings'
 
 
-function AccountScreen(props) {
+function AccountScreen({ navigation }) {
     const { user, logOut } = useAuth();
 
     return (
@@ -31,7 +32,8 @@ function AccountScreen(props) {
                 <ListItem
                     title={uistrings.Messages}
                     IconComponent={<Icon name="email" backgroudColor={colors.yellowgreen} />}
-                    onPress={() => logOut()} 
+                    onPress={() =>
+                        navigation.navigate(routes.MESSAGES)} 
                 />
             </View>
             <View style={styles.container}>

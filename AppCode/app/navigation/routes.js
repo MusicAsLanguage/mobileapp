@@ -11,4 +11,6 @@ export default Object.freeze({
   LANGUAGE: "Language",
   TERMS_AND_CONDITIONS: "TermsAndConditions",
   PRIVACY_POLICY: "PrivacyPolicy",
+  ACCOUNT: "Account",
+  MESSAGES: "Messages",
 });
