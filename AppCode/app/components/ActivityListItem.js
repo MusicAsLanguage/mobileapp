@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import AppText from "./AppText";
-import Status from "./Status";
+import ActivityStatus from "./ActivityStatus";
 
 function ActivityListItem({
   id,
@@ -28,7 +28,7 @@ function ActivityListItem({
             source={thumbnail}
             imageStyle={styles.imageStyle}
           >
-            {<Status value={status} />}
+            {<ActivityStatus value={status} />}
           </ImageBackground>
         )}
       </TouchableOpacity>

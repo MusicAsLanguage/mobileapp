@@ -10,11 +10,13 @@ import colors from '../config/colors';
 import getLessons from '../api/lessons';
 import routes from '../navigation/routes';
 import ListItemSeparator from "../components/ListItemSeparator";
+import { getActivityStatus } from "../api/status";
 
 function HomeScreen({ navigation }) {
     /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
     const [lessons, setLessons] = useState([]);
     const player = useRef(null);
+    const [activityStatus, setActivityStatus] = useState();
 
     useEffect(() => {
         let mounted = true;
@@ -36,42 +38,97 @@ function HomeScreen({ navigation }) {
         return blur;
     }, [navigation]); // only rerun the effect if navigation changes
 
-    return (
-        <Screen style={styles.screen}>
-            <View style={styles.introContainer}>
-                <View style={styles.introVideoContainer}>
-                    <Video
-                        source={require('../assets/sample_video.mp4')}
-                        ref={player}
-                        shouldPlay
-                        resizeMode="cover"
-                        useNativeControls
-                        style={styles.introVideo}
-                    />
-                    <View style={styles.titleContainer}>
-                        <AppText style={styles.introTitle}>Introduction</AppText>
-                        <AppText style={styles.introDescription}>Introduction of Music of Language</AppText>
-                        <ListItemSeparator />   
-                    </View>
-                </View>
+    useEffect(() => {
+      const focus = navigation.addListener("focus", () => {
+        getActivityStatus().then((response) => {
+          const data = response.data;
+          setActivityStatus(data);
+        });
+      });
 
-                <View style={styles.lessonContainer}>
-                    <FlatList 
-                        data={lessons}
-                        keyExtractor={lesson => lesson._id.toString()}
-                        renderItem={({item}) =>
-                            <LessonListItem
-                                title={item.Name}
-                                subTitle="10 min"              // subTitle={item.CourseDuration}
-                                image={require('../assets/breathing.jpg')}   // image={{uri: item.ImageUrl}}
-                                progress={30}                  // some API to get course progress (0-100)
-                                onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
-                            />
-                        }
-                    />
-                </View>
+      return focus;
+    }, [navigation]);
+
+    const GetLessonStatus = (lessonId) => {
+      try {
+        let lessonStatus = 0;
+
+        if (activityStatus == undefined) return 0;
+
+        const activity = activityStatus.filter(
+          (item) => item.LessonId == lessonId
+        );
+
+        const completionStatus = activity.map((item) => {
+          return item.CompletionStatus;
+        });
+
+        const completedStatus = completionStatus.reduce(
+          (totalCompleted, activityStatus) => {
+            // Increment if an activity was completed (10 == 100%)
+            if (activityStatus == 10) totalCompleted = totalCompleted + 1;
+
+            return totalCompleted;
+          },
+          0
+        );
+
+        lessonStatus = Math.round((completedStatus / activity.length) * 100);
+
+        if (isNaN(lessonStatus)) lessonStatus = 0;
+
+        return lessonStatus;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const renderItem = (item) => {
+      let percentage = GetLessonStatus(item._id);
+
+      if (percentage == undefined) percentage = 0;
+
+      return (
+        <LessonListItem
+          title={item.Name}
+          subTitle="10 min" // subTitle={item.CourseDuration}
+          image={require("../assets/breathing.jpg")} // image={{uri: item.ImageUrl}}
+          progress={percentage} // API to get course progress (0-100)
+          onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
+        />
+      );
+    };
+
+    return (
+      <Screen style={styles.screen}>
+        <View style={styles.introContainer}>
+          <View style={styles.introVideoContainer}>
+            <Video
+              source={require("../assets/sample_video.mp4")}
+              ref={player}
+              shouldPlay
+              resizeMode="cover"
+              useNativeControls
+              style={styles.introVideo}
+            />
+            <View style={styles.titleContainer}>
+              <AppText style={styles.introTitle}>Introduction</AppText>
+              <AppText style={styles.introDescription}>
+                Introduction of Music of Language
+              </AppText>
+              <ListItemSeparator />
             </View>
-        </Screen>
+          </View>
+
+          <View style={styles.lessonContainer}>
+            <FlatList
+              data={lessons}
+              keyExtractor={(lesson) => lesson._id.toString()}
+              renderItem={({ item }) => renderItem(item)}
+            />
+          </View>
+        </View>
+      </Screen>
     );
 }
 

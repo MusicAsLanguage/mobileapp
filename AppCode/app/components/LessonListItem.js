@@ -14,29 +14,36 @@ function LessonListItem({
     progress,
     onPress}) {
     return (
-        <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
-            <View style={styles.container}>
-                {image && <Image style={styles.image} source={image} />}
-                <View style={styles.detailContainer}>
-                    <AppText style={styles.title}>{title}</AppText>
-                    <View style={styles.durationContainer}>
-                        <MaterialCommunityIcons name="clock-time-three" color={colors.purple} size={15} style={styles.icon} /> 
-                        {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
-                    </View>
-                </View>
-                <View style={styles.progressCircleContainer}>
-                    <ProgressCircle 
-                        percent={progress}
-                        radius={22}
-                        borderWidth={10}
-                        color={colors.deepskyblue}
-                        shadowColor={colors.lightgrey}
-                    >
-                        <Text style={{ fontSize: 10 }}>{progress}%</Text>  
-                    </ProgressCircle>
-                </View>
+      <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
+        <View style={styles.container}>
+          {image && <Image style={styles.image} source={image} />}
+          <View style={styles.detailContainer}>
+            <AppText style={styles.title}>{title}</AppText>
+            <View style={styles.durationContainer}>
+              <MaterialCommunityIcons
+                name="clock-time-three"
+                color={colors.purple}
+                size={15}
+                style={styles.icon}
+              />
+              {subTitle && (
+                <AppText style={styles.subTitle}>{subTitle}</AppText>
+              )}
             </View>
-        </TouchableHighlight>
+          </View>
+          <View style={styles.progressCircleContainer}>
+            <ProgressCircle
+              percent={progress}
+              radius={22}
+              borderWidth={5}
+              color={colors.deepskyblue}
+              shadowColor={colors.lightgrey}
+            >
+              <Text style={{ fontSize: 10 }}>{progress}%</Text>
+            </ProgressCircle>
+          </View>
+        </View>
+      </TouchableHighlight>
     );
 }
 

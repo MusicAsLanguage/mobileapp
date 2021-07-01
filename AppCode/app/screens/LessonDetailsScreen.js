@@ -12,7 +12,7 @@ import Screen from "../components/Screen";
 import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
 
-import { getStatus } from "../api/status";
+import { getActivityStatus } from "../api/status";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -33,7 +33,7 @@ function LessonDetailsScreen({ navigation, route }) {
     const focus = navigation.addListener("focus", () => {
       // Workaround to delay GET call so the POST call happens first
       setTimeout(() => {
-        getStatus().then((response) => {
+        getActivityStatus().then((response) => {
           const data = response.data;
           setActivityStatus(data);
         });
