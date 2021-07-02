@@ -73,7 +73,13 @@ function HomeScreen({ navigation }) {
           0
         );
 
-        lessonStatus = Math.round((completedStatus / activity.length) * 100);
+        // Get total count of activities in order to calculate the lesson completion
+        const lesson = lessons.filter((item) => item._id == lessonId);
+
+        let acitivityCount = lesson[0].Activities.length;
+        acitivityCount = acitivityCount == undefined ? 0 : acitivityCount;
+
+        lessonStatus = Math.round((completedStatus / acitivityCount) * 100);
 
         if (isNaN(lessonStatus)) lessonStatus = 0;
 
