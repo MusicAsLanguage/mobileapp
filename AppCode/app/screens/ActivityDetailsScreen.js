@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
-import { updateStatus } from "../api/status";
+import { updateActivityStatus } from "../api/status";
 
 function ActivityScreen({ navigation, route }) {
   const { lessonId, activityId, activityVideo, activityPlayState } =
@@ -35,7 +35,7 @@ function ActivityScreen({ navigation, route }) {
         LessonId: lessonId,
       };
 
-      updateStatus(data)
+      updateActivityStatus(data)
         .then((response) => {})
         .catch((error) => {
           console.log(error);

@@ -4,7 +4,7 @@ import authStorage from "../auth/storage";
 const endpointGetStatus = "/activity/getStatus";
 const endpointUpdateStatus = "/activity/updateStatus";
 
-const getStatus = async () => {
+const getActivityStatus = async () => {
   const token = await authStorage.getToken();
 
   client.setHeaders({
@@ -16,7 +16,7 @@ const getStatus = async () => {
   return response;
 };
 
-const updateStatus = async (data) => {
+const updateActivityStatus = async (data) => {
   const token = await authStorage.getToken();
 
   client.setHeaders({
@@ -28,4 +28,4 @@ const updateStatus = async (data) => {
   return response;
 };
 
-export { getStatus, updateStatus };
+export { getActivityStatus, updateActivityStatus };

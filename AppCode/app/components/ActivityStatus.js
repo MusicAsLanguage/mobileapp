@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import Icon from "./Icon";
 
-function Status({ value }) {
+function ActivityStatus({ value }) {
   const completed = "checkbox-marked-circle";
   const notcompleted = "play-circle";
   let item = null;
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   status: {},
 });
 
-export default Status;
+export default ActivityStatus;
