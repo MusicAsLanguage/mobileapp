@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, View } from 'react-native';
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
@@ -10,6 +10,8 @@ import colors from '../config/colors';
 import getLessons from '../api/lessons';
 import routes from '../navigation/routes';
 import ListItemSeparator from "../components/ListItemSeparator";
+import useAuth from "../auth/useAuth";
+import uistrings from '../config/uistrings';
 import { getActivityStatus } from "../api/status";
 
 function HomeScreen({ navigation }) {
@@ -17,6 +19,7 @@ function HomeScreen({ navigation }) {
     const [lessons, setLessons] = useState([]);
     const player = useRef(null);
     const [activityStatus, setActivityStatus] = useState();
+  const { logOut } = useAuth();
 
     useEffect(() => {
         let mounted = true;
@@ -41,8 +44,18 @@ function HomeScreen({ navigation }) {
     useEffect(() => {
       const focus = navigation.addListener("focus", () => {
         getActivityStatus().then((response) => {
-          const data = response.data;
-          setActivityStatus(data);
+          if (response == null) {
+            const reloginAlert = () => {
+              Alert.alert(uistrings.Messages, uistrings.RequireRelogin, [
+                { text: "OK", onPress: () => logOut() }
+              ])
+            };
+
+            reloginAlert();
+          } else {
+            const data = response.data;
+            setActivityStatus(data);
+          }
         });
       });
 

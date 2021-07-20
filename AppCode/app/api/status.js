@@ -1,4 +1,5 @@
 import client from "./client";
+import logOut from "../auth/useAuth"
 import authStorage from "../auth/storage";
 
 const endpointGetStatus = "/activity/getStatus";
@@ -6,6 +7,9 @@ const endpointUpdateStatus = "/activity/updateStatus";
 
 const getActivityStatus = async () => {
   const token = await authStorage.getToken();
+  if (token == null) {
+    return null;
+  }
 
   client.setHeaders({
     "Content-Type": "application/json",
@@ -18,6 +22,9 @@ const getActivityStatus = async () => {
 
 const updateActivityStatus = async (data) => {
   const token = await authStorage.getToken();
+  if (token == null) {
+    return null;
+  }
 
   client.setHeaders({
     "Content-Type": "application/json",
