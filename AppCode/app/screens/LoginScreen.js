@@ -25,7 +25,7 @@ function LoginScreen({ navigation }) {
         const result = await login(userInfo);
         if (!result.ok) return setLoginFailed(true);
         setLoginFailed(false);
-        logIn(result.data.token);
+        logIn(result.data);
     };
     
     return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { SafeAreaView, View, FlatList, StyleSheet } from "react-native";
+import { SafeAreaView, View, FlatList, StyleSheet, Alert } from "react-native";
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
@@ -11,11 +11,13 @@ import BackButton from "../components/BackButton";
 import Screen from "../components/Screen";
 import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
-
+import useAuth from "../auth/useAuth";
 import { getActivityStatus } from "../api/status";
+
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
+  const { logOut } = useAuth();
 
   // Need to pause the video when navigate away to a new screen
   const player = useRef(null);
@@ -34,8 +36,18 @@ function LessonDetailsScreen({ navigation, route }) {
       // Workaround to delay GET call so the POST call happens first
       setTimeout(() => {
         getActivityStatus().then((response) => {
-          const data = response.data;
-          setActivityStatus(data);
+          if (response == null) {
+            const reloginAlert = () => {
+              Alert.alert(uistrings.Messages, uistrings.RequireRelogin, [
+                { text: "OK", onPress: () => logOut() }
+              ])
+            };
+
+            reloginAlert();
+          } else {
+            const data = response.data;
+            setActivityStatus(data);
+          }
         });
       }, 100);
     });
