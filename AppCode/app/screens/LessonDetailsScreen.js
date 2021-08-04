@@ -13,7 +13,7 @@ import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
 import useAuth from "../auth/useAuth";
 import { getActivityStatus } from "../api/status";
-
+import Accomplishment from "../components/Accomplishment";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -21,11 +21,13 @@ function LessonDetailsScreen({ navigation, route }) {
 
   // Need to pause the video when navigate away to a new screen
   const player = useRef(null);
-  const [activityStatus, setActivityStatus] = useState();
+  const [activityStatus, setActivityStatus] = useState(null);
+  const [playStateChanged, setPlayStateChanged] = useState(false);
 
   useEffect(() => {
     const blur = navigation.addListener("blur", () => {
       player?.current?.pauseAsync();
+      setPlayStateChanged(false);
     });
 
     return blur;
@@ -39,8 +41,8 @@ function LessonDetailsScreen({ navigation, route }) {
           if (response == null) {
             const reloginAlert = () => {
               Alert.alert(uistrings.Messages, uistrings.RequireRelogin, [
-                { text: "OK", onPress: () => logOut() }
-              ])
+                { text: uistrings.OK, onPress: () => logOut() },
+              ]);
             };
 
             reloginAlert();
@@ -54,6 +56,62 @@ function LessonDetailsScreen({ navigation, route }) {
 
     return focus;
   });
+
+  const lessonCompletionNotification = (lesson) => {
+    // if all the activites are completed, show congrats
+
+    // Only prompt once when there was a state changed
+    if (isLessonCompleted(lesson) == true && playStateChanged) {
+      return <Accomplishment />;
+    }
+  };
+
+  const isLessonCompleted = (lesson) => {
+    const percentage = GetLessonStatus(lesson);
+
+    if (percentage == 100) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const GetLessonStatus = (lesson) => {
+    try {
+      let lessonStatus = 0;
+
+      if (activityStatus == undefined) return 0;
+
+      const activity = activityStatus.filter(
+        (item) => item.LessonId == lesson._id
+      );
+
+      const completionStatus = activity.map((item) => {
+        return item.CompletionStatus;
+      });
+
+      const completedStatus = completionStatus.reduce(
+        (totalCompleted, activityStatus) => {
+          // Increment if an activity was completed (10 == 100%)
+          if (activityStatus == 10) totalCompleted = totalCompleted + 1;
+
+          return totalCompleted;
+        },
+        0
+      );
+
+      let acitivityCount = lesson.Activities.length;
+      acitivityCount = acitivityCount == undefined ? 0 : acitivityCount;
+
+      lessonStatus = Math.round((completedStatus / acitivityCount) * 100);
+
+      if (isNaN(lessonStatus)) lessonStatus = 0;
+
+      return lessonStatus;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getPlayState = (lessonId, activityId) => {
     try {
@@ -95,6 +153,9 @@ function LessonDetailsScreen({ navigation, route }) {
             activityId: item._id,
             activityVideo: item.Videos[0],
             activityPlayState: state,
+            onPlayStateChange: (updated) => {
+              setPlayStateChanged(updated);
+            },
           })
         }
       />
@@ -147,6 +208,7 @@ function LessonDetailsScreen({ navigation, route }) {
             />
           </SafeAreaView>
         </View>
+        {lessonCompletionNotification(lesson)}
       </View>
     </Screen>
   );
