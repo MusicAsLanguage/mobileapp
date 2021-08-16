@@ -1,4 +1,7 @@
 export default {
+    button: "#00bfff",
+    buttonText: "#fff",
+    disabledButton: "#808080",
     magenta: "#ff00ff",
     deepskyblue: "#00bfff",
     darkblue: "#004dcf",

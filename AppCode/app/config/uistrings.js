@@ -1,5 +1,6 @@
 export default {
     AccountDetails: "Account Details",
+    AskForHelp: "Ask for Help",
     CreateAccount: "Create Account",
     CreateAnAccount: "Create an Account",
     Email: "EMAIL",
@@ -36,4 +37,6 @@ export default {
     TermsAndConditions: "Terms & Conditions",
     TermsAndConditionsText: "Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text",
     Toolbox: "Toolbox",
+    TypeMessage: "Type your message here.",
+    MessageSent: "Your message has been sent.",
 }
