@@ -8,11 +8,11 @@ import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
 
 
-function AccountDetailsScreen({ navigation }) {
+function ProfileScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <BackButton onPress={() => navigation.navigate(routes.SETTINGS)} />
-            <AppText style={styles.screenTitle}>AccountDetails</AppText>
+            <AppText style={styles.screenTitle}>Profile</AppText>
             <ScrollView>
             {/* TODO: Get actual account details here */}
             <AppText style={styles.detailsText}>
@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     screen: {
-        backgroundColor: colors.purple1,
+        backgroundColor: colors.white,
     },
     screenTitle: {
         fontSize: 23,
         fontWeight: 'bold',
-        color: colors.white,
+        color: colors.dark,
         alignSelf: 'center',
         marginTop: 25,
         marginBottom: 25,
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     detailsText: {
         fontSize: 14,
         fontWeight: '500',
-        color: colors.white,
+        color: colors.dark,
         alignSelf: 'auto',
         marginBottom: 25,
         marginLeft: 25,
     },
 })
 
-export default AccountDetailsScreen;
+export default ProfileScreen;
