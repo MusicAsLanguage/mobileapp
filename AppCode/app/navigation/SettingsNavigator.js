@@ -2,9 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SettingScreen from "../screens/SettingScreen";
-import AccountDetailsScreen from "../screens/AccountDetailsScreen";
-import NotificationsScreen from "../screens/NotificationsScreen";
-import LanguageScreen from "../screens/LanguageScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 
@@ -18,18 +16,8 @@ const SettingsNavigator = () => (
       options={{ headerShown: false }} 
     />
     <Stack.Screen 
-      name="AccountDetails" 
-      component={AccountDetailsScreen}
-      options={{ headerShown: false }} 
-    />
-    <Stack.Screen 
-      name="Notifications" 
-      component={NotificationsScreen}
-      options={{ headerShown: false }} 
-    />
-    <Stack.Screen 
-      name="Language" 
-      component={LanguageScreen}
+      name="Profile" 
+      component={ProfileScreen}
       options={{ headerShown: false }} 
     />
     <Stack.Screen 
