@@ -1,5 +1,5 @@
 export default {
-  AccountDetails: "Account Details",
+  AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",
   Email: "EMAIL",
@@ -10,7 +10,6 @@ export default {
   Hello: "Hello.",
   Help: "Help",
   Home: "Home",
-  Language: "Language",
   Lessons: "Lessons",
   LessonCompletionTitle: "Congrats!",
   LessonCompletionMsg: "Lesson Completed",
@@ -21,13 +20,11 @@ export default {
   Music: "Music",
   Minutes: "minutes",
   Name: "NAME",
-  NoNotifications: "Notifications",
-  Notifications: "Notifications",
-  OK: "Ok",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
   PrivacyPolicyText:
     "Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text",
+  Profile: "Profile",
   Recover: "Recover",
   Recovery: "recovery",
   RequireRelogin:
@@ -42,4 +39,6 @@ export default {
   TermsAndConditionsText:
     "Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text",
   Toolbox: "Toolbox",
+  TypeMessage: "Type your message here.",
+  MessageSent: "Your message has been sent.",
 };

@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     screen: {
-        backgroundColor: colors.purple5,
+        backgroundColor: colors.white,
     },
     screenTitle: {
         fontSize: 23,
         fontWeight: 'bold',
-        color: colors.white,
+        color: colors.dark,
         alignSelf: 'center',
         marginTop: 25,
         marginBottom: 25,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     detailsText: {
         fontSize: 14,
         fontWeight: '500',
-        color: colors.white,
+        color: colors.dark,
         alignSelf: 'auto',
         marginBottom: 25,
         marginLeft: 25,

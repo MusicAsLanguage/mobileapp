@@ -1,4 +1,7 @@
 export default {
+    button: "#00bfff",
+    buttonText: "#fff",
+    disabledButton: "#808080",
     magenta: "#ff00ff",
     deepskyblue: "#00bfff",
     darkblue: "#004dcf",
@@ -8,7 +11,7 @@ export default {
     purple3: "#6b79d5",
     purple4: "#8390e2",
     purple5: "#929DE5",
-    yellowgreen: "#9acd32",
+    yellowgreen: "#94cf50",
     primary: "#fc5c65",
     secondary: "#4ecdc4",
     black: "#000",

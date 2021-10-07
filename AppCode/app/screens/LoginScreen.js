@@ -63,7 +63,7 @@ function LoginScreen({ navigation }) {
                         secureTextEntry={true}
                         textContentType="password"
                         />
-                    <SubmitButton title={uistrings.LogIn} />
+                    <SubmitButton title={uistrings.LogIn} marginTop={60}/>
                     <Text style={styles.shallowText}>
                         <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.PASSWORDRESET)}>{uistrings.ForgotPassword}</Text>
                         {'   |   '}

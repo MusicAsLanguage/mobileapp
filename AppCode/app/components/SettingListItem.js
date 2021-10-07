@@ -15,7 +15,7 @@ function SettingListItem({
             <View style={styles.container}>
                 <AppText style={styles.text}>{text}</AppText>
                 <View style={styles.iconContainer}>
-                    <MaterialCommunityIcons name="chevron-right" color={colors.white} size={30}/>
+                    <MaterialCommunityIcons name="chevron-right" color={colors.dark} size={30}/>
                 </View>
             </View>
         </TouchableOpacity>
@@ -24,7 +24,6 @@ function SettingListItem({
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 25,
         justifyContent: 'center',
         width: '100%',
     },
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: colors.white,
+        color: colors.dark,
         marginLeft: 25,
     },
 })
