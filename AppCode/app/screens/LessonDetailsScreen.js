@@ -23,6 +23,7 @@ function LessonDetailsScreen({ navigation, route }) {
   const player = useRef(null);
   const [activityStatus, setActivityStatus] = useState(null);
   const [playStateChanged, setPlayStateChanged] = useState(false);
+  const [statusRefreshed, setStatusRefreshed] = useState(false);
 
   useEffect(() => {
     const blur = navigation.addListener("blur", () => {
@@ -35,9 +36,14 @@ function LessonDetailsScreen({ navigation, route }) {
 
   useEffect(() => {
     const focus = navigation.addListener("focus", () => {
+      // Indicate the status has not been refreshed
+      setStatusRefreshed(false);
+
       // Workaround to delay GET call so the POST call happens first
       setTimeout(() => {
         getActivityStatus().then((response) => {
+          setStatusRefreshed(true);
+
           if (response == null) {
             const reloginAlert = () => {
               Alert.alert(uistrings.Messages, uistrings.RequireRelogin, [
@@ -58,11 +64,19 @@ function LessonDetailsScreen({ navigation, route }) {
   });
 
   const lessonCompletionNotification = (lesson) => {
-    // if all the activites are completed, show congrats
+    //
+    // If all the activites are completed, show congrats msg
+    //
+    // BUG FIX:
+    // Check that activity status has been refreshed;
+    // This is to handle the case stale data causes congrats msg to show up
+    //
 
-    // Only prompt once when there was a state changed
-    if (isLessonCompleted(lesson) == true && playStateChanged) {
-      return <Accomplishment />;
+    if (statusRefreshed == true) {
+      // Only prompt once when there was a state changed
+      if (playStateChanged == true && isLessonCompleted(lesson) == true) {
+        return <Accomplishment />;
+      }
     }
   };
 
