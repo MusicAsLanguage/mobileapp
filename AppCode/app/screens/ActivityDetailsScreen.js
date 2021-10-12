@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 import { updateActivityStatus } from "../api/status";
+import ActivityVideoControl from "../components/ActivityVideoControl";
 
 function ActivityScreen({ navigation, route }) {
   const { lessonId, activityId, activityVideo, activityPlayState } =
     route.params;
   const player = React.useRef(null);
+  const [videoFinished, setVideoFinished] = useState(false);
 
   let durationMillis = 0;
   let positionMillis = 0;
@@ -47,6 +49,16 @@ function ActivityScreen({ navigation, route }) {
     };
   }, [navigation]); // only rerun the effect if navigation changes
 
+
+  const onBack = () => {
+    navigation.goBack();
+  }
+
+  const onReplay = () => {
+    // Replay from the beginning
+    player.current.playFromPositionAsync(0);
+  }
+
   const onLoad = async (playbackStatus) => {
     durationMillis = playbackStatus.durationMillis;
     if (durationMillis != 0) {
@@ -58,7 +70,28 @@ function ActivityScreen({ navigation, route }) {
   const onPlaybackStatusUpdate = (playbackStatus) => {
     positionMillis = playbackStatus.positionMillis;
     completionRate = Math.ceil((positionMillis / durationMillis) * 10);
+    if (playbackStatus.didJustFinish) {
+      setVideoFinished(true);
+    }
+    else {
+      setVideoFinished(false);
+    }
   };
+
+  const loadVideoControl = () => {
+
+    // If video finishes playing,
+    // Show "Go Back", and "Replay button"
+    if (videoFinished === true) {
+
+      return (
+        <ActivityVideoControl
+          onBack={onBack}
+          onReplay={onReplay}
+        />)
+    }
+
+  }
 
   return (
     <View style={styles.container}>
@@ -72,6 +105,7 @@ function ActivityScreen({ navigation, route }) {
         onPlaybackStatusUpdate={onPlaybackStatusUpdate}
         style={styles.video}
       />
+      {loadVideoControl()}
     </View>
   );
 }
