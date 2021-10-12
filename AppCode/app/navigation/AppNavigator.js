@@ -5,6 +5,7 @@ import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import AccountNavigator from './AccountNavigator';
 import LessonsNavigator from './LessonsNavigator';
 import ToolboxScreen from '../screens/ToolboxScreen';
+import SongListScreen from '../screens/SongListScreen';
 import SettingsNavigator from './SettingsNavigator';
 import colors from '../config/colors';
 import uistrings from '../config/uistrings';
@@ -32,7 +33,9 @@ const AppNavigator = () => (
         />
         <Tab.Screen 
             name={uistrings.Toolbox} 
-            component={ToolboxScreen} 
+            //component={ToolboxScreen}
+            //name={uistrings.Songs}
+            component={SongListScreen} 
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <MaterialCommunityIcons name="briefcase-download-outline" color={color} size={size} /> 
