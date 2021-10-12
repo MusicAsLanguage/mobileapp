@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 import { updateActivityStatus } from "../api/status";
 import ActivityVideoControl from "../components/ActivityVideoControl";
 
+// Temporary workaround to be able to use callback to pass the data back to previous screen without causing warning
+import { LogBox } from "react-native";
+LogBox.ignoreLogs([
+  "Non-serializable values were found in the navigation state",
+]);
+
 function ActivityScreen({ navigation, route }) {
-  const { lessonId, activityId, activityVideo, activityPlayState } =
-    route.params;
+  const {
+    lessonId,
+    activityId,
+    activityVideo,
+    activityPlayState,
+    onPlayStateChange,
+  } = route.params;
   const player = React.useRef(null);
   const [videoFinished, setVideoFinished] = useState(false);
 
@@ -36,6 +47,10 @@ function ActivityScreen({ navigation, route }) {
         ActivityId: activityId,
         LessonId: lessonId,
       };
+
+      if (completionRate != activityPlayState) {
+        onPlayStateChange(true);
+      }
 
       updateActivityStatus(data)
         .then((response) => {})
