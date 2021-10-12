@@ -3,7 +3,6 @@ import { StyleSheet, View, FlatList } from 'react-native';
 
 import Screen from '../components/Screen';
 import ListItem from '../components/ListItem';
-import ListItemSeparatorComponent from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
 import uistrings from '../config/uistrings';
@@ -15,15 +14,13 @@ function ToolboxScreen(props) {
             <View style={styles.container}>
                 <ListItem
                     title={uistrings.Music}
-                    IconComponent={<Icon name="music-box-multiple" backgroudColor={colors.magenta} />}
-                    onPress={() => logOut()} 
+                    IconComponent={<Icon name="music-box-multiple" backgroudColor={colors.magenta} />} 
                 />
             </View>
             <View style={styles.container}>
                 <ListItem
                     title={uistrings.Metronome}
                     IconComponent={<Icon name="metronome" backgroudColor={colors.yellowgreen} />}
-                    onPress={() => logOut()} 
                 />
             </View>
         </Screen>
