@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
+import {Audio} from 'expo-av';
 
 import Screen from '../components/Screen';
 import AppText from "../components/AppText";
@@ -68,26 +69,32 @@ const songs = [
 
 function SongListScreen(props) {
 
+    const handleAudioPress =(songItem) => {
+        const playbackObj = new Audio.Sound();
+        playbackObj.loadAsync({uri: songItem.Url}, {shouldPlay:true})
+    };
+
     const renderItem = (item) => {
         return (
           <SongListItem
             songName={item.Name}
             length={item.LengthInSeconds}
+            onPress={() => handleAudioPress(item)}
           />
         );
-      };
+    };
 
     return (
         <Screen style={styles.screen}>
             <AppText style={styles.screenTitle}>{uistrings.SongList}</AppText>
 
-            <ScrollView style={styles.songListContainer}>
+            <View style={styles.songListContainer}>
                 <FlatList
                 data={songs}
                 keyExtractor={(song) => song._id.toString()}
                 renderItem={({ item }) => renderItem(item)}
                 />
-            </ScrollView>
+            </View>
         </Screen>
     );
 }
@@ -104,6 +111,8 @@ const styles = StyleSheet.create({
         marginTop: 25,
     },
     songListContainer: {
+        flex: 1,
+        justifyContent: "flex-start",
         marginTop: 35,
         backgroundColor: colors.white,
     },
