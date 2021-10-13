@@ -20,6 +20,7 @@ export default {
   Music: "Music",
   Minutes: "minutes",
   Name: "NAME",
+  OK: "OK",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
   PrivacyPolicyText:
