@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: "100%",
     height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
     aspectRatio: 1.5,
     borderRadius: 5,
   },

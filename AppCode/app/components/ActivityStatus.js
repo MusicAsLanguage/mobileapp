@@ -16,7 +16,7 @@ function ActivityStatus({ value }) {
           name={completed}
           iconColor="lime"
           backgroudColor="transparent"
-          size={80}
+          size={60}
           style={styles.status}
         />
       );
@@ -27,7 +27,7 @@ function ActivityStatus({ value }) {
           name={notcompleted}
           iconColor="deepskyblue"
           backgroudColor="transparent"
-          size={80}
+          size={60}
           style={styles.status}
         />
       );
