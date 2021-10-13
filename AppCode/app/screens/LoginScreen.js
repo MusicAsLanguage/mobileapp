@@ -38,7 +38,7 @@ function LoginScreen({ navigation }) {
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
                 
                 <AppForm
-                    initialValues={{ email: 'jane.doe@mal.com', password: 'Mal123!' }}
+                    initialValues={{ email: '', password: '' }}
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
