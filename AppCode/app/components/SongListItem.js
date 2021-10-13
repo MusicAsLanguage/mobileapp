@@ -4,6 +4,17 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import ListItemSeparator from "../components/ListItemSeparator";
 import colors from "../config/colors";
 
+const getThumbnailText = (songName) => songName[0]
+
+const convertTime = (timeInSecond) => {
+    const min = Math.floor(timeInSecond/60)
+    const sec = timeInSecond % 60
+    if (sec < 10) {
+        return `${min}:0${sec}`;
+    }
+    return `${min}:${sec}`;
+}
+
 function SongListItem({
     songName, 
     length,
@@ -15,7 +26,7 @@ function SongListItem({
             <View style={styles.container}>
                 <View style={styles.leftContainer}>
                     <View style={styles.thumbnail}>
-                        <Text style={styles.thumbnailText}>B</Text>
+                        <Text style={styles.thumbnailText}>{getThumbnailText(songName)}</Text>
                     </View>
                     <View style={styles.titleContainer}>
                         <Text numberOfLines={1} style={styles.title}>
@@ -27,7 +38,7 @@ function SongListItem({
                     </View>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={styles.musicLength}>{length}</Text>
+                    <Text style={styles.musicLength}>{convertTime(length)}</Text>
                 </View>
             </View>
             <ListItemSeparator />
