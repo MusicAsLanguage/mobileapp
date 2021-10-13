@@ -13,21 +13,33 @@ import ListItemSeparator from "../components/ListItemSeparator";
 import useAuth from "../auth/useAuth";
 import uistrings from '../config/uistrings';
 import { getActivityStatus } from "../api/status";
+import Icon from "../components/Icon";
 
 function HomeScreen({ navigation }) {
     /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
+    const [intro, setIntro] = useState([]);
+    const [introLength, setIntroLength] = useState([]);
     const [lessons, setLessons] = useState([]);
     const player = useRef(null);
     const [activityStatus, setActivityStatus] = useState();
-  const { logOut } = useAuth();
+    const { logOut } = useAuth();
 
     useEffect(() => {
         let mounted = true;
         getLessons()
         .then(response => {
         if(mounted) {
-        let lessons2 = response.data[0].Phases[0].Lessons
-        setLessons(lessons2)
+          let allLessons = response.data[0].Phases[0].Lessons
+          if (allLessons.length > 0){
+            // We use the video from the first lesson as the intro video on the 
+            // Home screen. The actual lessons start with the second one in the
+            // list.
+            setIntro(allLessons[0])
+            setIntroLength(Math.round(allLessons[0].IntroVideo.LengthInSeconds / 60))
+            if (allLessons.length > 1){
+              setLessons(allLessons.slice(1))
+            }
+          }
         }
         })
         return () => mounted = false;
@@ -111,7 +123,7 @@ function HomeScreen({ navigation }) {
         <LessonListItem
           title={item.Name}
           subTitle="10 min" // subTitle={item.CourseDuration}
-          image={require("../assets/breathing.jpg")} // image={{uri: item.ImageUrl}}
+          image={{uri: item.ImageUrl}}
           progress={percentage} // API to get course progress (0-100)
           onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
         />
@@ -123,7 +135,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.introContainer}>
           <View style={styles.introVideoContainer}>
             <Video
-              source={require("../assets/sample_video.mp4")}
+              source={{ uri: intro.IntroVideo.Url }}
               ref={player}
               shouldPlay
               resizeMode="cover"
@@ -131,14 +143,25 @@ function HomeScreen({ navigation }) {
               style={styles.introVideo}
             />
             <View style={styles.titleContainer}>
-              <AppText style={styles.introTitle}>Introduction</AppText>
-              <AppText style={styles.introDescription}>
-                Introduction of Music of Language
-              </AppText>
-              <ListItemSeparator />
+              <View style={styles.videoNameDescSect}>
+                <AppText style={styles.introTitle}>{intro.Name}</AppText>
+                <AppText style={styles.introDescription}>
+                {intro.Description}
+                </AppText>
+              </View>
+              <View style={styles.videoDurationSect}>
+                <Icon
+                  name="volume-medium"
+                  backgroudColor="transparent"
+                  iconColor={colors.medblue}
+                />
+                <AppText style={styles.videoLength}>
+                  {introLength} {uistrings.Minutes}
+                </AppText>
+              </View>
             </View>
           </View>
-
+          <ListItemSeparator />
           <View style={styles.lessonContainer}>
             <FlatList
               data={lessons}
@@ -188,8 +211,28 @@ const styles = StyleSheet.create({
         backgroundColor:colors.white
     },
     titleContainer: {
-        padding: 20,
+      flexDirection: "row",
+      height: "20%",
+      marginVertical: 8,
     },
-})
+    videoNameDescSect: {
+      width: "70%",
+      flexDirection: "column",
+      paddingLeft: 5,
+      justifyContent: "flex-start",
+    },
+    videoDurationSect: {
+      width: "30%",
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      paddingRight: 5,
+      height: "100%",
+      alignItems: "baseline",
+    },
+    videoLength: {
+      color: colors.black,
+      fontSize: 14,
+    },
+  })
 
 export default HomeScreen;
