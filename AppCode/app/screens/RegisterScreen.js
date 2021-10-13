@@ -39,7 +39,7 @@ function RegisterScreen({ navigation }) {
         };
         const loginResult = await login(loginInfo);
         if (!loginResult.ok) setError("Login failed. Please try again later.");
-        auth.logIn(loginResult.data.token);
+        auth.logIn(loginResult.data);
     };
 
     return (
