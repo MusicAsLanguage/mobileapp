@@ -33,27 +33,29 @@ function SongListScreen(props) {
         // playing audio for the first time.
         if (soundObj === null){
             const playbackObj = new Audio.Sound();
-            const status = await playbackObj.loadAsync({uri: songItem.Url}, {shouldPlay:true});
+            const status = await play(playbackObj, songItem.Url);
             setCurrenAudio(songItem);
             setPlaybackObj(playbackObj);
             return setSoundObj(status);
         }
 
         // pause audio
-        if (soundObj.isLoaded && soundObj.isPlaying){
-            const status = await playbackObj.pauseAsync();
+        if (soundObj.isLoaded && soundObj.isPlaying && currenAudio._id === songItem._id){
+            const status = await pause(playbackObj);
             return setSoundObj(status);
         }
 
         // resume audio
         if (soundObj.isLoaded && !soundObj.isPlaying && currenAudio._id === songItem._id){
-            const status = await playbackObj.playAsync();
+            const status = await resume(playbackObj);
             return setSoundObj(status);
         }
 
         // select another audio
         if (soundObj.isLoaded && currenAudio._id !== songItem._id){
-            await playNext(playbackObj, songItem.Url);
+            const status = await playNext(playbackObj, songItem.Url);
+            setCurrenAudio(songItem);
+            return setSoundObj(status);
         }
     };
 
