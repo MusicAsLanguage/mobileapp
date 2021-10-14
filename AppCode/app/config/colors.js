@@ -5,6 +5,7 @@ export default {
     magenta: "#ff00ff",
     deepskyblue: "#00bfff",
     darkblue: "#004dcf",
+    medblue: "#4b62f2",
     purple: "#5300eb",
     purple1: "#4051bf",
     purple2: "#5666CF",

@@ -22,7 +22,7 @@ function LessonListItem({
             <View style={styles.durationContainer}>
               <MaterialCommunityIcons
                 name="clock-time-three"
-                color={colors.purple}
+                color={colors.medblue}
                 size={15}
                 style={styles.icon}
               />
