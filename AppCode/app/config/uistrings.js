@@ -1,4 +1,5 @@
 export default {
+  Activities: "Activities",
   AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",
@@ -21,6 +22,7 @@ export default {
   Minutes: "min",
   Name: "NAME",
   OK: "OK",
+  OneActivity: "1 Activity",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
   PrivacyPolicyText:
@@ -35,6 +37,8 @@ export default {
   SendMessageToMAL: "Send a message to Music As Language",
   Settings: "Settings",
   SignUp: "Sign Up",
+  SongList: "Song List",
+  Songs: "Songs",
   TagLine: "#MusicAsLanguage",
   TermsAndConditions: "Terms & Conditions",
   TermsAndConditionsText:
@@ -43,3 +47,4 @@ export default {
   TypeMessage: "Type your message here.",
   MessageSent: "Your message has been sent.",
 };
+

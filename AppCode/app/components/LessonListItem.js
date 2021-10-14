@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ProgressCircle from 'react-native-progress-circle';
 
 import colors from '../config/colors';
@@ -20,12 +19,6 @@ function LessonListItem({
           <View style={styles.detailContainer}>
             <AppText style={styles.title}>{title}</AppText>
             <View style={styles.durationContainer}>
-              <MaterialCommunityIcons
-                name="clock-time-three"
-                color={colors.medblue}
-                size={15}
-                style={styles.icon}
-              />
               {subTitle && (
                 <AppText style={styles.subTitle}>{subTitle}</AppText>
               )}
