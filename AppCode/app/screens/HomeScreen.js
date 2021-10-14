@@ -119,10 +119,21 @@ function HomeScreen({ navigation }) {
 
       if (percentage == undefined) percentage = 0;
 
+      let numActivities = item.Activities.length
+      var numActivitiesText
+      if(numActivities == 1)
+      {
+        numActivitiesText = uistrings.OneActivity
+      }
+      else
+      {
+        numActivitiesText = numActivities.toString() + " " + uistrings.Activities
+      }
+
       return (
         <LessonListItem
           title={item.Name}
-          subTitle="10 min" // subTitle={item.CourseDuration}
+          subTitle={numActivitiesText}
           image={{uri: item.ImageUrl}}
           progress={percentage} // API to get course progress (0-100)
           onPress={() => navigation.navigate(routes.LESSON_DETAILS, item)}
