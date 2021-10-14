@@ -210,7 +210,7 @@ function LessonDetailsScreen({ navigation, route }) {
         </View>
         <ListItemSeparator />
         <View style={styles.activityContainer}>
-          <AppText style={styles.activitySectionTitle}>Activities</AppText>
+          <AppText style={styles.activitySectionTitle}>{uistrings.Activities} ({lesson.Activities.length})</AppText>
           <SafeAreaView>
             <FlatList
               data={lesson.Activities}
