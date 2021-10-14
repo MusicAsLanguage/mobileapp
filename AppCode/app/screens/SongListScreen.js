@@ -11,6 +11,7 @@ import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import { play, pause, resume, playNext } from '../media_control/audioController';
+import { color } from 'react-native-reanimated';
 
 function SongListScreen({ navigation }) {
 
@@ -96,8 +97,10 @@ function SongListScreen({ navigation }) {
 
     return (
         <Screen style={styles.screen}>
-        <BackButton onPress={() => navigation.navigate(routes.TOOLBOX)} />
-            <AppText style={styles.screenTitle}>{uistrings.SongList}</AppText>
+            <View style={styles.titleContainer}>
+                <BackButton onPress={() => navigation.navigate(routes.TOOLBOX)} />
+                <AppText style={styles.screenTitle}>{uistrings.SongList}</AppText>
+            </View>
 
             <View style={styles.songListContainer}>
                 <FlatList
@@ -119,13 +122,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colors.white,
         alignSelf: 'center',
-        marginTop: 25,
+        marginBottom: 10,
     },
     songListContainer: {
         flex: 1,
         justifyContent: "flex-start",
-        marginTop: 35,
+        marginTop: 10,
         backgroundColor: colors.white,
+    },
+    titleContainer: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
 })
 
