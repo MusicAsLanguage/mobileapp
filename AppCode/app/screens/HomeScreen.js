@@ -17,8 +17,8 @@ import Icon from "../components/Icon";
 
 function HomeScreen({ navigation }) {
     /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
-    const [intro, setIntro] = useState([]);
-    const [introLength, setIntroLength] = useState([]);
+    const [intro, setIntro] = useState({"Name": "", "Description": "", "IntroVideo": {"Url": ""}});
+    const [introLength, setIntroLength] = useState(0);
     const [lessons, setLessons] = useState([]);
     const player = useRef(null);
     const [activityStatus, setActivityStatus] = useState();
