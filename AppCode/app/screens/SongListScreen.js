@@ -8,27 +8,53 @@ import colors from '../config/colors';
 import uistrings from '../config/uistrings';
 import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
+import { play, pause, resume, playNext } from '../media_control/audioController';
 
 function SongListScreen(props) {
 
     const [songs, setSongs] = useState([]);
+    const [playbackObj, setPlaybackObj] = useState(null);
+    const [soundObj, setSoundObj] = useState(null);
+    const [currenAudio, setCurrenAudio] = useState({});
 
     useEffect(() => {
         let mounted = true;
         getLessons()
         .then(response => {
-        if(mounted) {
-        let songList = response.data[0].Songs
-        setSongs(songList)
-        }
+            if(mounted) {
+            let songList = response.data[0].Songs
+            setSongs(songList)
+            }
         })
-        console.log(songs)
         return () => mounted = false;
     }, []);
 
-    const handleAudioPress =(songItem) => {
-        const playbackObj = new Audio.Sound();
-        playbackObj.loadAsync({uri: songItem.Url}, {shouldPlay:true})
+    const handleAudioPress = async (songItem) => {
+        // playing audio for the first time.
+        if (soundObj === null){
+            const playbackObj = new Audio.Sound();
+            const status = await playbackObj.loadAsync({uri: songItem.Url}, {shouldPlay:true});
+            setCurrenAudio(songItem);
+            setPlaybackObj(playbackObj);
+            return setSoundObj(status);
+        }
+
+        // pause audio
+        if (soundObj.isLoaded && soundObj.isPlaying){
+            const status = await playbackObj.pauseAsync();
+            return setSoundObj(status);
+        }
+
+        // resume audio
+        if (soundObj.isLoaded && !soundObj.isPlaying && currenAudio._id === songItem._id){
+            const status = await playbackObj.playAsync();
+            return setSoundObj(status);
+        }
+
+        // select another audio
+        if (soundObj.isLoaded && currenAudio._id !== songItem._id){
+            await playNext(playbackObj, songItem.Url);
+        }
     };
 
     const renderItem = (item) => {
