@@ -1,4 +1,5 @@
 export default {
+  Activities: "Activities",
   AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",
@@ -21,6 +22,7 @@ export default {
   Minutes: "min",
   Name: "NAME",
   OK: "OK",
+  OneActivity: "1 Activity",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
   PrivacyPolicyText:
