@@ -10,7 +10,7 @@ import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
 import { play, pause, resume, playNext } from '../media_control/audioController';
 
-function SongListScreen({navigation}) {
+function SongListScreen(props) {
 
     const [songs, setSongs] = useState([]);
     const [playbackObj, setPlaybackObj] = useState(null);
@@ -30,19 +30,6 @@ function SongListScreen({navigation}) {
         })
         return () => mounted = false;
     }, []);
-
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('blur', async () => {
-
-          setIsPlaying(false);
-          if (soundObj.isLoaded && soundObj.isPlaying){
-            const status = await pause(playbackObj);
-            setSoundObj(status);
-          }
-        });
-    
-        return unsubscribe;
-      }, [navigation, soundObj, playbackObj]);
 
     const handleAudioPress = async (songItem) => {
         // playing audio for the first time.
