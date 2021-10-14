@@ -35,6 +35,8 @@ export default {
   SendMessageToMAL: "Send a message to Music As Language",
   Settings: "Settings",
   SignUp: "Sign Up",
+  SongList: "Song List",
+  Songs: "Songs",
   TagLine: "#MusicAsLanguage",
   TermsAndConditions: "Terms & Conditions",
   TermsAndConditionsText:
@@ -43,3 +45,4 @@ export default {
   TypeMessage: "Type your message here.",
   MessageSent: "Your message has been sent.",
 };
+
