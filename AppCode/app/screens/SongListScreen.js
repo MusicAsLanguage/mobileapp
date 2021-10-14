@@ -6,8 +6,10 @@ import Screen from '../components/Screen';
 import AppText from "../components/AppText";
 import colors from '../config/colors';
 import uistrings from '../config/uistrings';
+import BackButton from "../components/BackButton";
 import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
+import routes from "../navigation/routes";
 import { play, pause, resume, playNext } from '../media_control/audioController';
 
 function SongListScreen({ navigation }) {
@@ -35,7 +37,7 @@ function SongListScreen({ navigation }) {
         const unsubscribe = navigation.addListener('blur', async () => {
 
             setIsPlaying(false);
-            if (soundObj.isLoaded && soundObj.isPlaying) {
+            if (soundObj !== null && soundObj.isLoaded && soundObj.isPlaying) {
                 const status = await pause(playbackObj);
                 setSoundObj(status);
             }
@@ -94,6 +96,7 @@ function SongListScreen({ navigation }) {
 
     return (
         <Screen style={styles.screen}>
+        <BackButton onPress={() => navigation.navigate(routes.TOOLBOX)} />
             <AppText style={styles.screenTitle}>{uistrings.SongList}</AppText>
 
             <View style={styles.songListContainer}>
