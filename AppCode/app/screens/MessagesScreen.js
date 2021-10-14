@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, View, TextInput, Alert, Keyboard } from 'react-native';
 
 import Screen from '../components/Screen';
 import colors from '../config/colors';
@@ -15,7 +15,14 @@ function MessagesScreen() {
 
     const onClickSend = async () => {
         sendMessage(messageText)
-        alert(uistrings.MessageSent)
+        Alert.alert(
+            "",
+            uistrings.MessageSent,
+            [
+              { text: uistrings.OK, onPress: () => Keyboard.dismiss() }
+            ],
+            { cancelable: false }
+          )
         setMessageText("")
     };
 

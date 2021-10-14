@@ -18,8 +18,9 @@ export default {
   Messages: "Messages",
   Metronome: "Metronome",
   Music: "Music",
-  Minutes: "minutes",
+  Minutes: "min",
   Name: "NAME",
+  OK: "OK",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
   PrivacyPolicyText:
