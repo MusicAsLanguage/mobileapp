@@ -8,40 +8,76 @@ import colors from '../config/colors';
 import uistrings from '../config/uistrings';
 import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
+import { play, pause, resume, playNext } from '../media_control/audioController';
 
 function SongListScreen(props) {
 
     const [songs, setSongs] = useState([]);
+    const [playbackObj, setPlaybackObj] = useState(null);
+    const [soundObj, setSoundObj] = useState(null);
+    const [currenAudio, setCurrenAudio] = useState({});
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
 
     useEffect(() => {
         let mounted = true;
         getLessons()
         .then(response => {
-        if(mounted) {
-        let songList = response.data[0].Songs
-        setSongs(songList)
-        }
+            if(mounted) {
+            let songList = response.data[0].Songs
+            setSongs(songList)
+            }
         })
-        console.log(songs)
         return () => mounted = false;
     }, []);
 
-    const handleAudioPress =(songItem) => {
-        const playbackObj = new Audio.Sound();
-        playbackObj.loadAsync({uri: songItem.Url}, {shouldPlay:true})
+    const handleAudioPress = async (songItem) => {
+        // playing audio for the first time.
+        if (soundObj === null){
+            const playbackObj = new Audio.Sound();
+            const status = await play(playbackObj, songItem.Url);
+            setCurrenAudio(songItem);
+            setPlaybackObj(playbackObj);
+            setIsPlaying(true);
+            setCurrentAudioIndex(songItem._id);
+            return setSoundObj(status);
+        }
+
+        // pause audio
+        if (soundObj.isLoaded && soundObj.isPlaying && currenAudio._id === songItem._id){
+            const status = await pause(playbackObj);
+            setIsPlaying(false);
+            return setSoundObj(status);
+        }
+
+        // resume audio
+        if (soundObj.isLoaded && !soundObj.isPlaying && currenAudio._id === songItem._id){
+            const status = await resume(playbackObj);
+            setIsPlaying(true);
+            return setSoundObj(status);
+        }
+
+        // select another audio
+        if (soundObj.isLoaded && currenAudio._id !== songItem._id){
+            const status = await playNext(playbackObj, songItem.Url);
+            setCurrenAudio(songItem);
+            setIsPlaying(true);
+            setCurrentAudioIndex(songItem._id);
+            return setSoundObj(status);
+        }
     };
 
     const renderItem = (item) => {
         return (
           <SongListItem
             songName={item.Name}
+            isPlaying={isPlaying}
+            activeListItem={item._id === currentAudioIndex}
             length={item.LengthInSeconds}
             onPress={() => handleAudioPress(item)}
           />
         );
     };
-
-
 
     return (
         <Screen style={styles.screen}>

@@ -1,6 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import ListItemSeparator from "../components/ListItemSeparator";
 import colors from "../config/colors";
 
@@ -15,18 +17,40 @@ const convertTime = (timeInSecond) => {
     return `${min}:${sec}`;
 }
 
+const renderPlayPauseIcon = isPlaying => {
+    if (isPlaying) {
+        return <MaterialCommunityIcons
+        name="pause"
+        color={colors.black}
+        size={25}
+        style={styles.icon}
+        />
+    }
+    return <MaterialCommunityIcons
+        name="play"
+        color={colors.black}
+        size={25}
+        style={styles.icon}
+        />
+}
+
 function SongListItem({
     songName, 
     length,
-    onPress})
+    onPress,
+    isPlaying,
+    activeListItem})
     {
     return (
         <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
             <>
             <View style={styles.container}>
                 <View style={styles.leftContainer}>
-                    <View style={styles.thumbnail}>
-                        <Text style={styles.thumbnailText}>{getThumbnailText(songName)}</Text>
+                    <View style={[styles.thumbnail, {backgroundColor: 
+                    activeListItem ? colors.yellowgreen : colors.lightgrey}]}>
+                        <Text style={styles.thumbnailText}>
+                            {activeListItem ? renderPlayPauseIcon(isPlaying) : getThumbnailText(songName)}
+                        </Text>
                     </View>
                     <View style={styles.titleContainer}>
                         <Text numberOfLines={1} style={styles.title}>
@@ -70,7 +94,6 @@ const styles = StyleSheet.create({
     thumbnail: {
         height: 50,
         flexBasis: 50,
-        backgroundColor: colors.yellowgreen,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 25,
@@ -96,7 +119,10 @@ const styles = StyleSheet.create({
     musicLength: {
         fontSize: 15,
         color: colors.grey,
-    }
+    },
+    icon: {
+        marginTop: 1,
+    },
 })
 
 export default SongListItem;
