@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import Icon from "./Icon";
+import colors from "../config/colors";
 
 function ActivityVideoControl({ onBack, onReplay }) {
 
-  const replay = 'replay';
+  const replay = "refresh-circle"; //'replay';
   const goBack = 'arrow-left';
 
   const handleBack = () => {
@@ -17,21 +18,21 @@ function ActivityVideoControl({ onBack, onReplay }) {
 
   return (
     <View style={styles.toolbar}>
-      <TouchableOpacity onPress={handleBack}>
+      {/* <TouchableOpacity onPress={handleBack}>
         <Icon
           name={goBack}
-          iconColor="yellowgreen"
+          iconColor="#4b62f2"
           backgroudColor="transparent"
           size={80}
           style={styles.button}
         />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleReplay}>
+      </TouchableOpacity> */}
+      <TouchableOpacity onPress={handleReplay} style={styles.buttonContainer}>
         <Icon
           name={replay}
-          iconColor="yellowgreen"
+          iconColor={colors.darkblue}
           backgroudColor="transparent"
-          size={80}
+          size={160}
           style={styles.button}
         />
       </TouchableOpacity>
@@ -47,6 +48,14 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  buttonContainer: {
+    backgroundColor: "white",
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    width: 60,
+    height: 60,
   },
   button: {
     alignSelf: 'center',

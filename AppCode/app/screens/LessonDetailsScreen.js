@@ -57,7 +57,7 @@ function LessonDetailsScreen({ navigation, route }) {
             setActivityStatus(data);
           }
         });
-      }, 100);
+      }, 300);
     });
 
     return focus;

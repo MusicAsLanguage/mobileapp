@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 import { updateActivityStatus } from "../api/status";
@@ -20,10 +20,14 @@ function ActivityScreen({ navigation, route }) {
   } = route.params;
   const player = React.useRef(null);
   const [videoFinished, setVideoFinished] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [position, setPosition] = useState(0);
+  const [completion, setCompletion] = useState(0);
 
-  let durationMillis = 0;
-  let positionMillis = 0;
-  let completionRate = 0;
+  const durationRef = useRef(0);
+  const positionRef = useRef(0);
+  const completionRef = useRef(0);
+
 
   useEffect(() => {
     // Workaround to hide the status bar & the tab bar to make video full screen
@@ -41,19 +45,26 @@ function ActivityScreen({ navigation, route }) {
   }, []); // Run only once at mount
 
   useEffect(() => {
-    const blur = navigation.addListener("blur", () => {
+    const blur = navigation.addListener("blur", (e) => {
+
+      player?.current?.pauseAsync();
+
       const data = {
-        CompletionStatus: completionRate,
+        CompletionStatus: completionRef.current,
         ActivityId: activityId,
         LessonId: lessonId,
       };
 
-      if (completionRate != activityPlayState) {
+      if (completionRef.current != activityPlayState) {
         onPlayStateChange(true);
       }
 
       updateActivityStatus(data)
-        .then((response) => {})
+        .then((response) => {
+          if (response == null) {
+            console.warn(response);
+          }
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -71,21 +82,34 @@ function ActivityScreen({ navigation, route }) {
 
   const onReplay = () => {
     // Replay from the beginning
-    player.current.playFromPositionAsync(0);
+    player.current.replayAsync();
+    onPlayStateChange(true);
   }
 
   const onLoad = async (playbackStatus) => {
-    durationMillis = playbackStatus.durationMillis;
+    const durationMillis = playbackStatus.durationMillis;
+    durationRef.current = durationMillis;
+    setDuration(durationMillis)
     if (durationMillis != 0) {
       const startPos = durationMillis * (activityPlayState / 10);
       player.current.playFromPositionAsync(startPos);
     }
   };
 
-  const onPlaybackStatusUpdate = (playbackStatus) => {
-    positionMillis = playbackStatus.positionMillis;
-    completionRate = Math.ceil((positionMillis / durationMillis) * 10);
-    if (playbackStatus.didJustFinish) {
+  const onPlaybackStatusUpdate = async (playbackStatus) => {
+    const durationMillis = playbackStatus.durationMillis;
+    const positionMillis = playbackStatus.positionMillis;
+    const completionRate = Math.ceil((positionMillis / durationMillis) * 10);
+
+    durationRef.current = durationMillis;
+    positionRef.current = positionMillis;
+    completionRef.current = completionRate;
+
+    setPosition(positionMillis);
+    setDuration(durationMillis);
+    setCompletion(completionRate)
+
+    if (playbackStatus.didJustFinish === true) {
       setVideoFinished(true);
     }
     else {
