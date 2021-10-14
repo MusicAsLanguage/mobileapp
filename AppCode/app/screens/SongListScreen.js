@@ -16,6 +16,8 @@ function SongListScreen(props) {
     const [playbackObj, setPlaybackObj] = useState(null);
     const [soundObj, setSoundObj] = useState(null);
     const [currenAudio, setCurrenAudio] = useState({});
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
 
     useEffect(() => {
         let mounted = true;
@@ -36,18 +38,22 @@ function SongListScreen(props) {
             const status = await play(playbackObj, songItem.Url);
             setCurrenAudio(songItem);
             setPlaybackObj(playbackObj);
+            setIsPlaying(true);
+            setCurrentAudioIndex(songItem._id);
             return setSoundObj(status);
         }
 
         // pause audio
         if (soundObj.isLoaded && soundObj.isPlaying && currenAudio._id === songItem._id){
             const status = await pause(playbackObj);
+            setIsPlaying(false);
             return setSoundObj(status);
         }
 
         // resume audio
         if (soundObj.isLoaded && !soundObj.isPlaying && currenAudio._id === songItem._id){
             const status = await resume(playbackObj);
+            setIsPlaying(true);
             return setSoundObj(status);
         }
 
@@ -55,6 +61,8 @@ function SongListScreen(props) {
         if (soundObj.isLoaded && currenAudio._id !== songItem._id){
             const status = await playNext(playbackObj, songItem.Url);
             setCurrenAudio(songItem);
+            setIsPlaying(true);
+            setCurrentAudioIndex(songItem._id);
             return setSoundObj(status);
         }
     };
@@ -63,13 +71,13 @@ function SongListScreen(props) {
         return (
           <SongListItem
             songName={item.Name}
+            isPlaying={isPlaying}
+            activeListItem={item._id === currentAudioIndex}
             length={item.LengthInSeconds}
             onPress={() => handleAudioPress(item)}
           />
         );
     };
-
-
 
     return (
         <Screen style={styles.screen}>
