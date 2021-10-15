@@ -1,5 +1,6 @@
 export default {
   Activities: "Activities",
+  ActivityCompletionMsg: "Activity Completed",
   AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",

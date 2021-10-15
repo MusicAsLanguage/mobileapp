@@ -13,7 +13,7 @@ import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
 import useAuth from "../auth/useAuth";
 import { getActivityStatus } from "../api/status";
-import Accomplishment from "../components/Accomplishment";
+import LessonCompletion from "../components/LessonCompletion";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -75,7 +75,7 @@ function LessonDetailsScreen({ navigation, route }) {
     if (statusRefreshed == true) {
       // Only prompt once when there was a state changed
       if (playStateChanged == true && isLessonCompleted(lesson) == true) {
-        return <Accomplishment />;
+        return <LessonCompletion />;
       }
     }
   };

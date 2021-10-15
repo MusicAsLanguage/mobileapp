@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 import { updateActivityStatus } from "../api/status";
-import ActivityVideoControl from "../components/ActivityVideoControl";
+import ActivityCompletion from "../components/ActivityCompletion";
 
 // Temporary workaround to be able to use callback to pass the data back to previous screen without causing warning
 import { LogBox } from "react-native";
+
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
 ]);
@@ -117,14 +118,15 @@ function ActivityScreen({ navigation, route }) {
     }
   };
 
-  const loadVideoControl = () => {
+  const showEndState = () => {
 
     // If video finishes playing,
     // Show "Go Back", and "Replay button"
     if (videoFinished === true) {
 
       return (
-        <ActivityVideoControl
+
+        <ActivityCompletion
           onBack={onBack}
           onReplay={onReplay}
         />)
@@ -144,7 +146,7 @@ function ActivityScreen({ navigation, route }) {
         onPlaybackStatusUpdate={onPlaybackStatusUpdate}
         style={styles.video}
       />
-      {loadVideoControl()}
+      {showEndState()}
     </View>
   );
 }
