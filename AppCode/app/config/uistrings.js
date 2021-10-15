@@ -25,8 +25,6 @@ export default {
   OneActivity: "1 Activity",
   Password: "PASSWORD",
   PrivacyPolicy: "Privacy Policy",
-  PrivacyPolicyText:
-    "Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text Privacy policy text",
   Profile: "Profile",
   Recover: "Recover",
   Recovery: "recovery",
@@ -39,8 +37,6 @@ export default {
   SignUp: "Sign Up",
   TagLine: "#MusicAsLanguage",
   TermsAndConditions: "Terms & Conditions",
-  TermsAndConditionsText:
-    "Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text Terms and conditions text",
   Toolbox: "Toolbox",
   TypeMessage: "Type your message here.",
   MessageSent: "Your message has been sent.",
