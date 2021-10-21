@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, Image, StyleSheet, View } from "react-native";
-import AppText from "../components/AppText";
+import AppText from "./AppText";
 import uistrings from "../config/uistrings";
 
-function Accomplishment() {
+function LessonCompletion() {
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const [hide, setHide] = useState(false);
 
@@ -17,7 +17,7 @@ function Accomplishment() {
     }).start(() =>
       Animated.timing(fadeAnimation, {
         toValue: 0,
-        duration: 1000,
+        duration: 3000,
         delay: 3000,
         useNativeDriver: true,
       }).start(() => {
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Accomplishment;
+export default LessonCompletion;
