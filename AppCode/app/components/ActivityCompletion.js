@@ -11,11 +11,11 @@ function ActivityCompletion({ onBack, onReplay }) {
 
   const handleBack = () => {
     onBack();
-  }
+  };
 
   const handleReplay = () => {
     onReplay();
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -23,7 +23,7 @@ function ActivityCompletion({ onBack, onReplay }) {
         <View style={styles.outerBox}>
           <Icon
             name={musicNote}
-            iconColor={colors.white}
+            iconColor={colors.yellowgreen}
             backgroudColor="transparent"
             size={160}
             style={styles.musicnote}
@@ -34,7 +34,8 @@ function ActivityCompletion({ onBack, onReplay }) {
         </View>
       </View>
       <View style={styles.replayContainer}>
-        <ActivityVideoControl styles={styles.replay}
+        <ActivityVideoControl
+          styles={styles.replay}
           onBack={handleBack}
           onReplay={handleReplay}
         />
@@ -45,20 +46,19 @@ function ActivityCompletion({ onBack, onReplay }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    position: 'absolute',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "absolute",
+    flexDirection: "column",
+    marginTop: 150,
+    marginLeft: 100,
+    alignItems: "center",
+    justifyContent: "center",
   },
   completionContainer: {
     flex: 1,
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'flex-end',
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
   },
   musicnote: {
     alignItems: "center",
@@ -69,31 +69,26 @@ const styles = StyleSheet.create({
     backgroundColor: "darkviolet",
   },
   message: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: "center",
-    // margin: 10,
-    textAlignVertical: "auto",
-    color: "white",
+    color: colors.white,
   },
-  // outerBox: {
-  //   backgroundColor: "transparent",
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   borderRadius: 100,
-  //   width: 200,
-  //   height: 200,
-  //   borderColor: "orange",
-  //   borderWidth: 10,
-  // },
+  outerBox: {
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    width: 200,
+    height: 200,
+  },
   replayContainer: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     marginTop: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
-  replay: {
-  }
+  replay: {},
 });
 
 export default ActivityCompletion;
