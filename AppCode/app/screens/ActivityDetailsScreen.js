@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, StatusBar, View } from "react-native";
+import { Platform, StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
 import { updateActivityStatus } from "../api/status";
 import ActivityCompletion from "../components/ActivityCompletion";
@@ -29,13 +29,18 @@ function ActivityScreen({ navigation, route }) {
   const positionRef = useRef(0);
   const completionRef = useRef(0);
 
-
   useEffect(() => {
     // Workaround to hide the status bar & the tab bar to make video full screen
     const parent = navigation.dangerouslyGetParent();
     parent.setOptions({
       tabBarVisible: false,
     });
+
+    if (Platform.OS === "ios") {
+      navigation.setOptions({
+        headerBackTitle: " ",
+      });
+    }
 
     StatusBar.setHidden(true, "none");
 
@@ -47,7 +52,6 @@ function ActivityScreen({ navigation, route }) {
 
   useEffect(() => {
     const blur = navigation.addListener("blur", (e) => {
-
       player?.current?.pauseAsync();
 
       const data = {
@@ -76,21 +80,20 @@ function ActivityScreen({ navigation, route }) {
     };
   }, [navigation]); // only rerun the effect if navigation changes
 
-
   const onBack = () => {
     navigation.goBack();
-  }
+  };
 
   const onReplay = () => {
     // Replay from the beginning
     player.current.replayAsync();
     onPlayStateChange(true);
-  }
+  };
 
   const onLoad = async (playbackStatus) => {
     const durationMillis = playbackStatus.durationMillis;
     durationRef.current = durationMillis;
-    setDuration(durationMillis)
+    setDuration(durationMillis);
     if (durationMillis != 0) {
       const startPos = durationMillis * (activityPlayState / 10);
       player.current.playFromPositionAsync(startPos);
@@ -100,7 +103,7 @@ function ActivityScreen({ navigation, route }) {
   const onPlaybackStatusUpdate = async (playbackStatus) => {
     const durationMillis = playbackStatus.durationMillis;
     const positionMillis = playbackStatus.positionMillis;
-    const completionRate = Math.ceil((positionMillis / durationMillis) * 10);
+    const completionRate = Math.floor((positionMillis / durationMillis) * 10);
 
     durationRef.current = durationMillis;
     positionRef.current = positionMillis;
@@ -108,31 +111,22 @@ function ActivityScreen({ navigation, route }) {
 
     setPosition(positionMillis);
     setDuration(durationMillis);
-    setCompletion(completionRate)
+    setCompletion(completionRate);
 
-    if (playbackStatus.didJustFinish === true) {
+    if (completionRate === 10) {
       setVideoFinished(true);
-    }
-    else {
+    } else {
       setVideoFinished(false);
     }
   };
 
   const showEndState = () => {
-
     // If video finishes playing,
     // Show "Go Back", and "Replay button"
     if (videoFinished === true) {
-
-      return (
-
-        <ActivityCompletion
-          onBack={onBack}
-          onReplay={onReplay}
-        />)
+      return <ActivityCompletion onBack={onBack} onReplay={onReplay} />;
     }
-
-  }
+  };
 
   return (
     <View style={styles.container}>

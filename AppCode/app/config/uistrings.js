@@ -1,6 +1,6 @@
 export default {
   Activities: "Activities",
-  ActivityCompletionMsg: "Activity Completed",
+  ActivityCompletionMsg: "You did it!",
   AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",
@@ -44,4 +44,3 @@ export default {
   TypeMessage: "Type your message here.",
   MessageSent: "Your message has been sent.",
 };
-
