@@ -14,7 +14,7 @@ export default useLesson = () => {
   //  Return : True or False
   //
   const isLessonCompleted = (lesson) => {
-    const percentage = getLessonStatus(lesson);
+    const percentage = getLessonProgress(lesson);
 
     if (percentage === 100) {
       return true;
@@ -35,7 +35,7 @@ export default useLesson = () => {
   //  Purpose: Retrive the specified activity completion status for a given lesson
   //  Return: 0 ~ 10 (10 is 100%)
   //
-  const getStatus = (lessonId, activityId) => {
+  const getActivityProgress = (lessonId, activityId) => {
     try {
       let completionStatus = 0;
 
@@ -60,7 +60,7 @@ export default useLesson = () => {
   //  Purpose: Retrive the total completion rate for a given lesson
   //  Return: 0 ~ 10 (10 is 100%)
   //
-  const getLessonStatus = (lesson) => {
+  const getLessonProgress = (lesson) => {
     try {
       let lessonStatus = 0;
 
@@ -139,8 +139,8 @@ export default useLesson = () => {
     status,
     fetchAllLessonData,
     fetchStatusData,
-    getStatus,
-    getLessonStatus,
+    getActivityProgress,
+    getLessonProgress,
     isLessonCompleted,
     onPlayStateChanged,
     updateStatusData,

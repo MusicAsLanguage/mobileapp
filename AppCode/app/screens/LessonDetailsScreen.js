@@ -21,7 +21,7 @@ function LessonDetailsScreen({ navigation, route }) {
   const {
     fetchStatusData,
     isLessonCompleted,
-    getStatus,
+    getActivityProgress,
     onPlayStateChanged,
     playStateChanged,
   } = useLesson();
@@ -84,7 +84,7 @@ function LessonDetailsScreen({ navigation, route }) {
   const lessonLength = Math.round(lesson.IntroVideo.LengthInSeconds / 60);
 
   const renderItem = (item) => {
-    const state = getStatus(lesson._id, item._id);
+    const state = getActivityProgress(lesson._id, item._id);
 
     return (
       <ActivityListItem

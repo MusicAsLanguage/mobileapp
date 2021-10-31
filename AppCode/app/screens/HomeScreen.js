@@ -25,7 +25,8 @@ function HomeScreen({ navigation }) {
   const [lessons, setLessons] = useState([]);
   const player = useRef(null);
   const { logOut } = useAuth();
-  const { fetchAllLessonData, fetchStatusData, getLessonStatus } = useLesson();
+  const { fetchAllLessonData, fetchStatusData, getLessonProgress } =
+    useLesson();
 
   useEffect(() => {
     let mounted = true;
@@ -76,7 +77,7 @@ function HomeScreen({ navigation }) {
   }, [navigation]);
 
   const renderItem = (item) => {
-    let percentage = getLessonStatus(item);
+    let percentage = getLessonProgress(item);
 
     if (percentage == undefined) percentage = 0;
 
