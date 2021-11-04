@@ -80,7 +80,7 @@ function ActivityScreen({ navigation, route }) {
     durationRef.current = durationMillis;
     setDuration(durationMillis);
     if (durationMillis != 0) {
-      const startPos = Math.floor(durationMillis * (activityPlayState / 10));
+      const startPos = durationMillis * (activityPlayState / 10);
       player.current.playFromPositionAsync(startPos);
     }
   };
@@ -118,7 +118,7 @@ function ActivityScreen({ navigation, route }) {
       <Video
         source={{ uri: activityVideo.Url }}
         ref={player}
-        shouldPlay
+        shouldPlay={true}
         resizeMode="cover"
         useNativeControls
         onLoad={onLoad}

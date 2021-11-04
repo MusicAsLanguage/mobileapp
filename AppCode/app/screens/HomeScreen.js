@@ -32,17 +32,19 @@ function HomeScreen({ navigation }) {
     let mounted = true;
     fetchAllLessonData().then((response) => {
       if (mounted) {
-        let allLessons = response.data[0].Phases[0].Lessons;
-        if (allLessons.length > 0) {
-          // We use the video from the first lesson as the intro video on the
-          // Home screen. The actual lessons start with the second one in the
-          // list.
-          setIntro(allLessons[0]);
-          setIntroLength(
-            Math.round(allLessons[0].IntroVideo.LengthInSeconds / 60)
-          );
-          if (allLessons.length > 1) {
-            setLessons(allLessons.slice(1));
+        if (response.ok) {
+          let allLessons = response.data[0].Phases[0].Lessons;
+          if (allLessons.length > 0) {
+            // We use the video from the first lesson as the intro video on the
+            // Home screen. The actual lessons start with the second one in the
+            // list.
+            setIntro(allLessons[0]);
+            setIntroLength(
+              Math.round(allLessons[0].IntroVideo.LengthInSeconds / 60)
+            );
+            if (allLessons.length > 1) {
+              setLessons(allLessons.slice(1));
+            }
           }
         }
       }
