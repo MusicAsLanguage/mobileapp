@@ -1,24 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, StyleSheet, StatusBar, View } from "react-native";
 import { Video } from "expo-av";
-import { updateActivityStatus } from "../api/status";
 import ActivityCompletion from "../components/ActivityCompletion";
 
-// Temporary workaround to be able to use callback to pass the data back to previous screen without causing warning
-import { LogBox } from "react-native";
-
-LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state",
-]);
-
 function ActivityScreen({ navigation, route }) {
-  const {
-    lessonId,
-    activityId,
-    activityVideo,
-    activityPlayState,
-    onPlayStateChange,
-  } = route.params;
+  const { lessonId, activityId, activityVideo, activityPlayState } =
+    route.params;
   const player = React.useRef(null);
   const [videoFinished, setVideoFinished] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -28,6 +15,8 @@ function ActivityScreen({ navigation, route }) {
   const durationRef = useRef(0);
   const positionRef = useRef(0);
   const completionRef = useRef(0);
+
+  const { onPlayStateChanged, updateStatusData } = useLesson();
 
   useEffect(() => {
     // Workaround to hide the status bar & the tab bar to make video full screen
@@ -61,18 +50,14 @@ function ActivityScreen({ navigation, route }) {
       };
 
       if (completionRef.current != activityPlayState) {
-        onPlayStateChange(true);
+        onPlayStateChanged(true);
       }
 
-      updateActivityStatus(data)
-        .then((response) => {
-          if (response == null) {
-            console.warn(response);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      updateStatusData(data).then((response) => {
+        if (response == null) {
+          console.warn(response);
+        }
+      });
     });
 
     return () => {
@@ -87,7 +72,7 @@ function ActivityScreen({ navigation, route }) {
   const onReplay = () => {
     // Replay from the beginning
     player.current.replayAsync();
-    onPlayStateChange(true);
+    onPlayStateChanged(true);
   };
 
   const onLoad = async (playbackStatus) => {
@@ -133,12 +118,12 @@ function ActivityScreen({ navigation, route }) {
       <Video
         source={{ uri: activityVideo.Url }}
         ref={player}
-        shouldPlay
+        shouldPlay={true}
         resizeMode="cover"
         useNativeControls
         onLoad={onLoad}
         onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-        style={styles.video}
+        style={videoFinished ? styles.videoFaded : styles.video}
       />
       {showEndState()}
     </View>
@@ -153,6 +138,11 @@ const styles = StyleSheet.create({
   video: {
     width: "100%",
     height: "100%",
+  },
+  videoFaded: {
+    width: "100%",
+    height: "100%",
+    opacity: 0.5,
   },
 });
 
