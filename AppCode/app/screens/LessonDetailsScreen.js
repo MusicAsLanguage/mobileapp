@@ -119,23 +119,23 @@ function LessonDetailsScreen({ navigation, route }) {
             useNativeControls
             style={styles.lessonVideo}
           />
-          <View style={styles.lessonDetail}>
-            <View style={styles.lessonNameDescSect}>
-              <AppText style={styles.lessonName}>{lesson.Name}</AppText>
-              <AppText numberOfLines={1} style={styles.lessonDescription}>
-                {lesson.Description}
-              </AppText>
-            </View>
-            <View style={styles.lessonDurationSect}>
-              <Icon
-                name="volume-medium"
-                backgroudColor="transparent"
-                iconColor="skyblue"
-              />
-              <AppText style={styles.lessonLength}>
-                {lessonLength} {uistrings.Minutes}
-              </AppText>
-            </View>
+        </View>
+        <View style={styles.lessonDetail}>
+          <View style={styles.lessonNameDescSect}>
+            <AppText style={styles.lessonName}>{lesson.Name}</AppText>
+            <AppText numberOfLines={1} style={styles.lessonDescription}>
+              {lesson.Description}
+            </AppText>
+          </View>
+          <View style={styles.lessonDurationSect}>
+            <Icon
+              name="volume-medium"
+              backgroudColor="transparent"
+              iconColor="skyblue"
+            />
+            <AppText style={styles.lessonDuration} >
+              {lessonLength} {uistrings.Minutes}
+            </AppText>
           </View>
         </View>
         <ListItemSeparator />
@@ -162,7 +162,6 @@ function LessonDetailsScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   activityContainer: {
-    flex: 4,
     padding: 10,
     justifyContent: "flex-start",
   },
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 6,
+    padding: 3,
     justifyContent: "space-evenly",
   },
   lessonContainer: {
@@ -188,12 +187,11 @@ const styles = StyleSheet.create({
   lessonDescription: {
     color: colors.black,
     fontSize: 14,
-    marginTop: 2,
+    marginVertical: 2,
   },
   lessonDetail: {
     flexDirection: "row",
-    height: "20%",
-    marginVertical: 8,
+    marginBottom: 13,
   },
   lessonDuration: {
     color: colors.black,
@@ -205,31 +203,32 @@ const styles = StyleSheet.create({
     width: "30%",
     flexDirection: "row",
     justifyContent: "flex-end",
-    paddingRight: 5,
+    paddingRight: 10,
     height: "100%",
     alignItems: "baseline",
   },
   lessonName: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "500",
     color: colors.magenta,
     fontWeight: "bold",
+    marginBottom: 3,
   },
   lessonNameDescSect: {
     width: "70%",
     flexDirection: "column",
-    paddingLeft: 5,
+    paddingLeft: 10,
     justifyContent: "flex-start",
   },
   lessonVideo: {
     width: "100%",
-    height: "82%",
+    height: "100%",
     borderRadius: 10,
   },
   lessonVideoContainer: {
-    flex: 3,
+    width: "100%",
+    height: "35%",
     padding: 10,
-    marginBottom: 15,
   },
 });
 

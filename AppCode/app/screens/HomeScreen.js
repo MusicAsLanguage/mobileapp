@@ -190,14 +190,14 @@ const styles = StyleSheet.create({
   videoNameDescSect: {
     width: "70%",
     flexDirection: "column",
-    paddingLeft: 5,
+    paddingLeft: 22.5,
     justifyContent: "flex-start",
   },
   videoDurationSect: {
     width: "30%",
     flexDirection: "row",
     justifyContent: "flex-end",
-    paddingRight: 5,
+    paddingRight: 22.5,
     height: "100%",
     alignItems: "baseline",
   },

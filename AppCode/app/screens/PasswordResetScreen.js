@@ -58,7 +58,7 @@ function PasswordResetScreen({ navigation }) {
                         placeholder=""
                         textContentType="emailAddress"
                     />
-                    <SubmitButton title={uistrings.Recover} />
+                    <SubmitButton title={uistrings.Recover} marginTop={50} />
                 </AppForm>
             </Screen>
         </ImageBackground>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     },
     title: {
         paddingTop: 60,
-        paddingBottom: 50,
+        paddingBottom: 40,
     },
     titleText: {
         fontSize: 25,
