@@ -86,7 +86,7 @@ function RegisterScreen({ navigation }) {
                         secureTextEntry
                         textContentType="password"
                     />
-                    <SubmitButton title={uistrings.SignUp} />
+                    <SubmitButton title={uistrings.SignUp} marginTop={50}/>
                 </AppForm>
             </Screen>
         </ImageBackground>

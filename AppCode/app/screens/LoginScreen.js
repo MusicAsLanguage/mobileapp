@@ -63,7 +63,7 @@ function LoginScreen({ navigation }) {
                         secureTextEntry={true}
                         textContentType="password"
                         />
-                    <SubmitButton title={uistrings.LogIn} marginTop={60}/>
+                    <SubmitButton title={uistrings.LogIn} marginTop={50}/>
                     <Text style={styles.shallowText}>
                         <Text style={styles.hyperlinkStyle} onPress={() => navigation.navigate(routes.PASSWORDRESET)}>{uistrings.ForgotPassword}</Text>
                         {'   |   '}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         width: 110,
         height: 110,
         alignSelf: 'center',
-        marginBottom: 80,
+        marginBottom: 20,
     },
     shallowText: {
         fontSize: 13,

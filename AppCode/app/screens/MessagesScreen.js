@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     textContainer: {
-        marginTop: 60,
+        marginTop: 25,
         backgroundColor: colors.white,
     },
     buttonContainer: {
