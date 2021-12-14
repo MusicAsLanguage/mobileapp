@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
   },
   lessonDetail: {
     flexDirection: "row",
+    height: "8%",
     marginBottom: 13,
   },
   lessonDuration: {
