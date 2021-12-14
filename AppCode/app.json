@@ -2,6 +2,7 @@
   "expo": {
     "name": "MusicAsLanguageApp",
     "slug": "MusicAsLanguageApp",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -17,7 +18,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.northshorescholarshipfoundation.musicaslanguage",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
