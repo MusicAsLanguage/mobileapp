@@ -133,7 +133,7 @@ function LessonDetailsScreen({ navigation, route }) {
               backgroudColor="transparent"
               iconColor="skyblue"
             />
-            <AppText style={styles.lessonDuration} >
+            <AppText style={styles.lessonDuration}>
               {lessonLength} {uistrings.Minutes}
             </AppText>
           </View>
@@ -162,6 +162,7 @@ function LessonDetailsScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   activityContainer: {
+    flex: 4,
     padding: 10,
     justifyContent: "flex-start",
   },
