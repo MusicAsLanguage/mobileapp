@@ -18,7 +18,7 @@ function AppTextInput({ icon, ...otherProps }) {
             )}
             <TextInput 
                 placeholderTextColor={defaultStyles.colors.medium}
-                style={defaultStyles.text} 
+                style={[defaultStyles.text, {width: "90%"}]} 
                 {...otherProps} 
             />
         </View>
