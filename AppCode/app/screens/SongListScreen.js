@@ -34,18 +34,30 @@ function SongListScreen({ navigation }) {
         return () => mounted = false;
     }, []);
 
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('blur', async () => {
+
+    //         setIsPlaying(false);
+    //         if (soundObj !== null && soundObj.isLoaded && soundObj.isPlaying) {
+    //             const status = await pause(playbackObj);
+    //             setSoundObj(status);
+    //         }
+    //     });
+
+    //     return unsubscribe;
+    // }, [navigation, soundObj, playbackObj]);
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('blur', async () => {
-
-            setIsPlaying(false);
-            if (soundObj !== null && soundObj.isLoaded && soundObj.isPlaying) {
+            if (soundObj !== null && soundObj.isLoaded && isPlaying) {
                 const status = await pause(playbackObj);
+                setIsPlaying(false);
                 setSoundObj(status);
             }
         });
 
         return unsubscribe;
-    }, [navigation, soundObj, playbackObj]);
+    }, [navigation, soundObj, playbackObj, isPlaying]);
 
     const handleAudioPress = async (songItem) => {
         // playing audio for the first time.
