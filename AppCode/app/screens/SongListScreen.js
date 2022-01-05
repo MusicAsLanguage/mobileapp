@@ -11,7 +11,6 @@ import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import { play, pause, resume, playNext } from '../media_control/audioController';
-import { color } from 'react-native-reanimated';
 
 function SongListScreen({ navigation }) {
 
@@ -33,19 +32,6 @@ function SongListScreen({ navigation }) {
             })
         return () => mounted = false;
     }, []);
-
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener('blur', async () => {
-
-    //         setIsPlaying(false);
-    //         if (soundObj !== null && soundObj.isLoaded && soundObj.isPlaying) {
-    //             const status = await pause(playbackObj);
-    //             setSoundObj(status);
-    //         }
-    //     });
-
-    //     return unsubscribe;
-    // }, [navigation, soundObj, playbackObj]);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('blur', async () => {
