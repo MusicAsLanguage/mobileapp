@@ -11,7 +11,6 @@ import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import { play, pause, resume, playNext } from '../media_control/audioController';
-import { color } from 'react-native-reanimated';
 
 function SongListScreen({ navigation }) {
 
@@ -36,16 +35,15 @@ function SongListScreen({ navigation }) {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('blur', async () => {
-
-            setIsPlaying(false);
-            if (soundObj !== null && soundObj.isLoaded && soundObj.isPlaying) {
+            if (soundObj !== null && soundObj.isLoaded && isPlaying) {
                 const status = await pause(playbackObj);
+                setIsPlaying(false);
                 setSoundObj(status);
             }
         });
 
         return unsubscribe;
-    }, [navigation, soundObj, playbackObj]);
+    }, [navigation, soundObj, playbackObj, isPlaying]);
 
     const handleAudioPress = async (songItem) => {
         // playing audio for the first time.
