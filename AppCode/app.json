@@ -3,7 +3,7 @@
     "name": "MusicAsLanguageApp",
     "slug": "MusicAsLanguageApp",
     "privacy": "public",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -20,7 +20,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.northshorescholarshipfoundation.musicaslanguage",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.2",
+      "infoPlist": {
+        "NSUserActivityTypes": [
+          "INSendMessageIntent"
+        ],
+        "UIRequiresFullScreen": true
+      }
     },
     "android": {
       "adaptiveIcon": {
