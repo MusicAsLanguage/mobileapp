@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import defaultStyles from '../config/styles';
 import colors from '../config/colors';
 
-function AppTextInput({ icon, ...otherProps }) {
+function AppTextInput({ icon, rightIcon, rightIconOnPress, ...otherProps }) {
     return (
         <View style={styles.container}>
             {icon && (
@@ -18,9 +18,19 @@ function AppTextInput({ icon, ...otherProps }) {
             )}
             <TextInput 
                 placeholderTextColor={defaultStyles.colors.medium}
-                style={[defaultStyles.text, {width: "90%"}]} 
+                style={[defaultStyles.text, {width: "80%"}]} 
                 {...otherProps} 
             />
+            {rightIcon && rightIconOnPress && (
+                <TouchableOpacity onPress={rightIconOnPress}>
+                    <MaterialCommunityIcons 
+                        name={rightIcon} 
+                        size={20} 
+                        color={defaultStyles.colors.medium} 
+                        style={styles.rightIcon}
+                    />
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
@@ -36,6 +46,9 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10
+    },
+    rightIcon: {
+        marginLeft: 10
     },
 })
 
