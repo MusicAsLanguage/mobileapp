@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, StyleSheet, StatusBar, View } from "react-native";
-import { Video } from "expo-av";
+import { Video, Audio } from "expo-av";
 import ActivityCompletion from "../components/ActivityCompletion";
 
 function ActivityScreen({ navigation, route }) {
@@ -17,6 +17,10 @@ function ActivityScreen({ navigation, route }) {
   const completionRef = useRef(0);
 
   const { onPlayStateChanged, updateStatusData } = useLesson();
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   useEffect(() => {
     // Workaround to hide the status bar & the tab bar to make video full screen

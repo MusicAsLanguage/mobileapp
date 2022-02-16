@@ -21,6 +21,10 @@ function SongListScreen({ navigation }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
 
+    Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+    });
+
     useEffect(() => {
         let mounted = true;
         getLessons()

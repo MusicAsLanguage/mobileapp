@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
-import { Video } from "expo-av";
+import { Video, Audio } from "expo-av";
 
 import AppText from "../components/AppText";
 import Screen from "../components/Screen";
@@ -25,8 +25,11 @@ function HomeScreen({ navigation }) {
   const [lessons, setLessons] = useState([]);
   const player = useRef(null);
   const { logOut } = useAuth();
-  const { fetchAllLessonData, fetchStatusData, getLessonProgress } =
-    useLesson();
+  const { fetchAllLessonData, fetchStatusData, getLessonProgress } = useLesson();
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   useEffect(() => {
     let mounted = true;
