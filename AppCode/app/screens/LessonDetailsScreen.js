@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { SafeAreaView, View, FlatList, StyleSheet, Alert } from "react-native";
-import { Video } from "expo-av";
+import { Video, Audio } from "expo-av";
 
 import AppText from "../components/AppText";
 import ActivityListItem from "../components/ActivityListItem";
@@ -29,6 +29,10 @@ function LessonDetailsScreen({ navigation, route }) {
   // Need to pause the video when navigate away to a new screen
   const player = useRef(null);
   const [statusRefreshed, setStatusRefreshed] = useState(false);
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   useEffect(() => {
     const blur = navigation.addListener("blur", () => {
