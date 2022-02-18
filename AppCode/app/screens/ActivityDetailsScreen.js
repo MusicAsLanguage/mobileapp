@@ -79,14 +79,14 @@ function ActivityScreen({ navigation, route }) {
       StatusBar.setHidden(true, "none");
 
       setVideoUri(activityVideo.Url);
-    }
 
-    return () => {
-      parent.setOptions({
-        tabBarVisible: true,
-      });
-      mounted = false;
-    };
+      return () => {
+        parent.setOptions({
+          tabBarVisible: true,
+        });
+        mounted = false;
+      };
+    }
   }, []); // Run only once at mount
 
   useEffect(() => {
