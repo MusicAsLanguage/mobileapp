@@ -1,5 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { SafeAreaView, View, FlatList, StyleSheet, Alert } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
@@ -30,13 +37,43 @@ function LessonDetailsScreen({ navigation, route }) {
   const player = useRef(null);
   const [statusRefreshed, setStatusRefreshed] = useState(false);
 
-  useEffect(() => {
-    const blur = navigation.addListener("blur", () => {
-      player?.current?.pauseAsync();
-      onPlayStateChanged(false);
-    });
+  // pull to refresh
+  const [refreshing, setRefreshing] = useState(false);
+  const [videoUri, setVideoUri] = useState("");
+  const [lessonData, setLessonData] = useState(lesson);
 
-    return blur;
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => {
+      setLessonData([]);
+      setVideoUri("");
+
+      wait(500).then(() => {
+        setLessonData(lesson);
+        setVideoUri(lesson.IntroVideo.Url);
+      });
+
+      setRefreshing(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      const blur = navigation.addListener("blur", () => {
+        player?.current?.pauseAsync();
+        onPlayStateChanged(false);
+      });
+
+      return () => {
+        blur();
+        mounted = false;
+      };
+    }
   }, [navigation]); // only rerun the effect if navigation changes
 
   useEffect(() => {
@@ -57,6 +94,8 @@ function LessonDetailsScreen({ navigation, route }) {
 
             reloginAlert();
           }
+          setLessonData(lesson);
+          setVideoUri(lesson.IntroVideo.Url);
         });
       }, 300);
     });
@@ -107,7 +146,7 @@ function LessonDetailsScreen({ navigation, route }) {
   };
 
   const onLoadStart = async (playbackStatus) => {
-    console.log("loaded lesson video started");
+    //console.log("lesson video load started");
   };
   const onLoad = async (playbackStatus) => {
     console.log("Video loaded: ", lesson.IntroVideo.Url);
@@ -124,11 +163,16 @@ function LessonDetailsScreen({ navigation, route }) {
 
   return (
     <Screen style={styles.container}>
-      <View style={styles.lessonContainer}>
+      <ScrollView
+        contentContainerStyle={styles.lessonContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <BackButton onPress={() => navigation.navigate(routes.HOME)} />
         <View style={styles.lessonVideoContainer}>
           <Video
-            source={{ uri: lesson.IntroVideo.Url }}
+            source={{ uri: videoUri }}
             ref={player}
             resizeMode="cover"
             useNativeControls
@@ -161,19 +205,22 @@ function LessonDetailsScreen({ navigation, route }) {
           <AppText style={styles.activitySectionTitle}>
             {uistrings.Activities} ({lesson.Activities.length})
           </AppText>
-          <SafeAreaView>
-            <FlatList
-              data={lesson.Activities}
-              key={lesson.Activities._id}
-              numColumns={2}
-              columnWrapperStyle={styles.activityItem}
-              keyExtractor={(activities) => activities._id}
-              renderItem={({ item }) => renderItem(item)}
-            />
-          </SafeAreaView>
+          {lessonData.Activities ? (
+            <ScrollView contentContainerStyle={styles.activityList}>
+              {lessonData.Activities.map((item, index) => (
+                <View style={styles.activityItem} key={index}>
+                  {renderItem(item)}
+                </View>
+              ))}
+            </ScrollView>
+          ) : (
+            <View>
+              <ActivityIndicator size={33}></ActivityIndicator>
+            </View>
+          )}
         </View>
         {lessonCompletionNotification(lesson)}
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
@@ -184,8 +231,12 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "flex-start",
   },
+  activityList: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+  },
   activityItem: {
-    justifyContent: "space-between",
+    width: "50%",
   },
   activitySectionTitle: {
     textAlign: "left",

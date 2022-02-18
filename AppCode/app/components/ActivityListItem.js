@@ -49,7 +49,7 @@ function ActivityListItem({
 
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    width: "95%",
     paddingBottom: 20,
   },
   video: {
