@@ -106,6 +106,22 @@ function LessonDetailsScreen({ navigation, route }) {
     );
   };
 
+  const onLoadStart = async (playbackStatus) => {
+    console.log("loaded lesson video started");
+  };
+  const onLoad = async (playbackStatus) => {
+    console.log("Video loaded: ", lesson.IntroVideo.Url);
+  };
+
+  const onError = async (err) => {
+    console.log(
+      "Failed to load video ",
+      lesson.IntroVideo.Url,
+      " with error: ",
+      err
+    );
+  };
+
   return (
     <Screen style={styles.container}>
       <View style={styles.lessonContainer}>
@@ -114,9 +130,11 @@ function LessonDetailsScreen({ navigation, route }) {
           <Video
             source={{ uri: lesson.IntroVideo.Url }}
             ref={player}
-            shouldPlay
             resizeMode="cover"
             useNativeControls
+            onLoad={onLoad}
+            onLoadStart={onLoadStart}
+            onError={onError}
             style={styles.lessonVideo}
           />
         </View>

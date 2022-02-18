@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
-import { Alert, FlatList, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Video } from "expo-av";
 
 import AppText from "../components/AppText";
@@ -28,8 +37,30 @@ function HomeScreen({ navigation }) {
   const { fetchAllLessonData, fetchStatusData, getLessonProgress } =
     useLesson();
 
-  useEffect(() => {
-    let mounted = true;
+  // Add ability to refresh the data
+  const [refreshing, setRefreshing] = useState(false);
+  const [videoUri, setVideoUri] = useState("");
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => {
+      let mounted = true;
+      setLessons([]);
+
+      setVideoUri("");
+      fetchLesson(mounted);
+      setVideoUri(intro.IntroVideo.Url);
+      setRefreshing(false);
+      mounted = false;
+    });
+  }, []);
+
+  const fetchLesson = (mounted) => {
     fetchAllLessonData().then((response) => {
       if (mounted) {
         if (response.ok) {
@@ -46,9 +77,16 @@ function HomeScreen({ navigation }) {
               setLessons(allLessons.slice(1));
             }
           }
+          setVideoUri(allLessons[0].IntroVideo.Url);
         }
       }
     });
+  };
+
+  useEffect(() => {
+    let mounted = true;
+    fetchLesson(mounted);
+
     return () => (mounted = false);
   }, []);
 
@@ -102,51 +140,83 @@ function HomeScreen({ navigation }) {
     );
   };
 
+  const onLoad = async (playbackStatus) => {
+    console.log("Video loaded: ", videoUri);
+  };
+
+  const onError = async (err) => {
+    console.log("Failed to load video ", videoUri, " with error: ", err);
+  };
+
   return (
     <Screen style={styles.screen}>
-      <View style={styles.introContainer}>
-        <View style={styles.introVideoContainer}>
-          <Video
-            source={{ uri: intro.IntroVideo.Url }}
-            ref={player}
-            shouldPlay
-            resizeMode="cover"
-            useNativeControls
-            style={styles.introVideo}
-          />
-          <View style={styles.titleContainer}>
-            <View style={styles.videoNameDescSect}>
-              <AppText style={styles.introTitle}>{intro.Name}</AppText>
-              <AppText style={styles.introDescription}>
-                {intro.Description}
-              </AppText>
-            </View>
-            <View style={styles.videoDurationSect}>
-              <Icon
-                name="volume-medium"
-                backgroudColor="transparent"
-                iconColor={colors.medblue}
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View style={styles.introContainer}>
+          <View style={styles.introVideoContainer}>
+            {!videoUri ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ActivityIndicator />
+              </View>
+            ) : (
+              <Video
+                source={{
+                  uri: videoUri, // intro.IntroVideo.Url,
+                }}
+                ref={player}
+                resizeMode="cover"
+                useNativeControls
+                onLoad={onLoad}
+                onError={onError}
+                style={styles.introVideo}
               />
-              <AppText style={styles.videoLength}>
-                {introLength} {uistrings.Minutes}
-              </AppText>
+            )}
+            <View style={styles.titleContainer}>
+              <View style={styles.videoNameDescSect}>
+                <AppText style={styles.introTitle}>{intro.Name}</AppText>
+                <AppText style={styles.introDescription}>
+                  {intro.Description}
+                </AppText>
+              </View>
+              <View style={styles.videoDurationSect}>
+                <Icon
+                  name="volume-medium"
+                  backgroudColor="transparent"
+                  iconColor={colors.medblue}
+                />
+                <AppText style={styles.videoLength}>
+                  {introLength} {uistrings.Minutes}
+                </AppText>
+              </View>
             </View>
           </View>
+          <ListItemSeparator />
+          <View style={styles.lessonContainer}>
+            <ScrollView>
+              {lessons.map((item, index) => (
+                <View key={index}>{renderItem(item)}</View>
+              ))}
+            </ScrollView>
+          </View>
         </View>
-        <ListItemSeparator />
-        <View style={styles.lessonContainer}>
-          <FlatList
-            data={lessons}
-            keyExtractor={(lesson) => lesson._id.toString()}
-            renderItem={({ item }) => renderItem(item)}
-          />
-        </View>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   introContainer: {
     flex: 1,
     flexDirection: "column",

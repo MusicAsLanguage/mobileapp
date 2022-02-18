@@ -81,8 +81,17 @@ function ActivityScreen({ navigation, route }) {
     setDuration(durationMillis);
     if (durationMillis != 0) {
       const startPos = durationMillis * (activityPlayState / 10);
-      player.current.playFromPositionAsync(startPos);
+      // player.current.playFromPositionAsync(startPos);
+      // player.current.pauseAsync();
+      player.current.setPositionAsync(startPos);
     }
+  };
+
+  const onError = async (err) => {
+    console.log(
+      //"Did you notice problem loading the video? Pull screen to retry"
+      err
+    );
   };
 
   const onPlaybackStatusUpdate = async (playbackStatus) => {
@@ -122,6 +131,7 @@ function ActivityScreen({ navigation, route }) {
         resizeMode="cover"
         useNativeControls
         onLoad={onLoad}
+        onError={onError}
         onPlaybackStatusUpdate={onPlaybackStatusUpdate}
         style={videoFinished ? styles.videoFaded : styles.video}
       />
