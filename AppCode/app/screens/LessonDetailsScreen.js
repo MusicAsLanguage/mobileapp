@@ -149,7 +149,7 @@ function LessonDetailsScreen({ navigation, route }) {
     //console.log("lesson video load started");
   };
   const onLoad = async (playbackStatus) => {
-    console.log("Video loaded: ", lesson.IntroVideo.Url);
+    //console.log("Video loaded: ", lesson.IntroVideo.Url);
   };
 
   const onError = async (err) => {

@@ -141,7 +141,7 @@ function HomeScreen({ navigation }) {
   };
 
   const onLoad = async (playbackStatus) => {
-    console.log("Video loaded: ", videoUri);
+    //console.log("Video loaded: ", videoUri);
   };
 
   const onError = async (err) => {
