@@ -220,7 +220,6 @@ const styles = StyleSheet.create({
   introContainer: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
   },
   introDescription: {
     color: colors.black,
