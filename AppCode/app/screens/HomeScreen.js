@@ -3,14 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
   Alert,
-  FlatList,
   RefreshControl,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from "react-native";
-import { Video } from "expo-av";
+import { Audio, Video } from "expo-av";
 
 import AppText from "../components/AppText";
 import Screen from "../components/Screen";
@@ -36,6 +34,10 @@ function HomeScreen({ navigation }) {
   const { logOut } = useAuth();
   const { fetchAllLessonData, fetchStatusData, getLessonProgress } =
     useLesson();
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   // Add ability to refresh the data
   const [refreshing, setRefreshing] = useState(false);

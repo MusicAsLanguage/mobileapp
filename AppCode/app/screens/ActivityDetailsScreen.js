@@ -8,7 +8,7 @@ import {
   StatusBar,
   View,
 } from "react-native";
-import { Video } from "expo-av";
+import { Audio, Video } from "expo-av";
 import ActivityCompletion from "../components/ActivityCompletion";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
@@ -59,6 +59,10 @@ function ActivityScreen({ navigation, route }) {
       setRefreshing(false);
     });
   }, []);
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   useEffect(() => {
     let mounted = true;

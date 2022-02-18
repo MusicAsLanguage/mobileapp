@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { Video } from "expo-av";
+import { Audio, Video } from "expo-av";
 
 import AppText from "../components/AppText";
 import ActivityListItem from "../components/ActivityListItem";
@@ -60,6 +60,10 @@ function LessonDetailsScreen({ navigation, route }) {
       setRefreshing(false);
     });
   }, []);
+
+  Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+  });
 
   useEffect(() => {
     let mounted = true;

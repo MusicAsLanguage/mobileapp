@@ -21,6 +21,7 @@ const validationSchema = Yup.object().shape({
 function RegisterScreen({ navigation }) {
     const auth = useAuth();
     const [error, setError] = useState();
+    const [isSecureEntry, setIsSecureEntry] = useState(true);
 
     const handleSubmit = async (userInfo) => {
         const result = await signup(userInfo);
@@ -83,8 +84,12 @@ function RegisterScreen({ navigation }) {
                         icon="lock"
                         name="password"
                         placeholder=""
-                        secureTextEntry
+                        secureTextEntry={isSecureEntry}
                         textContentType="password"
+                        rightIcon={isSecureEntry? "eye" : "eye-off"}
+                        rightIconOnPress={() => {
+                            setIsSecureEntry((prev) => !prev);
+                        }}
                     />
                     <SubmitButton title={uistrings.SignUp} marginTop={50}/>
                 </AppForm>
