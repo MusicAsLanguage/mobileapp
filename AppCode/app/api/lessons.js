@@ -1,7 +1,7 @@
-import client from './client';
+import client from "./client";
 
-const endpoint = '/lesson/getLessons';
+const endpoint = "/lesson/getLessons";
 
-const getLessons = () => client.get(endpoint);
+const getLessons = async () => client.get(endpoint);
 
 export default getLessons;

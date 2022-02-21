@@ -25,7 +25,7 @@ function ActivityListItem({
         {thumbnail && (
           <ImageBackground
             style={styles.thumbnail}
-            source={thumbnail}
+            source={{ uri: thumbnail.uri, cache: "force-cache" }}
             imageStyle={styles.imageStyle}
           >
             {<ActivityStatus value={status} />}
@@ -49,7 +49,7 @@ function ActivityListItem({
 
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    width: "95%",
     paddingBottom: 20,
   },
   video: {

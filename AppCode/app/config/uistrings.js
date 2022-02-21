@@ -18,6 +18,7 @@ export default {
   LogIn: "Login",
   LogOut: "Log Out",
   Messages: "Messages",
+  MessageSent: "Your message has been sent.",
   Metronome: "Metronome",
   Music: "Music",
   Minutes: "min",
@@ -42,5 +43,6 @@ export default {
   TermsAndConditions: "Terms & Conditions",
   Toolbox: "Toolbox",
   TypeMessage: "Type your message here.",
-  MessageSent: "Your message has been sent.",
+  VideoWasNotLoadedPullToRetry:
+    "Sorry, video was not loaded.\nPlease, pull down to try again.",
 };
