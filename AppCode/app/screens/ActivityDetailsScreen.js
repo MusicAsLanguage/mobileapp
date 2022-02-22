@@ -14,6 +14,7 @@ import colors from "../config/colors";
 import Icon from "../components/Icon";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import uistrings from "../config/uistrings";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 function ActivityScreen({ navigation, route }) {
   const { lessonId, activityId, activityVideo, activityPlayState } =
@@ -130,6 +131,7 @@ function ActivityScreen({ navigation, route }) {
   };
 
   const onLoad = async (playbackStatus) => {
+    console.log("loaded ", new Date());
     setErrorMsg("");
     const durationMillis = playbackStatus.durationMillis;
     durationRef.current = durationMillis;
@@ -217,17 +219,24 @@ function ActivityScreen({ navigation, route }) {
           />
         }
       >
-        <Video
-          source={{ uri: videoUri }}
-          ref={player}
-          shouldPlay={false}
-          resizeMode="cover"
-          useNativeControls
-          onLoad={onLoad}
-          onError={onError}
-          onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-          style={videoFinished ? styles.videoFaded : styles.video}
-        />
+        {!videoUri ? (
+          <LoadingIndicator />
+        ) : (
+          <Video
+            source={{ uri: videoUri }}
+            ref={player}
+            shouldPlay={false}
+            resizeMode="cover"
+            useNativeControls
+            onLoadStart={() =>
+              console.log("load start ", new Date(), " - ", videoUri)
+            }
+            onLoad={onLoad}
+            onError={onError}
+            onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+            style={videoFinished ? styles.videoFaded : styles.video}
+          />
+        )}
         {showErrorMessage()}
         {showEndState()}
       </ScrollView>

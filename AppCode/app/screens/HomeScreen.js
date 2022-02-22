@@ -20,6 +20,7 @@ import useAuth from "../auth/useAuth";
 import uistrings from "../config/uistrings";
 import Icon from "../components/Icon";
 import useLesson from "../data/lesson/lessondata";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 function HomeScreen({ navigation }) {
   /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
@@ -142,10 +143,6 @@ function HomeScreen({ navigation }) {
     );
   };
 
-  const onLoad = async (playbackStatus) => {
-    //console.log("Video loaded: ", videoUri);
-  };
-
   const onError = async (err) => {
     console.log("Failed to load video ", videoUri, " with error: ", err);
   };
@@ -161,14 +158,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.introContainer}>
           <View style={styles.introVideoContainer}>
             {!videoUri ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <ActivityIndicator />
-              </View>
+              <LoadingIndicator />
             ) : (
               <Video
                 source={{
@@ -177,7 +167,10 @@ function HomeScreen({ navigation }) {
                 ref={player}
                 resizeMode="cover"
                 useNativeControls
-                onLoad={onLoad}
+                onLoadStart={() =>
+                  console.log("load start ", new Date(), " - ", videoUri)
+                }
+                onLoad={() => console.log("loaded ", new Date())}
                 onError={onError}
                 style={styles.introVideo}
               />

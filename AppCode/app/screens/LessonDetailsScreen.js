@@ -21,6 +21,7 @@ import uistrings from "../config/uistrings";
 import useAuth from "../auth/useAuth";
 import useLesson from "../data/lesson/lessondata";
 import LessonCompletion from "../components/LessonCompletion";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -149,13 +150,6 @@ function LessonDetailsScreen({ navigation, route }) {
     );
   };
 
-  const onLoadStart = async (playbackStatus) => {
-    //console.log("lesson video load started");
-  };
-  const onLoad = async (playbackStatus) => {
-    //console.log("Video loaded: ", lesson.IntroVideo.Url);
-  };
-
   const onError = async (err) => {
     console.log(
       "Failed to load video ",
@@ -175,16 +169,22 @@ function LessonDetailsScreen({ navigation, route }) {
       >
         <BackButton onPress={() => navigation.navigate(routes.HOME)} />
         <View style={styles.lessonVideoContainer}>
-          <Video
-            source={{ uri: videoUri }}
-            ref={player}
-            resizeMode="cover"
-            useNativeControls
-            onLoad={onLoad}
-            onLoadStart={onLoadStart}
-            onError={onError}
-            style={styles.lessonVideo}
-          />
+          {!videoUri ? (
+            <LoadingIndicator />
+          ) : (
+            <Video
+              source={{ uri: videoUri }}
+              ref={player}
+              resizeMode="cover"
+              useNativeControls
+              onLoadStart={() =>
+                console.log("load start ", new Date(), " - ", videoUri)
+              }
+              onLoad={() => console.log("loaded ", new Date())}
+              onError={onError}
+              style={styles.lessonVideo}
+            />
+          )}
         </View>
         <View style={styles.lessonDetail}>
           <View style={styles.lessonNameDescSect}>
