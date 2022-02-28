@@ -34,7 +34,7 @@ export default {
     "Your access has been expired and require to login in using user name and password again",
   Send: "Send",
   SendMessage: "Send Message",
-  SendMessageToMAL: "Send a message to Music As Language",
+  SendMessageToMAL: "Send a message to MusicAsLanguage",
   Settings: "Settings",
   SignUp: "Sign Up",
   SongList: "Song List",
