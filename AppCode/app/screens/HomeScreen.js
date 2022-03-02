@@ -119,6 +119,30 @@ function HomeScreen({ navigation }) {
     return focus;
   }, [navigation]);
 
+  // TRICK, REMOVE IN THE FUTURE: fix the SDK bug that the audio doesn't work 
+  // even if we set the configuration on iOS: `playsInSilentModeIOS`, if the video doesn't autoplay.
+  // Walkaround by autoplay a silent audio in the background.
+  useEffect(
+    () => {
+      const sound = new Audio.Sound();
+      
+      if (Platform.OS === 'ios') {
+        const playSilentSound = async () => {
+          await sound.loadAsync(require('../assets/2-seconds-of-silence.mp3'))
+          await sound.playAsync()
+          await sound.setIsLoopingAsync(true)
+        }
+        void playSilentSound()
+      }
+
+      return () => {
+        void sound.stopAsync()
+        void sound.unloadAsync()
+      }
+    },
+    [ ],
+  )
+
   const renderItem = (item) => {
     let percentage = getLessonProgress(item);
 
