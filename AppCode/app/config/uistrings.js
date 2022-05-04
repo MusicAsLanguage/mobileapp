@@ -20,7 +20,6 @@ export default {
   Messages: "Messages",
   MessageSent: "Your message has been sent.",
   Metronome: "Metronome",
-  Music: "Music",
   Minutes: "min",
   Name: "NAME",
   OK: "OK",
