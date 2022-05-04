@@ -41,7 +41,7 @@ export default {
   Songs: "Songs",
   TagLine: "#MusicAsLanguage",
   TermsAndConditions: "Terms & Conditions",
-  Toolbox: "Toolbox",
+  MusicBox: "Music box",
   TypeMessage: "Type your message here.",
   VideoWasNotLoadedPullToRetry:
     "Sorry, video was not loaded.\nPlease, pull down to try again.",
