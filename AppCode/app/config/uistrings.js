@@ -21,6 +21,7 @@ export default {
   MessageSent: "Your message has been sent.",
   Metronome: "Metronome",
   Minutes: "min",
+  MusicBox: "Music Box",
   Name: "NAME",
   OK: "OK",
   OneActivity: "1 Activity",
@@ -45,7 +46,6 @@ export default {
   Songs: "Songs",
   TagLine: "#MusicAsLanguage",
   TermsAndConditions: "Terms & Conditions",
-  MusicBox: "Music box",
   TypeMessage: "Type your message here.",
   VideoWasNotLoadedPullToRetry:
     "Sorry, video was not loaded.\nPlease, pull down to try again.",
