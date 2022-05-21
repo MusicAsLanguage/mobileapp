@@ -32,11 +32,11 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen 
-            name={uistrings.Toolbox} 
+            name={uistrings.MusicBox} 
             component={ToolboxNavigator}
             options={{
                 tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="briefcase-download-outline" color={color} size={size} /> 
+                    <MaterialCommunityIcons name="music-box-outline" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 
