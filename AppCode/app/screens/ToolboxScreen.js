@@ -1,14 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Screen from '../components/Screen';
-import ListItem from '../components/ListItem';
-import Icon from '../components/Icon';
 import colors from '../config/colors';
 import routes from "../navigation/routes";
 import uistrings from '../config/uistrings';
-import GradientButton from '../components/GradientButton';
+import { GradientButtonLeft, GradientButtonRight } from '../components/GradientButton';
 
 
 function ToolboxScreen({navigation}) {
@@ -16,84 +14,104 @@ function ToolboxScreen({navigation}) {
         <Screen style={styles.screen}>
             
             <View style={styles.musicContainer}>
-                <View style={styles.buttonContainer}>
-                    <GradientButton
-                        onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryInstruction)}
-                        colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
-                        text="Instruction"
-                        renderIcon={() => (
-                            <FontAwesome5
-                                name="paper-plane"
-                                size={50}
-                                color={colors.white}
-                                style={{ marginLeft: 10, marginRight: 20 }}
-                            />
-                        )}
-                    />
+                <View style={styles.instruMetroContainer}>
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonRight
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryInstruction)}
+                            colors={[colors.white, colors.magenta, colors.magenta]}
+                            text="Instruction"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="account-music"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
+
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonRight
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryMetronome)}
+                            colors={[colors.white, colors.deepskyblue, colors.deepskyblue]}
+                            text="Metronome"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="metronome"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
                 </View>
 
-                <View style={styles.buttonContainer}>
-                    <GradientButton
-                        onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryBeginner)}
-                        colors={[colors.deepskyblue, colors.deepskyblue, colors.white]}
-                        text="Beginner"
-                        renderIcon={() => (
-                            <FontAwesome5
-                                name="paper-plane"
-                                size={50}
-                                color={colors.white}
-                                style={{ marginLeft: 10, marginRight: 20 }}
-                            />
-                        )}
-                    />
-                </View>
+                <View style={styles.songContainer}>
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonLeft
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryBeginner)}
+                            colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
+                            text="Beginner"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="music-note-half-dotted"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
 
-                <View style={styles.buttonContainer}>
-                    <GradientButton
-                        onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryIntermediate)}
-                        colors={[colors.magenta, colors.magenta, colors.white]}
-                        text="Intermediate"
-                        renderIcon={() => (
-                            <Ionicons
-                                name="md-airplane-outline"
-                                size={50}
-                                color={colors.white}
-                                style={{ marginLeft: 10, marginRight: 20 }}
-                            />
-                        )}
-                    />
-                </View>
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonLeft
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryIntermediate)}
+                            colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
+                            text="Intermediate"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="music-note-quarter-dotted"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
 
-                <View style={styles.buttonContainer}>
-                    <GradientButton
-                        onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategorySuperStar)}
-                        colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
-                        text="Super Star"
-                        renderIcon={() => (
-                            <Ionicons
-                                name="rocket-outline"
-                                size={50}
-                                color={colors.white}
-                                style={{ marginLeft: 10, marginRight: 20 }}
-                            />
-                        )}
-                    />
-                </View>
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonLeft
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategorySuperStar)}
+                            colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
+                            text="Super Star"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="music-note-eighth-dotted"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
 
-                <View style={styles.buttonContainer}>
-                    <GradientButton
-                        onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryLegend)}
-                        colors={[colors.deepskyblue, colors.deepskyblue, colors.white]}
-                        text="Legend"
-                        renderIcon={() => (
-                            <MaterialCommunityIcons
-                                name="medal-outline"
-                                size={50}
-                                color={colors.white}
-                                style={{ marginLeft: 10, marginRight: 20 }}
-                            />
-                        )}
-                    />
+                    <View style={styles.buttonContainer}>
+                        <GradientButtonLeft
+                            onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryLegend)}
+                            colors={[colors.yellowgreen, colors.yellowgreen, colors.white]}
+                            text="Legend"
+                            renderIcon={() => (
+                                <MaterialCommunityIcons
+                                    name="music-note-sixteenth-dotted"
+                                    size={40}
+                                    color={colors.white}
+                                    style={{ marginLeft: 10, marginRight: 20 }}
+                                />
+                            )}
+                        />
+                    </View>
                 </View>
             </View>
         </Screen>
@@ -102,16 +120,24 @@ function ToolboxScreen({navigation}) {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        marginVertical: 15,
+        marginVertical: 10,
+    },
+    instruMetroContainer: {
+        marginLeft: 50,
+        marginBottom: 22,
     },
     musicContainer: {
         flex: 1,
-        marginTop: 50,
-        marginHorizontal: 50,
+        marginVertical: 30,
+        marginHorizontal: 25,
         justifyContent: 'center',
     },
     screen: {
         backgroundColor: colors.white
+    },
+    songContainer: {
+        marginRight: 50,
+        marginTop: 22,
     }
 })
 

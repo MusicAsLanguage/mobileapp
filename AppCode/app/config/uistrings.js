@@ -41,6 +41,7 @@ export default {
   SongCategoryInstruction: "Instruction",
   SongCategoryIntermediate: "Intermediate",
   SongCategoryLegend: "Legend",
+  SongCategoryMetronome: "Metronome",
   SongCategorySuperStar: "Superstar",
   SongList: "Song List",
   Songs: "Songs",
