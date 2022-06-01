@@ -2,21 +2,6 @@ import RewardContext from "./rewardcontext";
 import { useContext } from "react";
 import getLessons from "../../api/lessons";
 
-// const rewardConfig = {
-//   ActivityRepeat: 0.1,
-//   SongRepeat: 0.1,
-//   Trophies: [
-//     {
-//       Description: "",
-//       Name: "Golden Microphone",
-//       ScoreThrehold: 1000,
-//       Url: "https://malstorecdn.azureedge.net/assets/trophy/golden_mic.png",
-//       _id: 1,
-//     },
-//   ],
-//   _id: 1,
-// };
-
 export default useRewardConfig = () => {
   const { rewardConfig, setRewardConfig } = useContext(RewardContext);
 

@@ -51,4 +51,8 @@ export default {
   TypeMessage: "Type your message here.",
   VideoWasNotLoadedPullToRetry:
     "Sorry, video was not loaded.\nPlease, pull down to try again.",
+  WelcomeMessage: "Welcome!",
+  WelcomeScore: "You've earned",
+  WelcomeSubMessage: "Keep it up!",
+  WelcomeSubMessageWhenNoScore: "Have fun singing!",
 };

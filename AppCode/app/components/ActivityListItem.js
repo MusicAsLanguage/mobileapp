@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import AppText from "./AppText";
 import ActivityStatus from "./ActivityStatus";
-import Icon from "./Icon";
+import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
 
 function ActivityListItem({
@@ -17,6 +17,7 @@ function ActivityListItem({
   duration,
   thumbnail,
   status,
+  repeats,
   onPress,
 }) {
   const durationMin = Math.round(duration / 60);
@@ -31,28 +32,18 @@ function ActivityListItem({
             source={{ uri: thumbnail.uri, cache: "force-cache" }}
             imageStyle={styles.imageStyle}
           >
-            {/* <View
-              style={{
-                //alignItems: "space-evenly",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flex: 0.4,
-                width: "100%",
-                //bottom: 0,
-                //backgroundColor: "",
-                //opacity: 0.3,
-              }}
-            > */}
-            {<ActivityStatus value={status} />}
-            {/* {
-                <Icon
-                  name={repeatIcons}
-                  size={30}
-                  backgroudColor={colors.medblue}
-                />
-              } */}
-            {/* </View> */}
+            <View style={styles.thumbnailbottompanel}>
+              {<ActivityStatus value={status} />}
+              {repeats > 0 && (
+                <View style={styles.repeatcount}>
+                  <MaterialIcons
+                    name="plus-one"
+                    size={28}
+                    color={colors.white}
+                  ></MaterialIcons>
+                </View>
+              )}
+            </View>
           </ImageBackground>
         )}
       </TouchableOpacity>
@@ -87,6 +78,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     aspectRatio: 1.5,
     borderRadius: 5,
+  },
+  thumbnailbottompanel: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 0.4,
+    width: "100%",
+    paddingRight: 10,
+  },
+  repeatcount: {
+    //backgroundColor: colors.darkviolet,
+    borderRadius: 20,
+    justifyContent: "center",
   },
   imageStyle: {
     borderRadius: 6,

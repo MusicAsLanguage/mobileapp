@@ -36,6 +36,7 @@ function ActivityScreen({ navigation, route }) {
   const [score, setScore] = useState(0);
   const [playCounts, setPlayCounts] = useState(0);
   const [status, setStatus] = useState({});
+  const [workaround, setWorkaround] = useState(false);
 
   const durationRef = useRef(0);
   const positionRef = useRef(0);
@@ -114,7 +115,7 @@ function ActivityScreen({ navigation, route }) {
       fetchRewardConfig(mounted);
       repeatsRef.current = activityRepeats;
 
-      setPlayCounts(activityPlayState / 10 + activityRepeats * 1);
+      setPlayCounts(Math.floor(activityPlayState / 10) + activityRepeats * 1);
 
       return () => {
         parent.setOptions({
@@ -159,17 +160,13 @@ function ActivityScreen({ navigation, route }) {
   }, [navigation]); // only rerun the effect if navigation changes
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (status.isPlaying === true) {
-        onPlayStateChanged(true);
-      }
+    if (videoFinished === true && playStateChanged === true) {
+      //console.log("should earn score", playStateChanged);
+      setEarnedScore(true);
+    } else {
+      setEarnedScore(false);
     }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [status.isPlaying]);
+  }, [playStateChanged, videoFinished]);
 
   useEffect(() => {
     let isMounted = true;
@@ -179,19 +176,12 @@ function ActivityScreen({ navigation, route }) {
       durationRef.current = status.durationMillis;
       positionRef.current = status.positionMillis;
 
-      // console.log(
-      //   positionRef.current,
-      //   ",",
-      //   durationRef.current,
-      // );
+      //console.log(positionRef.current, ",", durationRef.current);
 
       if (positionRef.current === durationRef.current) {
         setVideoFinished(true);
-
-        if (playStateChanged === true) setEarnedScore(true);
       } else {
         setVideoFinished(false);
-        setEarnedScore(false);
       }
     }
 
@@ -202,6 +192,9 @@ function ActivityScreen({ navigation, route }) {
 
   useEffect(() => {
     if (status?.didJustFinish === true) {
+      if (workaround === false) {
+        onPlayStateChanged(true);
+      }
       if (playCounts === 0) {
         setScore(activityScore);
       } else {
@@ -209,6 +202,10 @@ function ActivityScreen({ navigation, route }) {
       }
       setPlayCounts(playCounts + 1);
     }
+
+    // clear off workaround flag so next time
+    // play finished consider it intended
+    setWorkaround(false);
   }, [status?.didJustFinish]);
 
   useEffect(() => {
@@ -238,7 +235,17 @@ function ActivityScreen({ navigation, route }) {
           toleranceMillisBefore: 0,
           toleranceMillisAfter: 0,
         });
+
+        console.log(status);
+
+        // workaround: seek on iOS is not accurate so if the positionMilli is not what is expected
+        // let it play
+        if (durationMillis - status.positionMillis < 10) {
+          setWorkaround(true);
+          await player.current.playAsync();
+        }
       } else {
+        setWorkaround(false);
         const status = await player.current.setPositionAsync(startPos);
       }
     }

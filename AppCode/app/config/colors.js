@@ -23,5 +23,6 @@ export default {
   medium: "#6e6969",
   white: "#fff",
   grey: "#808080",
+  steelblue: "#4682B4",
   transparent: "#ffffff00",
 };

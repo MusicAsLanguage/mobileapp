@@ -44,8 +44,6 @@ function LessonDetailsScreen({ navigation, route }) {
   const [videoUri, setVideoUri] = useState("");
   const [lessonData, setLessonData] = useState(lesson);
 
-  const repeatIcons = "license";
-
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -144,6 +142,7 @@ function LessonDetailsScreen({ navigation, route }) {
         duration={item.Videos[0].LengthInSeconds}
         thumbnail={{ uri: item.ImageUrl }}
         status={state}
+        repeats={repeats}
         onPress={() =>
           navigation.navigate(routes.ACTIVITI_DETAILS, {
             lessonId: lesson._id,

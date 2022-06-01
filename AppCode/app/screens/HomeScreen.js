@@ -21,7 +21,7 @@ import uistrings from "../config/uistrings";
 import Icon from "../components/Icon";
 import useLesson from "../data/lesson/lessondata";
 import LoadingIndicator from "../components/LoadingIndicator";
-import { getUserScore } from "../api/score";
+import WelcomeMessage from "../components/WelcomeMessage";
 
 function HomeScreen({ navigation }) {
   /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
@@ -133,11 +133,6 @@ function HomeScreen({ navigation }) {
         await sound.setIsLoopingAsync(true);
       };
       void playSilentSound();
-
-      getUserScore().then((response) => {
-        const score = response.data?.score;
-        console.log(`user score = ${score}`);
-      });
     }
 
     return () => {
@@ -230,6 +225,7 @@ function HomeScreen({ navigation }) {
             </ScrollView>
           </View>
         </View>
+        <WelcomeMessage />
       </ScrollView>
     </Screen>
   );
