@@ -30,6 +30,7 @@ function LessonDetailsScreen({ navigation, route }) {
     fetchStatusData,
     isLessonCompleted,
     getActivityProgress,
+    getActivityRepeats,
     onPlayStateChanged,
     playStateChanged,
   } = useLesson();
@@ -42,6 +43,8 @@ function LessonDetailsScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
   const [videoUri, setVideoUri] = useState("");
   const [lessonData, setLessonData] = useState(lesson);
+
+  const repeatIcons = "license";
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -129,6 +132,9 @@ function LessonDetailsScreen({ navigation, route }) {
 
   const renderItem = (item) => {
     const state = getActivityProgress(lesson._id, item._id);
+    const repeats = getActivityRepeats(lesson._id, item._id);
+
+    //console.log(`activity=${item.Name}, score=${item.Score}`);
 
     return (
       <ActivityListItem
@@ -144,6 +150,8 @@ function LessonDetailsScreen({ navigation, route }) {
             activityId: item._id,
             activityVideo: item.Videos[0],
             activityPlayState: state,
+            activityScore: item.Score,
+            activityRepeats: repeats,
           })
         }
       />

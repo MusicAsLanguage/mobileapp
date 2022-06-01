@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import AppText from "./AppText";
 import ActivityStatus from "./ActivityStatus";
+import Icon from "./Icon";
+import colors from "../config/colors";
 
 function ActivityListItem({
   id,
@@ -18,6 +20,7 @@ function ActivityListItem({
   onPress,
 }) {
   const durationMin = Math.round(duration / 60);
+  const repeatIcons = "license";
 
   return (
     <View style={styles.container}>
@@ -28,7 +31,28 @@ function ActivityListItem({
             source={{ uri: thumbnail.uri, cache: "force-cache" }}
             imageStyle={styles.imageStyle}
           >
+            {/* <View
+              style={{
+                //alignItems: "space-evenly",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flex: 0.4,
+                width: "100%",
+                //bottom: 0,
+                //backgroundColor: "",
+                //opacity: 0.3,
+              }}
+            > */}
             {<ActivityStatus value={status} />}
+            {/* {
+                <Icon
+                  name={repeatIcons}
+                  size={30}
+                  backgroudColor={colors.medblue}
+                />
+              } */}
+            {/* </View> */}
           </ImageBackground>
         )}
       </TouchableOpacity>

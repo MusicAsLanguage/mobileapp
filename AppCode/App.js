@@ -8,11 +8,13 @@ import navigationTheme from "./app/navigation/navigationTheme";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import LessonContext from "./app/data/lesson/lessoncontext";
+import RewardContext from "./app/data/config/rewardcontext";
 
 export default function App() {
   const [user, setUser] = useState();
   const [status, setStatus] = useState();
   const [playStateChanged, setPlayStateChanged] = useState();
+  const [rewardConfig, setRewardConfig] = useState();
 
   const restoreUser = async () => {
     const user = await authStorage.getUser();
@@ -25,13 +27,15 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <LessonContext.Provider
-        value={{ status, setStatus, playStateChanged, setPlayStateChanged }}
-      >
-        <NavigationContainer theme={navigationTheme}>
-          {user ? <AppNavigator /> : <AuthNavigator />}
-        </NavigationContainer>
-      </LessonContext.Provider>
+      <RewardContext.Provider value={{ rewardConfig, setRewardConfig }}>
+        <LessonContext.Provider
+          value={{ status, setStatus, playStateChanged, setPlayStateChanged }}
+        >
+          <NavigationContainer theme={navigationTheme}>
+            {user ? <AppNavigator /> : <AuthNavigator />}
+          </NavigationContainer>
+        </LessonContext.Provider>
+      </RewardContext.Provider>
     </AuthContext.Provider>
   );
 
