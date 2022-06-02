@@ -7,6 +7,7 @@ export default useRewardConfig = () => {
 
   const getRewardConfig = async () => {
     const response = await getLessons();
+
     if (response == null) return null;
 
     const config = response.data[0].RewardConfig;
@@ -17,10 +18,8 @@ export default useRewardConfig = () => {
 
   const getActivityRepeatPoint = async () => {
     if (rewardConfig === undefined) {
-      getRewardConfig().then((response) => {
-        if (response != null) return response.config?.ActivityRepeat;
-        else return null;
-      });
+      const response = await getLessons();
+      return response.data[0].RewardConfig.ActivityRepeat;
     } else {
       return rewardConfig.ActivityRepeat;
     }

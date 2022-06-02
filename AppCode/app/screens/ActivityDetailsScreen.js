@@ -236,7 +236,7 @@ function ActivityScreen({ navigation, route }) {
           toleranceMillisAfter: 0,
         });
 
-        console.log(status);
+        //console.log(status);
 
         // workaround: seek on iOS is not accurate so if the positionMilli is not what is expected
         // let it play

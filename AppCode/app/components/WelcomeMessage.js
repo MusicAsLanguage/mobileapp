@@ -4,6 +4,7 @@ import { getUserScore } from "../api/score";
 import colors from "../config/colors";
 import uistrings from "../config/uistrings";
 import AppText from "./AppText";
+import { Wait } from "./Wait";
 
 function WelcomeMessage() {
   const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -15,23 +16,24 @@ function WelcomeMessage() {
 
     getUserScore().then((response) => {
       const score = response.data?.score;
-      //console.log(`user score = ${score}`);
       setScore(score);
     });
 
-    Animated.timing(fadeAnimation, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: true,
-    }).start(() =>
+    Wait(500).then(() =>
       Animated.timing(fadeAnimation, {
-        toValue: 0,
-        duration: 1000,
-        delay: 3500,
+        toValue: 1,
+        duration: 600,
         useNativeDriver: true,
-      }).start(() => {
-        if (isMounted) setHide(true);
-      })
+      }).start(() =>
+        Animated.timing(fadeAnimation, {
+          toValue: 0,
+          duration: 1000,
+          delay: 3500,
+          useNativeDriver: true,
+        }).start(() => {
+          if (isMounted) setHide(true);
+        })
+      )
     );
 
     return () => (isMounted = false);

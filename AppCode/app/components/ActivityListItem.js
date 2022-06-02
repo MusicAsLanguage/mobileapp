@@ -21,7 +21,6 @@ function ActivityListItem({
   onPress,
 }) {
   const durationMin = Math.round(duration / 60);
-  const repeatIcons = "license";
 
   return (
     <View style={styles.container}>
@@ -34,22 +33,12 @@ function ActivityListItem({
           >
             <View style={styles.thumbnailbottompanel}>
               {<ActivityStatus value={status} />}
-              {repeats > 0 && (
-                <View style={styles.repeatcount}>
-                  <MaterialIcons
-                    name="plus-one"
-                    size={28}
-                    color={colors.white}
-                  ></MaterialIcons>
-                </View>
-              )}
             </View>
           </ImageBackground>
         )}
       </TouchableOpacity>
       <View style={styles.detail}>
         <View style={styles.descSect}>
-          <AppText style={styles.id}>{id}</AppText>
           {description && <AppText style={styles.name}>{name}</AppText>}
         </View>
         <View style={styles.durationSect}>

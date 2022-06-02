@@ -27,15 +27,15 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <RewardContext.Provider value={{ rewardConfig, setRewardConfig }}>
-        <LessonContext.Provider
-          value={{ status, setStatus, playStateChanged, setPlayStateChanged }}
-        >
+      <LessonContext.Provider
+        value={{ status, setStatus, playStateChanged, setPlayStateChanged }}
+      >
+        <RewardContext.Provider value={{ rewardConfig, setRewardConfig }}>
           <NavigationContainer theme={navigationTheme}>
             {user ? <AppNavigator /> : <AuthNavigator />}
           </NavigationContainer>
-        </LessonContext.Provider>
-      </RewardContext.Provider>
+        </RewardContext.Provider>
+      </LessonContext.Provider>
     </AuthContext.Provider>
   );
 
