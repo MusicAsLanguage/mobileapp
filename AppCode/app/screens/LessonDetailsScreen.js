@@ -30,6 +30,7 @@ function LessonDetailsScreen({ navigation, route }) {
     fetchStatusData,
     isLessonCompleted,
     getActivityProgress,
+    getActivityRepeats,
     onPlayStateChanged,
     playStateChanged,
   } = useLesson();
@@ -129,6 +130,9 @@ function LessonDetailsScreen({ navigation, route }) {
 
   const renderItem = (item) => {
     const state = getActivityProgress(lesson._id, item._id);
+    const repeats = getActivityRepeats(lesson._id, item._id);
+
+    //console.log(`activity=${item.Name}, score=${item.Score}`);
 
     return (
       <ActivityListItem
@@ -138,12 +142,15 @@ function LessonDetailsScreen({ navigation, route }) {
         duration={item.Videos[0].LengthInSeconds}
         thumbnail={{ uri: item.ImageUrl }}
         status={state}
+        repeats={repeats}
         onPress={() =>
           navigation.navigate(routes.ACTIVITI_DETAILS, {
             lessonId: lesson._id,
             activityId: item._id,
             activityVideo: item.Videos[0],
             activityPlayState: state,
+            activityScore: item.Score,
+            activityRepeats: repeats,
           })
         }
       />

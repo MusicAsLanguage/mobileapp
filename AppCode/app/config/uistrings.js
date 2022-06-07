@@ -1,6 +1,6 @@
 export default {
   Activities: "Activities",
-  ActivityCompletionMsg: "You did it!",
+  ActivityCompletionMsg: "Play again?",
   AskForHelp: "Ask for Help",
   CreateAccount: "Create Account",
   CreateAnAccount: "Create an Account",
@@ -32,6 +32,7 @@ export default {
   Recovery: "recovery",
   RequireRelogin:
     "Your access has been expired and require to login in using user name and password again",
+  ScoreEarnedMsg: "You earned new score!",
   Send: "Send",
   SendMessage: "Send Message",
   SendMessageToMAL: "Send a message to MusicAsLanguage",
@@ -45,4 +46,8 @@ export default {
   TypeMessage: "Type your message here.",
   VideoWasNotLoadedPullToRetry:
     "Sorry, video was not loaded.\nPlease, pull down to try again.",
+  WelcomeMessage: "Welcome!",
+  WelcomeScore: "You've earned",
+  WelcomeSubMessage: "Keep it up!",
+  WelcomeSubMessageWhenNoScore: "Have fun singing!",
 };

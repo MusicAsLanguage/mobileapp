@@ -57,6 +57,28 @@ export default useLesson = () => {
   };
 
   //
+  //  Purpose: Retrive the specified activity repeat count for a given lesson
+  //  Return: a number
+  //
+  const getActivityRepeats = (lessonId, activityId) => {
+    try {
+      let repeats = 0;
+
+      if (status === undefined) return;
+
+      const activity = status.filter(
+        (item) => item.ActivityId == activityId && item.LessonId == lessonId
+      );
+
+      repeats = activity[0]?.Repeats == null ? 0 : activity[0].Repeats;
+
+      return repeats;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //
   //  Purpose: Retrive the total completion rate for a given lesson
   //  Return: 0 ~ 10 (10 is 100%)
   //
@@ -140,6 +162,7 @@ export default useLesson = () => {
     fetchAllLessonData,
     fetchStatusData,
     getActivityProgress,
+    getActivityRepeats,
     getLessonProgress,
     isLessonCompleted,
     onPlayStateChanged,
