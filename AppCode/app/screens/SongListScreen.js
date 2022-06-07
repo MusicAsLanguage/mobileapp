@@ -12,7 +12,8 @@ import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import { play, pause, resume, playNext } from '../media_control/audioController';
 
-function SongListScreen({ navigation }) {
+function SongListScreen({ navigation, route }) {
+    const songCategory = route.params;
 
     const [songs, setSongs] = useState([]);
     const [playbackObj, setPlaybackObj] = useState(null);
@@ -31,7 +32,8 @@ function SongListScreen({ navigation }) {
             .then(response => {
                 if (mounted) {
                     let songList = response.data[0].Songs
-                    setSongs(songList)
+                    let filteredSongList = songList.filter((song) => song.Category === songCategory)
+                    setSongs(filteredSongList)
                 }
             })
         return () => mounted = false;
