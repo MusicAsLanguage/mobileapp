@@ -1,5 +1,12 @@
 import { React, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, Image, Text } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -8,11 +15,13 @@ import routes from "../navigation/routes";
 import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
 import { getUserScore } from "../api/score";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import useRewardConfig from "../data/config/reward";
 
 function ProfileScreen({ navigation }) {
   const { user } = useAuth();
   const [score, setScore] = useState(0);
+  const [trophies, setTrophies] = useState();
+  const { getTrophies } = useRewardConfig();
 
   useEffect(() => {
     const focus = navigation.addListener("focus", (e) => {
@@ -23,10 +32,31 @@ function ProfileScreen({ navigation }) {
         //console.log("Profile score = ", score);
         setScore(score);
       });
+
+      getTrophies().then((response) => {
+        if (response == null) return;
+
+        const trophies = response;
+        console.log(trophies);
+        setTrophies(trophies);
+      });
     });
 
     return () => focus;
   }, [navigation]);
+
+  const showTrophy = (trophy) => {
+    if (score >= trophy.ScoreThrehold) {
+      return (
+        <ImageBackground
+          source={{ uri: trophy.Url, cache: "force-cache" }}
+          style={styles.trophy}
+        ></ImageBackground>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <Screen style={styles.screen}>
@@ -47,6 +77,18 @@ function ProfileScreen({ navigation }) {
         <AppText style={styles.scoreTitle}>Your Score</AppText>
         <AppText style={styles.score}>{score.toLocaleString()}</AppText>
       </ScrollView>
+      {trophies != null
+        ? trophies.map((trophy, index) => (
+            <ScrollView
+              key={index}
+              style={styles.trophycontainer}
+              contentContainerStyle={styles.trophycontentcontainer}
+              horizontal={true}
+            >
+              {showTrophy(trophy)}
+            </ScrollView>
+          ))
+        : null}
     </Screen>
   );
 }
@@ -55,6 +97,7 @@ const styles = StyleSheet.create({
   accountInfo: {
     marginVertical: 30,
     alignItems: "center",
+    flex: 1,
   },
   container: {
     marginTop: 20,
@@ -78,10 +121,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: "bold",
   },
-  scoreInfo: { padding: 50 },
+  scoreInfo: { padding: 50, flex: 1 },
   scoreContent: {
     alignItems: "center",
-    padding: 50,
+    padding: 10,
   },
   scoreTitle: {
     color: colors.deepskyblue,
@@ -93,6 +136,28 @@ const styles = StyleSheet.create({
     color: colors.magenta,
     fontWeight: "bold",
     fontSize: 50,
+  },
+  trophycontainer: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingBottom: 50,
+  },
+  trophycontentcontainer: {
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    flexGrow: 1,
+  },
+  trophy: {
+    height: 150,
+    width: 150,
+    padding: 15,
+    margin: 15,
+    backgroundColor: colors.transparent,
+    shadowOffset: { width: -3, height: 3 },
+    shadowColor: colors.deepskyblue,
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
   },
 });
 

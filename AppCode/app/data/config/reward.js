@@ -24,5 +24,15 @@ export default useRewardConfig = () => {
       return rewardConfig.ActivityRepeat;
     }
   };
-  return { getActivityRepeatPoint, getRewardConfig, rewardConfig };
+
+  const getTrophies = async () => {
+    if (rewardConfig === undefined) {
+      const response = await getLessons();
+      return response.data[0].RewardConfig.Trophies;
+    } else {
+      return rewardConfig.Trophies;
+    }
+  };
+
+  return { getActivityRepeatPoint, getRewardConfig, getTrophies, rewardConfig };
 };
