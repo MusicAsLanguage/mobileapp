@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import AppText from "./AppText";
 import ActivityStatus from "./ActivityStatus";
+import { MaterialIcons } from "@expo/vector-icons";
+import colors from "../config/colors";
 
 function ActivityListItem({
   id,
@@ -15,6 +17,7 @@ function ActivityListItem({
   duration,
   thumbnail,
   status,
+  repeats,
   onPress,
 }) {
   const durationMin = Math.round(duration / 60);
@@ -28,13 +31,14 @@ function ActivityListItem({
             source={{ uri: thumbnail.uri, cache: "force-cache" }}
             imageStyle={styles.imageStyle}
           >
-            {<ActivityStatus value={status} />}
+            <View style={styles.thumbnailbottompanel}>
+              {<ActivityStatus value={status} />}
+            </View>
           </ImageBackground>
         )}
       </TouchableOpacity>
       <View style={styles.detail}>
         <View style={styles.descSect}>
-          <AppText style={styles.id}>{id}</AppText>
           {description && <AppText style={styles.name}>{name}</AppText>}
         </View>
         <View style={styles.durationSect}>
@@ -63,6 +67,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     aspectRatio: 1.5,
     borderRadius: 5,
+  },
+  thumbnailbottompanel: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 0.4,
+    width: "100%",
+    paddingRight: 10,
+  },
+  repeatcount: {
+    //backgroundColor: colors.darkviolet,
+    borderRadius: 20,
+    justifyContent: "center",
   },
   imageStyle: {
     borderRadius: 6,
