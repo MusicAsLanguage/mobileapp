@@ -51,6 +51,13 @@ function SongListScreen({ navigation, route }) {
         return unsubscribe;
     }, [navigation, soundObj, playbackObj, isPlaying]);
 
+    const onPlaybackStatusUpdate = playbackStatus => {
+        if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+            setIsPlaying(false);
+            return setSoundObj(null);
+        }
+    };
+
     const handleAudioPress = async (songItem) => {
         // playing audio for the first time.
         if (soundObj === null){
@@ -60,7 +67,8 @@ function SongListScreen({ navigation, route }) {
             setPlaybackObj(playbackObj);
             setIsPlaying(true);
             setCurrentAudioIndex(songItem._id);
-            return setSoundObj(status);
+            setSoundObj(status);
+            return playbackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         }
 
         // pause audio
@@ -74,7 +82,8 @@ function SongListScreen({ navigation, route }) {
         if (soundObj.isLoaded && !soundObj.isPlaying && currenAudio._id === songItem._id){
             const status = await resume(playbackObj);
             setIsPlaying(true);
-            return setSoundObj(status);
+            setSoundObj(status);
+            return playbackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         }
 
         // select another audio
@@ -83,7 +92,8 @@ function SongListScreen({ navigation, route }) {
             setCurrenAudio(songItem);
             setIsPlaying(true);
             setCurrentAudioIndex(songItem._id);
-            return setSoundObj(status);
+            setSoundObj(status);
+            return playbackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         }
     };
 
