@@ -32,7 +32,9 @@
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
     "yarn": "^1.22.10",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "expo-media-library": "~14.0.0",
+    "expo-camera": "~12.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

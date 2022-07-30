@@ -7,9 +7,13 @@ import {
   StyleSheet,
   StatusBar,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
-import { Audio, Video, AVPlaybackStatus } from "expo-av";
+import { Audio, Video } from "expo-av";
+import { Camera } from "expo-camera";
+import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from "expo-media-library";
 import ActivityCompletion from "../components/ActivityCompletion";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
@@ -18,7 +22,8 @@ import uistrings from "../config/uistrings";
 import LoadingIndicator from "../components/LoadingIndicator";
 import ScoreNotification from "../components/ScoreNotification";
 import useRewardConfig from "../data/config/reward";
-import { play } from "../media_control/audioController";
+import RecordIcon from "../components/RecordIcon";
+import StopIcon from "../components/StopIcon";
 
 function ActivityScreen({ navigation, route }) {
   const {
@@ -28,6 +33,7 @@ function ActivityScreen({ navigation, route }) {
     activityPlayState,
     activityScore,
     activityRepeats,
+    practiceMode,
   } = route.params;
   const player = React.useRef(null);
   const [videoFinished, setVideoFinished] = useState(false);
@@ -51,14 +57,20 @@ function ActivityScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
   const [videoUri, setVideoUri] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [recording, setRecording] = useState(false);
+
+  // For recording
+  const [cameraRef, setCameraRef] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type] = useState(Camera.Constants.Type.front);
 
   const fetchRewardConfig = (mounted) => {
+    if (mounted === false) return;
+
     getActivityRepeatPoint().then((response) => {
-      if (mounted) {
-        if (response) {
-          const repeatPoint = response;
-          setRepeatPoint(repeatPoint);
-        }
+      if (response) {
+        const repeatPoint = response;
+        setRepeatPoint(repeatPoint);
       }
     });
   };
@@ -90,6 +102,8 @@ function ActivityScreen({ navigation, route }) {
 
   Audio.setAudioModeAsync({
     playsInSilentModeIOS: true,
+    allowsRecordingIOS: true,
+    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
   });
 
   useEffect(() => {
@@ -117,6 +131,9 @@ function ActivityScreen({ navigation, route }) {
 
       setPlayCounts(Math.floor(activityPlayState / 10) + activityRepeats * 1);
 
+      // requesting permission for camera and audio
+      if (practiceMode) requestDevicePermission();
+
       return () => {
         parent.setOptions({
           tabBarVisible: true,
@@ -125,6 +142,18 @@ function ActivityScreen({ navigation, route }) {
       };
     }
   }, []); // Run only once at mount
+
+  const requestDevicePermission = () => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+
+    (async () => {
+      const { status } = await Audio.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  };
 
   useEffect(() => {
     const blur = navigation.addListener("blur", (e) => {
@@ -141,7 +170,7 @@ function ActivityScreen({ navigation, route }) {
         Repeats: repeatsRef.current,
       };
 
-      console.log(data);
+      // console.log(data);
 
       if (completionStatus != activityPlayState) {
         onPlayStateChanged(true);
@@ -153,6 +182,16 @@ function ActivityScreen({ navigation, route }) {
         }
       });
     });
+
+    // stop camera recording before navigate away
+    if (cameraRef && cameraRef.ref) {
+      cameraRef
+        .stopRecording()
+        .then(() => {})
+        .catch((e) => {
+          console.log(e);
+        });
+    }
 
     return () => {
       blur;
@@ -302,6 +341,54 @@ function ActivityScreen({ navigation, route }) {
     }
   };
 
+  const renderCamera = () => {
+    if (hasPermission === null) return <View></View>;
+
+    if (hasPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
+
+    return (
+      <Camera
+        style={styles.camera}
+        type={type}
+        ref={(ref) => setCameraRef(ref)}
+      ></Camera>
+    );
+  };
+
+  const recordVideo = async () => {
+    if (cameraRef) {
+      let video = await cameraRef.recordAsync({});
+      //console.log("recordVideo ", video.uri);
+
+      // Copy the recorded video to camera roll and delete the one under local cache folder
+      MediaLibrary.saveToLibraryAsync(video.uri).then(() => {
+        FileSystem.deleteAsync(video.uri).then(() =>
+          console.log("vide is deleted")
+        );
+      });
+    }
+  };
+
+  const stopRecord = async () => {
+    try {
+      await cameraRef.stopRecording();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRecording = async () => {
+    setRecording(!recording);
+
+    if (recording === false) {
+      await recordVideo();
+    } else {
+      await stopRecord();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -333,6 +420,14 @@ function ActivityScreen({ navigation, route }) {
             style={videoFinished ? styles.videoFaded : styles.video}
           />
         )}
+        {practiceMode === true ? (
+          <View style={styles.cameraContainer}>
+            {renderCamera()}
+            <TouchableOpacity onPress={onRecording} style={styles.button}>
+              {recording === false ? <RecordIcon /> : <StopIcon />}
+            </TouchableOpacity>
+          </View>
+        ) : null}
         {showErrorMessage()}
         {videoFinished && showEndState()}
       </ScrollView>
@@ -350,8 +445,7 @@ const styles = StyleSheet.create({
   },
   video: {
     marginTop: 35,
-    width: "100%",
-    height: "90%",
+    flex: 1,
   },
   videoFaded: {
     marginTop: 35,
@@ -362,14 +456,31 @@ const styles = StyleSheet.create({
   errorMsgContainer: {
     position: "absolute",
     flexDirection: "column",
-    marginTop: 250,
-    marginLeft: 70,
+    marginTop: 150,
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   errorMsg: {
     color: colors.white,
     textAlign: "center",
+  },
+  cameraContainer: {
+    flex: 1,
+    backgroundColor: colors.transparent,
+    borderColor: colors.grey,
+    borderTopWidth: 1,
+  },
+  camera: {
+    backgroundColor: colors.transparent,
+    flex: 1,
+  },
+  button: {
+    height: 100,
+    width: 100,
+    position: "absolute",
+    marginTop: 275,
+    marginLeft: 175,
   },
 });
 
