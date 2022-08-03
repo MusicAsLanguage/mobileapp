@@ -11,10 +11,11 @@ import SongListItem from "../components/SongListItem";
 import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import useAuth from '../auth/useAuth';
-import ScoreNotification from "../components/ScoreNotification";
 import useRewardConfig from "../data/config/reward";
 import useSong from "../data/song/songdata";
 import { play, pause, resume, playNext } from '../media_control/audioController';
+import ScoreNotification from "../components/ScoreNotification";
+import { getUserScore, updateUserScore } from "../api/score";
 
 function SongListScreen({ navigation, route }) {
     const songCategory = route.params;
@@ -33,6 +34,7 @@ function SongListScreen({ navigation, route }) {
     const [playCount, setPlayCount] = useState(0);
     const [songFullScore, setSongFullScore] = useState(0);
     const [songJustFinish, setSongJustFinish] = useState(false);
+    const [earnedScore, setEarnedScore] = useState(false);
 
     const { getSongRepeatPoint } = useRewardConfig();
 
@@ -146,6 +148,28 @@ function SongListScreen({ navigation, route }) {
             setSongJustFinish(false);
         }
     }, [songJustFinish]);
+
+    useEffect(() => {
+        // if score changed to a non-zero value, upload new user score to server, then set score back to zero.
+        if (score !== 0){
+            setEarnedScore(true);
+
+            getUserScore().then((response) => {
+                const preScore = response.data?.score;
+                if (response == null) return;
+      
+                const data = { score: preScore + score };
+      
+                updateUserScore(data).then((response) => {
+                    console.log(`[${response.ok}] Earned score = ${score} Updated score = ${data.score}`);
+                });
+            });
+
+            setScore(0);
+        } else {
+            setEarnedScore(false);
+        }
+    }, [score]);
 
     const onPlaybackStatusUpdate = playbackStatus => {
         if (playbackStatus.didJustFinish) {
