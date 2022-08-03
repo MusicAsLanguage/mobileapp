@@ -25,6 +25,15 @@ export default useRewardConfig = () => {
     }
   };
 
+  const getSongRepeatPoint = async () => {
+    if (rewardConfig == undefined) {
+      const response = await getLessons();
+      return response.data[0].RewardConfig.SongRepeat;
+    } else {
+      return rewardConfig.SongRepeat;
+    }
+  };
+ 
   const getTrophies = async () => {
     if (rewardConfig === undefined) {
       const response = await getLessons();
@@ -34,5 +43,5 @@ export default useRewardConfig = () => {
     }
   };
 
-  return { getActivityRepeatPoint, getRewardConfig, getTrophies, rewardConfig };
+  return { getActivityRepeatPoint, getSongRepeatPoint, getRewardConfig, getTrophies, rewardConfig };
 };

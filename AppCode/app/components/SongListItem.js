@@ -39,7 +39,8 @@ function SongListItem({
     length,
     onPress,
     isPlaying,
-    activeListItem})
+    activeListItem,
+    repeats})
     {
     return (
         <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
@@ -56,8 +57,8 @@ function SongListItem({
                         <Text numberOfLines={1} style={styles.title}>
                             {songName}
                         </Text>
-                        <Text style={styles.singer}>
-                            Bernadette Bascom
+                        <Text style={styles.completions}>
+                            Completions: {repeats}
                         </Text>
                     </View>
                 </View>
@@ -73,6 +74,10 @@ function SongListItem({
 
 const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
+    completions: {
+        fontSize: 12,
+        color: colors.grey,
+    },
     container: {
         flexDirection: "row",
         alignSelf: "center",
@@ -111,10 +116,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: colors.black,
-    },
-    singer: {
-        fontSize: 12,
-        color: colors.grey,
     },
     musicLength: {
         fontSize: 15,
