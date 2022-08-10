@@ -8,7 +8,7 @@ export default {
   DeleteUser: "Delete Account",
   DeleteUserConfirmationTitle: "Delete Account",
   DeleteUserConfirmationMsg:
-    "Are you sure you want to delete your account? \nThis action cannot be undone.",
+    "Are you sure you want to delete your account?\nThis will delete your account, its associated data and cannot be undone.",
   Email: "EMAIL",
   English: "English",
   ErrInvalidLogin: "Invalid email and/or password.",
