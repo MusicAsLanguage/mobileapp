@@ -33,13 +33,9 @@ function PrivacyPolicyScreen({ navigation }) {
                 We may collect information directly from anyone who uses the app, whether student or parent. In addition, we may use cookies and other tracking means to collect information from anyone using the app.{'\n'}{'\n'} 
                 We collect information from you directly when you sign up for an account, use one of the Services, or choose to save information about your use of our Services. The following is the information collected, processed and stored through our App.{'\n'}{'\n'} 
                 When you create an account on our App, we may collect the following information:{'\n'}{'\n'} 
-                {'\n'}{'\n'} 
-                Your Name, Your Email Address, and Other relevant contact information.{'\n'}{'\n'} 
-                {'\n'}{'\n'} 
+                Your Name, Your Email Address, and Other relevant contact information.{'\n'}{'\n'}  
                 MAL collects and processes this basic account information in order to provide you with an account, access to the Services, and communicate with you regarding our Services. An account is required to save and track your progress on our Services. {'\n'}{'\n'} 
-                Performance Information. If you establish an account with us and choose to save your progress on our Services, we will collect information about your performance on our Services. This will enable us to return you to the correct place when you return to our App. {'\n'}{'\n'} 
-                {'\n'}{'\n'} 
-                {'\n'}{'\n'} 
+                Performance Information. If you establish an account with us and choose to save your progress on our Services, we will collect information about your performance on our Services. This will enable us to return you to the correct place when you return to our App. 
                 </AppText>
                 
                 <AppText style={styles.sectionTitle}>
@@ -48,7 +44,7 @@ function PrivacyPolicyScreen({ navigation }) {
                 <AppText style={styles.detailsText}>
                 We use the information described above to provide, maintain, and improve the app and services, to communicate with you.{'\n'}{'\n'}
                 Necessary Uses and Sharing of Your Information. When you create an account on our Services, you are given the option to consent to the use of your information as described in this Privacy Policy. Certain uses of your information are necessary in order to provide the Services to you. These include your name and contact information to create and maintain an account. If you do not consent to the use of this information, we are unable to provide the Services to You.{'\n'}{'\n'}
-                Service Providers. We may use certain third parties and contractors ("Service Providers") to assist us in providing and maintaining our Services. MAL uses Azure to store its data. Other than the storage of that data, MAL does not provide personal information to Service Providers. Azure's privacy policies can be viewed here https://azure.microsoft.com/en-us/support/legal/.{'\n'}{'\n'} 
+                Service Providers. We may use certain third parties and contractors ("Service Providers") to assist us in providing and maintaining our Services. MAL uses Azure to store its data. Other than the storage of that data, MAL does not provide personal information to Service Providers. Azure's privacy policies can be viewed here https://azure.microsoft.com/en-us/support/legal/ {'\n'}{'\n'} 
                 Additional Disclosures. We also may disclose personal information about you with your permission, as required by applicable law or legal process, as necessary to enforce our Terms of Service or Privacy Policy, to investigate or defend against third-party claims or allegations, to protect the security and integrity of our Services and property, and to protect our rights or personal safety and that of our users or others. We may disclose or transfer your personal information in connection with, or during negotiations concerning, any sale, merger, bankruptcy, sale of assets, financing, acquisition, or reorganization, in whole or in part. 
                 </AppText>
 
