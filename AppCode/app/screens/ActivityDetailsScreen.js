@@ -233,13 +233,13 @@ function ActivityScreen({ navigation, route }) {
     if (status?.didJustFinish === true) {
       if (workaround === false) {
         onPlayStateChanged(true);
+        if (playCounts === 0) {
+          setScore(activityScore);
+        } else {
+          setScore(activityScore * repeatPoint);
+        }
+        setPlayCounts(playCounts + 1);
       }
-      if (playCounts === 0) {
-        setScore(activityScore);
-      } else {
-        setScore(activityScore * repeatPoint);
-      }
-      setPlayCounts(playCounts + 1);
     }
 
     // clear off workaround flag so next time
@@ -248,7 +248,9 @@ function ActivityScreen({ navigation, route }) {
   }, [status?.didJustFinish]);
 
   useEffect(() => {
-    repeatsRef.current = playCounts - 1;
+    if (playCounts > 0) {
+      repeatsRef.current = playCounts - 1;
+    }
   }, [playCounts]);
 
   const onBack = () => {
