@@ -102,8 +102,6 @@ function ActivityScreen({ navigation, route }) {
 
   Audio.setAudioModeAsync({
     playsInSilentModeIOS: true,
-    allowsRecordingIOS: true,
-    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
   });
 
   useEffect(() => {
@@ -361,6 +359,12 @@ function ActivityScreen({ navigation, route }) {
 
   const recordVideo = async () => {
     if (cameraRef) {
+      Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        allowsRecordingIOS: true,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      });
+
       let video = await cameraRef.recordAsync({});
       //console.log("recordVideo ", video.uri);
 
@@ -376,6 +380,13 @@ function ActivityScreen({ navigation, route }) {
   const stopRecord = async () => {
     try {
       await cameraRef.stopRecording();
+
+      // resetting the AudioMode
+      // this is to fix the issue where audio becoomes lower
+      // after came into practice mode
+      Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+      });
     } catch (e) {
       console.log(e);
     }
