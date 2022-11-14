@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Audio, Video } from "expo-av";
 import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import ActivityCompletion from "../components/ActivityCompletion";
@@ -48,6 +49,10 @@ function ActivityScreen({ navigation, route }) {
   const positionRef = useRef(0);
   const repeatsRef = useRef(0);
   const startPositionRef = useRef(0);
+
+  const [faceDetected, setFaceDeteced] = useState(false);
+  const [facebox, setFaceBox] = useState({});
+  const [facedetecting, setFaceDetecting] = useState(true);
 
   const { onPlayStateChanged, playStateChanged, updateStatusData } =
     useLesson();
@@ -353,7 +358,105 @@ function ActivityScreen({ navigation, route }) {
         style={styles.camera}
         type={type}
         ref={(ref) => setCameraRef(ref)}
+        onFacesDetected={handleFaceDetected}
+        faceDetectorSettings={{
+          mode: FaceDetector.FaceDetectorMode.fast,
+          detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+          runClassifications: FaceDetector.FaceDetectorClassifications.none,
+          minDetectionInterval: 100,
+          tracking: true,
+        }}
       ></Camera>
+    );
+  };
+
+  const handleFaceDetected = ({ faces }) => {
+    if (faces.length === 1) {
+      const leftmouth = faces[0].leftMouthPosition;
+      const rightmouth = faces[0].rightMouthPosition;
+      const bottommouth = faces[0].bottomMouthPosition;
+      const width = Math.abs(leftmouth.x - rightmouth.x);
+      const left = leftmouth.x;
+      const top = leftmouth.y < rightmouth.y ? leftmouth.y : rightmouth.y;
+      const height = Math.abs(top - bottommouth.y);
+      const facebox = {
+        origin: {
+          x: left,
+          y: top - height / 2,
+        },
+        size: {
+          width: width,
+          height: height * 2,
+        },
+      };
+
+      //setFaceDeteced(true);
+      setFaceBox(facebox);
+    } else {
+      //setFaceDeteced(false);
+      setFaceBox({});
+    }
+  };
+
+  const [mouthOpened, setMouthOpened] = useState(false);
+
+  useEffect(() => {
+    if (mouthOpened === true)
+      console.log("Mouth likly opened ", facebox?.size?.height);
+  }, [mouthOpened]);
+
+  // useEffect(() => {
+  //   if (facebox?.size?.width > 100) setMouthOpened(true);
+  //   else setMouthOpened(false);
+  // }, [facebox?.size?.width]);
+
+  const prevHeight = useRef();
+
+  useEffect(() => {
+    //console.log(prevHeight?.current, " vs. ", facebox?.size?.height);
+    if (facebox?.size?.height - prevHeight.current > 10) {
+      setMouthOpened(true);
+      setFaceDeteced(true);
+    } else {
+      setMouthOpened(false);
+      setFaceDeteced(false);
+    }
+
+    prevHeight.current = facebox?.size?.height;
+  }, [facebox?.size?.height]);
+
+  const showFacebox = () => {
+    //console.log("showFaceBox", facebox?.size);
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "transparent",
+          position: "absolute",
+        }}
+      >
+        {faceDetected && (
+          // <View
+          //   style={{
+          //     backgroundColor: "transparent",
+          //     width: facebox?.size.width,
+          //     height: facebox?.size.height,
+          //     top: facebox?.origin.y,
+          //     left: facebox?.origin.x,
+          //     position: "absolute",
+          //     flexDirection: "row",
+          //     borderColor: "red",
+          //     borderWidth: 2,
+          //     display: "flex",
+          //   }}
+          // ></View>
+          <Icon
+            name="numeric-positive-1"
+            size={60}
+            backgroudColor={colors.red}
+          />
+        )}
+      </View>
     );
   };
 
@@ -362,7 +465,7 @@ function ActivityScreen({ navigation, route }) {
       Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
         allowsRecordingIOS: true,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        //interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
       });
 
       let video = await cameraRef.recordAsync({});
@@ -439,6 +542,7 @@ function ActivityScreen({ navigation, route }) {
             <TouchableOpacity onPress={onRecording} style={styles.button}>
               {recording === false ? <RecordIcon /> : <StopIcon />}
             </TouchableOpacity>
+            {showFacebox()}
           </View>
         ) : null}
         {showErrorMessage()}
