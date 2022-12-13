@@ -7,8 +7,8 @@ import {
 } from "react-native";
 import AppText from "./AppText";
 import ActivityStatus from "./ActivityStatus";
-import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
+import Icon from "./Icon";
 
 function ActivityListItem({
   id,
@@ -18,6 +18,7 @@ function ActivityListItem({
   thumbnail,
   status,
   repeats,
+  practiceMode,
   onPress,
 }) {
   const durationMin = Math.round(duration / 60);
@@ -33,6 +34,9 @@ function ActivityListItem({
           >
             <View style={styles.thumbnailbottompanel}>
               {<ActivityStatus value={status} />}
+              {practiceMode ? (
+                <Icon name="camera" size={30} backgroudColor={colors.red} />
+              ) : null}
             </View>
           </ImageBackground>
         )}

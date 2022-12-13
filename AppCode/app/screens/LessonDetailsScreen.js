@@ -143,6 +143,7 @@ function LessonDetailsScreen({ navigation, route }) {
         thumbnail={{ uri: item.ImageUrl }}
         status={state}
         repeats={repeats}
+        practiceMode={item.PracticeMode}
         onPress={() =>
           navigation.navigate(routes.ACTIVITI_DETAILS, {
             lessonId: lesson._id,
@@ -151,6 +152,7 @@ function LessonDetailsScreen({ navigation, route }) {
             activityPlayState: state,
             activityScore: item.Score,
             activityRepeats: repeats,
+            practiceMode: item.PracticeMode,
           })
         }
       />
