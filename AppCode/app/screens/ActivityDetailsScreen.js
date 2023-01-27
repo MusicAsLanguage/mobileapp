@@ -50,9 +50,9 @@ function ActivityScreen({ navigation, route }) {
   const repeatsRef = useRef(0);
   const startPositionRef = useRef(0);
 
-  const [faceDetected, setFaceDeteced] = useState(false);
-  const [facebox, setFaceBox] = useState({});
-  const [facedetecting, setFaceDetecting] = useState(true);
+  const [mouthBox, setMouthBox] = useState({});
+
+  const MOUSE_OPEN_THRESHOLD = 10;
 
   const { onPlayStateChanged, playStateChanged, updateStatusData } =
     useLesson();
@@ -379,7 +379,7 @@ function ActivityScreen({ navigation, route }) {
       const left = leftmouth.x;
       const top = leftmouth.y < rightmouth.y ? leftmouth.y : rightmouth.y;
       const height = Math.abs(top - bottommouth.y);
-      const facebox = {
+      const mouthBox = {
         origin: {
           x: left,
           y: top - height / 2,
@@ -390,11 +390,11 @@ function ActivityScreen({ navigation, route }) {
         },
       };
 
-      //setFaceDeteced(true);
-      setFaceBox(facebox);
+      //setFaceDetected(true);
+      setMouthBox(mouthBox);
     } else {
-      //setFaceDeteced(false);
-      setFaceBox({});
+      //setFaceDetected(false);
+      setMouthBox({});
     }
   };
 
@@ -402,31 +402,31 @@ function ActivityScreen({ navigation, route }) {
 
   useEffect(() => {
     if (mouthOpened === true)
-      console.log("Mouth likly opened ", facebox?.size?.height);
+      console.log("Mouth likly opened ", mouthBox?.size?.height);
   }, [mouthOpened]);
 
   // useEffect(() => {
-  //   if (facebox?.size?.width > 100) setMouthOpened(true);
+  //   if (mouthBox?.size?.width > 100) setMouthOpened(true);
   //   else setMouthOpened(false);
-  // }, [facebox?.size?.width]);
+  // }, [mouthBox?.size?.width]);
 
   const prevHeight = useRef();
 
   useEffect(() => {
-    //console.log(prevHeight?.current, " vs. ", facebox?.size?.height);
-    if (facebox?.size?.height - prevHeight.current > 10) {
+    //console.log(prevHeight?.current, " vs. ", mouthBox?.size?.height);
+    if (mouthBox?.size?.height - prevHeight.current > MOUSE_OPEN_THRESHOLD) {
       setMouthOpened(true);
-      setFaceDeteced(true);
+      //setFaceDetected(true);
     } else {
       setMouthOpened(false);
-      setFaceDeteced(false);
+      //setFaceDetected(false);
     }
 
-    prevHeight.current = facebox?.size?.height;
-  }, [facebox?.size?.height]);
+    prevHeight.current = mouthBox?.size?.height;
+  }, [mouthBox?.size?.height]);
 
   const showFacebox = () => {
-    //console.log("showFaceBox", facebox?.size);
+    //console.log("showFaceBox", mouthBox?.size);
     return (
       <View
         style={{
@@ -435,14 +435,14 @@ function ActivityScreen({ navigation, route }) {
           position: "absolute",
         }}
       >
-        {faceDetected && (
+        {mouthOpened && (
           // <View
           //   style={{
           //     backgroundColor: "transparent",
-          //     width: facebox?.size.width,
-          //     height: facebox?.size.height,
-          //     top: facebox?.origin.y,
-          //     left: facebox?.origin.x,
+          //     width: mouthBox?.size.width,
+          //     height: mouthBox?.size.height,
+          //     top: mouthBox?.origin.y,
+          //     left: mouthBox?.origin.x,
           //     position: "absolute",
           //     flexDirection: "row",
           //     borderColor: "red",
