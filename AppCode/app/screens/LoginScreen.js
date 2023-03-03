@@ -10,6 +10,7 @@ import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
 import routes from "../navigation/routes";
 import uistrings from '../config/uistrings';
+import BackButton from '../components/BackButton';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -35,8 +36,10 @@ function LoginScreen({ navigation }) {
         source={require('../assets/signin_background.png')}
         >
             <Screen style={styles.container}>
-                <Text style={styles.tagLine}>{uistrings.TagLine}</Text>
+                <BackButton onPress={() => navigation.navigate(routes.NAVIGATION)} />
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Text style={styles.hello}>{uistrings.Hello}</Text>
+                <Text style={styles.hello}>{uistrings.WelcomeBack}</Text>
                 
                 <AppForm
                     initialValues={{ email: '', password: '' }}
@@ -98,24 +101,16 @@ const styles = StyleSheet.create({
         color: colors.darkblue,
     },
     logo: {
-        width: 110,
-        height: 110,
-        alignSelf: 'center',
-        marginBottom: 20,
+        width: 60,
+        height: 60,
+        alignSelf: 'auto',
+        marginLeft: 270
     },
     shallowText: {
         fontSize: 13,
         color: colors.dark,
         alignSelf: 'center',
         marginTop: 20,
-    },
-    tagLine: {
-        fontSize: 15,
-        paddingVertical: 10,
-        color: colors.black,
-        fontWeight: 'bold',
-        alignSelf: 'center',
-        marginTop: 50,
     },
     text: {
         fontSize: 15,

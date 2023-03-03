@@ -49,7 +49,7 @@ function RegisterScreen({ navigation }) {
         source={require('../assets/signin_background.png')}
         >
             <Screen style={styles.container}>
-                <BackButton onPress={() => navigation.navigate(routes.LOGIN)} />
+                <BackButton onPress={() => navigation.navigate(routes.NAVIGATION)} />
                 <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
                 <Text style={styles.hello}>{uistrings.Hello}</Text>
                 <Text style={styles.hello}>{uistrings.CreateAnAccount}</Text>

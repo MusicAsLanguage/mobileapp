@@ -56,6 +56,7 @@ export default {
   TypeMessage: "Type your message here.",
   VideoWasNotLoadedPullToRetry:
     "Sorry, video was not loaded.\nPlease, pull down to try again.",
+  WelcomeBack: "Welcome back!",
   WelcomeMessage: "Welcome!",
   WelcomeScore: "You've earned",
   WelcomeSubMessage: "Keep it up!",
