@@ -14,17 +14,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.northshorescholarshipfoundation.musicaslanguage",
       "buildNumber": "1.0.7",
       "infoPlist": {
-        "NSUserActivityTypes": [
-          "INSendMessageIntent"
-        ],
+        "NSUserActivityTypes": ["INSendMessageIntent"],
         "UIRequiresFullScreen": true
       }
     },
@@ -34,6 +30,16 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
     "web": {
       "favicon": "./app/assets/favicon.png"
     }

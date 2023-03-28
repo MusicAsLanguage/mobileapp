@@ -362,7 +362,8 @@ function ActivityScreen({ navigation, route }) {
       Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
         allowsRecordingIOS: true,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        interruptionModeIOS: 1, // Do not mix
+        interruptionModeAndroid: 1, // Do not mix
       });
 
       let video = await cameraRef.recordAsync({});
