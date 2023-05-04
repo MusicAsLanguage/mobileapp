@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
   videoFaded: {
     marginTop: 35,
     width: "100%",
-    height: "90%",
+    height: "100%",
     opacity: 0.1,
   },
   errorMsgContainer: {
