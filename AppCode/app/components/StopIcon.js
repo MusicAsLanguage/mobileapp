@@ -1,11 +1,19 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import colors from "../config/colors";
+import Icon from "./Icon";
 
 function StopIcon() {
   return (
     <View style={styles.container}>
-      <View style={styles.innerBox}></View>
+      <View style={styles.innerbox}>
+        <Icon
+          name="pause"
+          size={60}
+          backgroudColor={colors.white}
+          iconColor={colors.red}
+        ></Icon>
+      </View>
       <View style={styles.outerbox}></View>
     </View>
   );
@@ -13,30 +21,16 @@ function StopIcon() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.8,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: colors.transparent,
   },
-  outerbox: {
-    height: 60,
-    width: 60,
-    position: "absolute",
-    justifyContent: "center",
-    backgroundColor: colors.white,
-    borderRadius: 30,
-    margin: -5,
-  },
-  innerBox: {
-    height: 30,
-    width: 30,
-    position: "absolute",
-    justifyContent: "center",
-    backgroundColor: colors.red,
-    margin: 10,
+  outerbox: {},
+  innerbox: {
     zIndex: 1,
   },
   Icon: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: colors.transparent,
   },
 });

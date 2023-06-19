@@ -6,14 +6,9 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
-  Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { Audio, Video } from "expo-av";
-import { Camera } from "expo-camera";
-import * as FileSystem from "expo-file-system";
-import * as MediaLibrary from "expo-media-library";
 import ActivityCompletion from "../components/ActivityCompletion";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
@@ -22,8 +17,7 @@ import uistrings from "../config/uistrings";
 import LoadingIndicator from "../components/LoadingIndicator";
 import ScoreNotification from "../components/ScoreNotification";
 import useRewardConfig from "../data/config/reward";
-import RecordIcon from "../components/RecordIcon";
-import StopIcon from "../components/StopIcon";
+import PracticeModeCamera from "../components/PracticeModeCamera";
 
 function ActivityScreen({ navigation, route }) {
   const {
@@ -57,12 +51,6 @@ function ActivityScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
   const [videoUri, setVideoUri] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [recording, setRecording] = useState(false);
-
-  // For recording
-  const [cameraRef, setCameraRef] = useState(null);
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type] = useState(Camera.Constants.Type.front);
 
   const fetchRewardConfig = (mounted) => {
     if (mounted === false) return;
@@ -129,9 +117,6 @@ function ActivityScreen({ navigation, route }) {
 
       setPlayCounts(Math.floor(activityPlayState / 10) + activityRepeats * 1);
 
-      // requesting permission for camera and audio
-      if (practiceMode) requestDevicePermission();
-
       return () => {
         parent.setOptions({
           tabBarVisible: true,
@@ -140,18 +125,6 @@ function ActivityScreen({ navigation, route }) {
       };
     }
   }, []); // Run only once at mount
-
-  const requestDevicePermission = () => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-
-    (async () => {
-      const { status } = await Audio.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  };
 
   useEffect(() => {
     const blur = navigation.addListener("blur", (e) => {
@@ -180,16 +153,6 @@ function ActivityScreen({ navigation, route }) {
         }
       });
     });
-
-    // stop camera recording before navigate away
-    if (cameraRef && cameraRef.ref) {
-      cameraRef
-        .stopRecording()
-        .then(() => {})
-        .catch((e) => {
-          console.log(e);
-        });
-    }
 
     return () => {
       blur;
@@ -341,68 +304,6 @@ function ActivityScreen({ navigation, route }) {
     }
   };
 
-  const renderCamera = () => {
-    if (hasPermission === null) return <View></View>;
-
-    if (hasPermission === false) {
-      return <Text>No access to camera</Text>;
-    }
-
-    return (
-      <Camera
-        style={styles.camera}
-        type={type}
-        ref={(ref) => setCameraRef(ref)}
-      ></Camera>
-    );
-  };
-
-  const recordVideo = async () => {
-    if (cameraRef) {
-      Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-        allowsRecordingIOS: true,
-        interruptionModeIOS: 1, // Do not mix
-        interruptionModeAndroid: 1, // Do not mix
-      });
-
-      let video = await cameraRef.recordAsync({});
-      //console.log("recordVideo ", video.uri);
-
-      // Copy the recorded video to camera roll and delete the one under local cache folder
-      MediaLibrary.saveToLibraryAsync(video.uri).then(() => {
-        FileSystem.deleteAsync(video.uri).then(() =>
-          console.log("vide is deleted")
-        );
-      });
-    }
-  };
-
-  const stopRecord = async () => {
-    try {
-      await cameraRef.stopRecording();
-
-      // resetting the AudioMode
-      // this is to fix the issue where audio becoomes lower
-      // after came into practice mode
-      Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const onRecording = async () => {
-    setRecording(!recording);
-
-    if (recording === false) {
-      await recordVideo();
-    } else {
-      await stopRecord();
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -415,35 +316,33 @@ function ActivityScreen({ navigation, route }) {
           />
         }
       >
-        {!videoUri ? (
-          <LoadingIndicator />
-        ) : (
-          <Video
-            source={{ uri: videoUri }}
-            ref={player}
-            shouldPlay={false}
-            resizeMode="cover"
-            useNativeControls
-            // onLoadStart={() =>
-            //   console.log("load start ", new Date(), " - ", videoUri)
-            // }
-            onLoad={onLoad}
-            onError={onError}
-            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-            progressUpdateIntervalMillis={800}
-            style={videoFinished ? styles.videoFaded : styles.video}
-          />
-        )}
+        <View style={{ flex: 1 }}>
+          {!videoUri ? (
+            <LoadingIndicator />
+          ) : (
+            <Video
+              source={{ uri: videoUri }}
+              ref={player}
+              shouldPlay={false}
+              resizeMode="cover"
+              useNativeControls
+              // onLoadStart={() =>
+              //   console.log("load start ", new Date(), " - ", videoUri)
+              // }
+              onLoad={onLoad}
+              onError={onError}
+              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              progressUpdateIntervalMillis={800}
+              style={videoFinished ? styles.videoFaded : styles.video}
+            />
+          )}
+
+          {showErrorMessage()}
+          {videoFinished && showEndState()}
+        </View>
         {practiceMode === true ? (
-          <View style={styles.cameraContainer}>
-            {renderCamera()}
-            <TouchableOpacity onPress={onRecording} style={styles.button}>
-              {recording === false ? <RecordIcon /> : <StopIcon />}
-            </TouchableOpacity>
-          </View>
+          <PracticeModeCamera navigation={navigation} />
         ) : null}
-        {showErrorMessage()}
-        {videoFinished && showEndState()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -478,23 +377,6 @@ const styles = StyleSheet.create({
   errorMsg: {
     color: colors.white,
     textAlign: "center",
-  },
-  cameraContainer: {
-    flex: 1,
-    backgroundColor: colors.transparent,
-    borderColor: colors.grey,
-    borderTopWidth: 1,
-  },
-  camera: {
-    backgroundColor: colors.transparent,
-    flex: 1,
-  },
-  button: {
-    height: 100,
-    width: 100,
-    position: "absolute",
-    marginTop: 275,
-    marginLeft: 175,
   },
 });
 

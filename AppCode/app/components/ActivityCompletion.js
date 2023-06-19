@@ -35,16 +35,14 @@ function ActivityCompletion({ onBack, onReplay }) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    marginTop: 120,
-    marginLeft: 100,
+    width: "100%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   completionContainer: {
     flex: 1,
     alignItems: "center",
-    width: "100%",
-    height: "100%",
     justifyContent: "flex-end",
   },
   message: {
@@ -54,17 +52,11 @@ const styles = StyleSheet.create({
   },
   outerBox: {
     backgroundColor: colors.transparent,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: 200,
-    height: 200,
+    top: "20%",
+    position: "absolute",
   },
   replayContainer: {
     flex: 1,
-    width: "50%",
-    height: "50%",
-    marginTop: 50,
     justifyContent: "center",
   },
   replay: {},
