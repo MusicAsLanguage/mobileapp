@@ -8,7 +8,7 @@ function RecordIcon() {
     <View style={styles.container}>
       <View style={styles.innerbox}>
         <Icon
-          name="microphone"
+          name="video"
           size={60}
           backgroudColor={colors.red}
           iconColor={colors.white}
