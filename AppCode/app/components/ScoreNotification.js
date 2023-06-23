@@ -68,17 +68,17 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    width: "100%",
+    height: "100%",
     position: "absolute",
     backgroundColor: colors.black,
     zIndex: 100,
   },
   animContainer: {
-    //flex: 1,
-    // alignItems: "center",
+    flex: 1,
+    alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "transparent",
+    backgroundColor: colors.transparent,
   },
   avatarBox: {
     alignItems: "center",
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: "darkviolet",
+    backgroundColor: colors.darkviolet,
   },
   avatar: {
     alignItems: "center",

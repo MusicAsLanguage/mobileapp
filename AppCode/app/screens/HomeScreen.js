@@ -225,7 +225,7 @@ function HomeScreen({ navigation }) {
             </ScrollView>
           </View>
         </View>
-        <WelcomeMessage />
+        {/* <WelcomeMessage /> */}
       </ScrollView>
     </Screen>
   );

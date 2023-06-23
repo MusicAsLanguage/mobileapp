@@ -35,7 +35,7 @@ function ActivityListItem({
             <View style={styles.thumbnailbottompanel}>
               {<ActivityStatus value={status} />}
               {practiceMode ? (
-                <Icon name="camera" size={30} backgroudColor={colors.red} />
+                <Icon name="video" size={30} backgroudColor={colors.red} />
               ) : null}
             </View>
           </ImageBackground>

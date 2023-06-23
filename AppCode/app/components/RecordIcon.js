@@ -1,11 +1,19 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import colors from "../config/colors";
+import Icon from "./Icon";
 
 function RecordIcon() {
   return (
     <View style={styles.container}>
-      <View style={styles.innerbox}></View>
+      <View style={styles.innerbox}>
+        <Icon
+          name="video"
+          size={60}
+          backgroudColor={colors.red}
+          iconColor={colors.white}
+        ></Icon>
+      </View>
       <View style={styles.outerbox}></View>
     </View>
   );
@@ -13,30 +21,16 @@ function RecordIcon() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.8,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: colors.transparent,
   },
-  outerbox: {
-    height: 60,
-    width: 60,
-    position: "absolute",
-    justifyContent: "center",
-    backgroundColor: colors.white,
-    borderRadius: 30,
-    margin: -5,
-  },
+  outerbox: {},
   innerbox: {
-    height: 50,
-    width: 50,
-    position: "absolute",
-    justifyContent: "center",
-    backgroundColor: colors.red,
-    borderRadius: 25,
     zIndex: 1,
   },
   Icon: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: colors.transparent,
   },
 });
