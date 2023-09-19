@@ -1,14 +1,16 @@
 import React, { useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
 import {
-  ActivityIndicator,
   Alert,
+  Image,
   RefreshControl,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
-import { Audio, Video } from "expo-av";
+import { Audio } from "expo-av";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AppText from "../components/AppText";
 import Screen from "../components/Screen";
@@ -18,12 +20,15 @@ import routes from "../navigation/routes";
 import ListItemSeparator from "../components/ListItemSeparator";
 import useAuth from "../auth/useAuth";
 import uistrings from "../config/uistrings";
-import Icon from "../components/Icon";
 import useLesson from "../data/lesson/lessondata";
-import LoadingIndicator from "../components/LoadingIndicator";
-import WelcomeMessage from "../components/WelcomeMessage";
+import { getUserScore } from "../api/score";
 
 function HomeScreen({ navigation }) {
+  // get user infomation and scores
+  const { user } = useAuth();
+  const [score, setScore] = useState(0);
+  const [trophies, setTrophies] = useState();
+  const { getTrophies } = useRewardConfig();
   /// <Start> This is the code getting lesson info json file from webservice. The data will be stored in 'programs'.
   const [intro, setIntro] = useState({
     Name: "",
@@ -141,6 +146,28 @@ function HomeScreen({ navigation }) {
     };
   }, []);
 
+  useEffect(() => {
+    const focus = navigation.addListener("focus", (e) => {
+      getUserScore().then((response) => {
+        if (response == null) return;
+
+        const score = response.data?.score;
+        //console.log("Profile score = ", score);
+        setScore(score);
+      });
+
+      getTrophies().then((response) => {
+        if (response == null) return;
+
+        const trophies = response;
+        console.log(trophies);
+        setTrophies(trophies);
+      });
+    });
+
+    return () => focus;
+  }, [navigation]);
+
   const renderItem = (item) => {
     let percentage = getLessonProgress(item);
 
@@ -177,42 +204,17 @@ function HomeScreen({ navigation }) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.introContainer}>
-          <View style={styles.introVideoContainer}>
-            {!videoUri ? (
-              <LoadingIndicator />
-            ) : (
-              <Video
-                source={{
-                  uri: videoUri, // intro.IntroVideo.Url,
-                }}
-                ref={player}
-                resizeMode="cover"
-                useNativeControls
-                onLoadStart={() =>
-                  console.log("load start ", new Date(), " - ", videoUri)
-                }
-                onLoad={() => console.log("loaded ", new Date())}
-                onError={onError}
-                style={styles.introVideo}
-              />
-            )}
-            <View style={styles.titleContainer}>
-              <View style={styles.videoNameDescSect}>
-                <AppText style={styles.introTitle}>{intro.Name}</AppText>
-                <AppText style={styles.introDescription}>
-                  {intro.Description}
-                </AppText>
-              </View>
-              <View style={styles.videoDurationSect}>
-                <Icon
-                  name="volume-medium"
-                  backgroudColor="transparent"
-                  iconColor={colors.medblue}
-                />
-                <AppText style={styles.videoLength}>
-                  {introLength} {uistrings.Minutes}
-                </AppText>
+        <View style={styles.homeContainer}>
+          <View style={styles.userProfile}>
+            <Image
+              style={styles.userPortrait}
+              source={require("../assets/portrait_placeholder.png")}
+            />
+            <View style={styles.userInfo}>
+              <AppText style={styles.userName}>{user.name}</AppText>
+              <View style={styles.userScore}>
+                <AppText style={styles.userPoints}>Your Points:</AppText>
+                <AppText style={styles.userPoints}>{score.toLocaleString()}</AppText>
               </View>
             </View>
           </View>
@@ -224,8 +226,16 @@ function HomeScreen({ navigation }) {
               ))}
             </ScrollView>
           </View>
+          <ListItemSeparator />
+          <TouchableOpacity 
+            style={styles.musicBoxContainer}
+            onPress={() => navigation.navigate(routes.TOOLBOX)}>
+            <View style={styles.musicBoxIcon}>
+              <MaterialCommunityIcons name="music-circle-outline" color={colors.yellowgreen} size={50} /> 
+            </View>
+            <AppText style={styles.musicBoxText}>{uistrings.MusicBox}</AppText>
+          </TouchableOpacity>
         </View>
-        {/* <WelcomeMessage /> */}
       </ScrollView>
     </Screen>
   );
@@ -235,7 +245,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  introContainer: {
+  homeContainer: {
     flex: 1,
     flexDirection: "column",
   },
@@ -264,15 +274,66 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "flex-start",
   },
+  musicBoxContainer: {
+    height: 70,
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 20,
+    marginVertical: 30,
+    borderRadius: 20,
+    shadowOffset: { height: 5, width: 2 }, // IOS
+    shadowColor: colors.yellowgreen, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    elevation: 2, // Android
+  },
+  musicBoxIcon: {
+    marginLeft: 20,
+  },
+  musicBoxText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.black,
+    marginLeft: 15,
+  },
   screen: {
     flex: 1,
-    padding: 0,
-    backgroundColor: colors.white,
+    padding: 2,
   },
   titleContainer: {
     flexDirection: "row",
     height: "20%",
     marginVertical: 8,
+  },
+  userInfo: {
+    flexDirection: "column",
+    marginHorizontal: 10,
+  },
+  userName: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: "bold",
+  },
+  userPortrait: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginHorizontal: 5,
+  },
+  userProfile: {
+    flexDirection: "row",
+    marginVertical: 20,
+    marginHorizontal: 20,
+  },
+  userScore: {
+    flexDirection: "row",
+  },
+  userPoints: {
+    color: colors.black,
+    fontSize: 15,
+    fontWeight: "normal",
+    marginRight: 5,
   },
   videoNameDescSect: {
     width: "70%",
