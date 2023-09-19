@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
   },
   lessonContainer: {
     flex: 1,
-    padding: 20,
     justifyContent: "flex-start",
   },
   musicBoxContainer: {
@@ -280,13 +279,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 20,
-    marginVertical: 30,
+    marginVertical: 20,
     borderRadius: 20,
-    shadowOffset: { height: 5, width: 2 }, // IOS
+    shadowOffset: { height: 5, width: 1 }, // IOS
     shadowColor: colors.yellowgreen, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
-    elevation: 2, // Android
+    elevation: 5, // Android
   },
   musicBoxIcon: {
     marginLeft: 20,
