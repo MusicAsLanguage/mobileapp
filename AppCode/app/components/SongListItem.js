@@ -1,9 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import ListItemSeparator from "../components/ListItemSeparator";
 import colors from "../config/colors";
 
 const getThumbnailText = (songName) => songName[0]
@@ -43,32 +41,27 @@ function SongListItem({
     repeats})
     {
     return (
-        <TouchableHighlight underlayColor={colors.white} onPress={onPress}>
-            <>
-            <View style={styles.container}>
-                <View style={styles.leftContainer}>
-                    <View style={[styles.thumbnail, {backgroundColor: 
-                    activeListItem ? colors.yellowgreen : colors.lightgrey}]}>
-                        <Text style={styles.thumbnailText}>
-                            {activeListItem ? renderPlayPauseIcon(isPlaying) : getThumbnailText(songName)}
-                        </Text>
-                    </View>
-                    <View style={styles.titleContainer}>
-                        <Text numberOfLines={1} style={styles.title}>
-                            {songName}
-                        </Text>
-                        <Text style={styles.completions}>
-                            Completions: {repeats}
-                        </Text>
-                    </View>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
+            <View style={styles.leftContainer}>
+                <View style={[styles.thumbnail, {backgroundColor: 
+                activeListItem ? colors.yellowgreen : colors.lightgrey}]}>
+                    <Text style={styles.thumbnailText}>
+                        {activeListItem ? renderPlayPauseIcon(isPlaying) : getThumbnailText(songName)}
+                    </Text>
                 </View>
-                <View style={styles.rightContainer}>
-                    <Text style={styles.musicLength}>{convertTime(length)}</Text>
+                <View style={styles.titleContainer}>
+                    <Text numberOfLines={1} style={styles.title}>
+                        {songName}
+                    </Text>
+                    <Text style={styles.completions}>
+                        Completions: {repeats}
+                    </Text>
                 </View>
             </View>
-            <ListItemSeparator />
-            </>
-        </TouchableHighlight>
+            <View style={styles.rightContainer}>
+                <Text style={styles.musicLength}>{convertTime(length)}</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 
@@ -81,9 +74,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignSelf: "center",
-        width: width - 50,
-        paddingTop: 10,
-        paddingBottom: 10,
+        width: width - 20,
+        padding: 10,
+        paddingLeft: 15,
+        backgroundColor: colors.white,
+        borderRadius: 10,
+        marginTop: 10,
     },
     leftContainer: {
         flexDirection: "row",

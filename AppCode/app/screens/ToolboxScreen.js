@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Screen from '../components/Screen';
+import AppText from "../components/AppText";
 import BackButton from "../components/BackButton";
 import colors from '../config/colors';
 import routes from "../navigation/routes";
@@ -13,7 +14,10 @@ import { ToolBoxButtonLeft, ToolBoxButtonRight } from '../components/ToolBoxButt
 function ToolboxScreen({navigation}) {
     return (
         <Screen style={styles.screen}>
-            <BackButton onPress={() => navigation.navigate(routes.HOME)} />
+            <View style={styles.titleContainer}>
+                <BackButton onPress={() => navigation.navigate(routes.HOME)} />
+                <AppText style={styles.title}>Music Box</AppText>
+            </View>
             <ScrollView 
                 contentContainerStyle={styles.musicContainer}
             >
@@ -140,6 +144,17 @@ const styles = StyleSheet.create({
     },
     songContainer: {
         marginRight: 50,
+    },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 10,
+        marginTop: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
     },
 })
 

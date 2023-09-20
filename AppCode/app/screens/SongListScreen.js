@@ -8,6 +8,7 @@ import colors from '../config/colors';
 import uistrings from '../config/uistrings';
 import BackButton from "../components/BackButton";
 import SongListItem from "../components/SongListItem";
+import ListItemSeparator from "../components/ListItemSeparator";
 import getLessons from '../api/lessons';
 import routes from "../navigation/routes";
 import useAuth from '../auth/useAuth';
@@ -237,8 +238,10 @@ function SongListScreen({ navigation, route }) {
         <Screen style={styles.screen}>
             <View style={styles.titleContainer}>
                 <BackButton onPress={() => navigation.navigate(routes.TOOLBOX)} />
-                <AppText style={styles.screenTitle}>{uistrings.SongList}</AppText>
+                <AppText style={styles.title}>Song List</AppText>
             </View>
+
+            <ListItemSeparator />
 
             <View style={styles.songListContainer}>
                 <FlatList
@@ -253,7 +256,7 @@ function SongListScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
     screen: {
-        backgroundColor: colors.yellowgreen,
+        padding: 2,
     },
     screenTitle: {
         fontSize: 23,
@@ -265,12 +268,18 @@ const styles = StyleSheet.create({
     songListContainer: {
         flex: 1,
         justifyContent: "flex-start",
-        marginTop: 10,
-        backgroundColor: colors.light,
+        marginHorizontal: 10,
     },
     titleContainer: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 10,
+        marginVertical: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
     },
 })
 
