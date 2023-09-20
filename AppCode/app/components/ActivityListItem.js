@@ -24,8 +24,8 @@ function ActivityListItem({
   const durationMin = Math.round(duration / 60);
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onPress} style={styles.video}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <View style={styles.video}>
         {thumbnail && (
           <ImageBackground
             style={styles.thumbnail}
@@ -35,50 +35,47 @@ function ActivityListItem({
             <View style={styles.thumbnailbottompanel}>
               {<ActivityStatus value={status} />}
               {practiceMode ? (
-                <Icon name="video" size={30} backgroudColor={colors.red} />
+                <Icon name="video" size={25} backgroudColor={colors.red} />
               ) : null}
             </View>
           </ImageBackground>
         )}
-      </TouchableOpacity>
-      <View style={styles.detail}>
-        <View style={styles.descSect}>
-          {description && <AppText style={styles.name}>{name}</AppText>}
-        </View>
-        <View style={styles.durationSect}>
-          {duration && (
-            <AppText style={styles.duration}>{durationMin} mins</AppText>
-          )}
-        </View>
       </View>
-    </View>
+
+      <View style={styles.detail}>
+        {id && <AppText style={styles.nameIndex}>Activity{id}</AppText>}
+        {description && <AppText style={styles.name}>{name}</AppText>}
+      </View>
+
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
-    paddingBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    marginVertical: 10,
   },
   video: {
-    alignItems: "center",
-    flex: 1,
+    height: 60,
+    width: 68,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   thumbnail: {
-    width: "100%",
     height: "100%",
-    alignItems: "flex-start",
     justifyContent: "flex-end",
-    aspectRatio: 1.5,
-    borderRadius: 5,
   },
   thumbnailbottompanel: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    //justifyContent: "space-between",
     alignItems: "center",
     flex: 0.4,
     width: "100%",
-    paddingRight: 10,
+    marginLeft: -17,
   },
   repeatcount: {
     //backgroundColor: colors.darkviolet,
@@ -89,27 +86,15 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   detail: {
-    textAlignVertical: "top",
-    flexDirection: "row",
-    marginTop: 10,
+    flexDirection: "column",
+    marginHorizontal: 5,
   },
   name: {
-    fontSize: 12,
+    fontSize: 16,
   },
-  id: {
-    fontSize: 12,
-    paddingRight: 5,
-  },
-  duration: {
-    fontSize: 12,
-    textAlign: "right",
-  },
-  descSect: {
-    flex: 1.5,
-    flexDirection: "row",
-  },
-  durationSect: {
-    flex: 1,
+  nameIndex: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

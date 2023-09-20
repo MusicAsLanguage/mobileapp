@@ -36,7 +36,7 @@ function LessonListItem({ title, subTitle, image, progress, onPress }) {
         </View>
         <ListItemSeparator />
         <View style={styles.detailContainer}>
-        <MaterialCommunityIcons name="ticket" color={getProgressColor()} size={25} /> 
+          <MaterialCommunityIcons name="ticket" color={getProgressColor()} size={25} /> 
           {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
           <View style={styles.progressCircleContainer}>
             <AppText style={styles.subTitle}>{progress}%</AppText>
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
   titleLeading: {
     fontSize: 20,
     fontWeight: "bold",
-    marginRight: 7,
-  }
+    marginRight: 6,
+  },
 });
 
 export default LessonListItem;

@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         marginTop: 10,
-        backgroundColor: colors.white,
+        backgroundColor: colors.light,
     },
     titleContainer: {
         paddingHorizontal: 10,
