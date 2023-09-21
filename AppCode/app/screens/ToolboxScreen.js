@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 25,
         flexDirection: "column",
-        justifyContent: "space-between",
     },
     screen: {
         flex: 1,
