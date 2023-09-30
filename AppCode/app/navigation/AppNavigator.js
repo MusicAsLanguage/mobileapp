@@ -4,7 +4,6 @@ import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 import AccountNavigator from './AccountNavigator';
 import LessonsNavigator from './LessonsNavigator';
-import ToolboxNavigator from './ToolboxNavigator';
 import SettingsNavigator from './SettingsNavigator';
 import colors from '../config/colors';
 import uistrings from '../config/uistrings';
@@ -16,11 +15,11 @@ const AppNavigator = () => (
         initialRouteName="home"
         tabBarOptions={{
             activeBackgroundColor: colors.white,
-            activeTintColor: colors.deepskyblue,
+            activeTintColor: colors.yellowgreen,
             inactiveBackgroundColor: colors.white,
             inactiveTintColor: colors.grey,
             labelStyle: {
-                fontSize: 11,
+                fontSize: 13,
             },
         }}>
         <Tab.Screen 
@@ -29,14 +28,6 @@ const AppNavigator = () => (
             options={{
                 tabBarIcon: ({ color, size }) =>
                     <MaterialCommunityIcons name="home" color={color} size={size} /> 
-            }}
-        />
-        <Tab.Screen 
-            name={uistrings.MusicBox} 
-            component={ToolboxNavigator}
-            options={{
-                tabBarIcon: ({ color, size }) =>
-                    <MaterialCommunityIcons name="music-box-outline" color={color} size={size} /> 
             }}
         />
         <Tab.Screen 

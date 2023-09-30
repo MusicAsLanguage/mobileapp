@@ -1,30 +1,37 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Screen from '../components/Screen';
+import AppText from "../components/AppText";
+import BackButton from "../components/BackButton";
 import colors from '../config/colors';
 import routes from "../navigation/routes";
 import uistrings from '../config/uistrings';
-import { GradientButtonLeft, GradientButtonRight } from '../components/GradientButton';
+import { ToolBoxButtonLeft, ToolBoxButtonRight } from '../components/ToolBoxButton';
 
 
 function ToolboxScreen({navigation}) {
     return (
         <Screen style={styles.screen}>
-            
-            <View style={styles.musicContainer}>
+            <View style={styles.titleContainer}>
+                <BackButton onPress={() => navigation.navigate(routes.HOME)} />
+                <AppText style={styles.title}>Music Box</AppText>
+            </View>
+            <ScrollView 
+                contentContainerStyle={styles.musicContainer}
+            >
                 <View style={styles.instruMetroContainer}>
                     <View style={styles.buttonContainer}>
-                        <GradientButtonRight
+                        <ToolBoxButtonRight
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryInstruction)}
-                            colors={[colors.white, colors.magenta]}
+                            color={colors.magenta}
                             text="Instruction"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="account-music"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.magenta}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
@@ -32,15 +39,15 @@ function ToolboxScreen({navigation}) {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <GradientButtonRight
+                        <ToolBoxButtonRight
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryMetronome)}
-                            colors={[colors.white, colors.deepskyblue]}
+                            color={colors.deepskyblue}
                             text="Metronome"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="metronome"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.deepskyblue}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
@@ -50,15 +57,15 @@ function ToolboxScreen({navigation}) {
 
                 <View style={styles.songContainer}>
                     <View style={styles.buttonContainer}>
-                        <GradientButtonLeft
+                        <ToolBoxButtonLeft
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryBeginner)}
-                            colors={[colors.yellowgreen, colors.white]}
+                            color={colors.yellowgreen}
                             text="Beginner"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="music-note-half-dotted"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.yellowgreen}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
@@ -66,15 +73,15 @@ function ToolboxScreen({navigation}) {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <GradientButtonLeft
+                        <ToolBoxButtonLeft
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryIntermediate)}
-                            colors={[colors.yellowgreen, colors.white]}
+                            color={colors.yellowgreen}
                             text="Intermediate"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="music-note-quarter-dotted"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.yellowgreen}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
@@ -82,15 +89,15 @@ function ToolboxScreen({navigation}) {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <GradientButtonLeft
+                        <ToolBoxButtonLeft
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategorySuperStar)}
-                            colors={[colors.yellowgreen, colors.white]}
+                            color={colors.yellowgreen}
                             text="Super Star"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="music-note-eighth-dotted"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.yellowgreen}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
@@ -98,22 +105,22 @@ function ToolboxScreen({navigation}) {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <GradientButtonLeft
+                        <ToolBoxButtonLeft
                             onPress={() => navigation.navigate(routes.SONG_LIST, uistrings.SongCategoryLegend)}
-                            colors={[colors.yellowgreen, colors.white]}
+                            color={colors.yellowgreen}
                             text="Legend"
                             renderIcon={() => (
                                 <MaterialCommunityIcons
                                     name="music-note-sixteenth-dotted"
                                     size={40}
-                                    color={colors.white}
+                                    color={colors.yellowgreen}
                                     style={{ marginLeft: 10, marginRight: 20 }}
                                 />
                             )}
                         />
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </Screen>
     );
 }
@@ -124,21 +131,30 @@ const styles = StyleSheet.create({
     },
     instruMetroContainer: {
         marginLeft: 50,
-        marginBottom: 22,
     },
     musicContainer: {
         flex: 1,
-        marginVertical: 30,
         marginHorizontal: 25,
-        justifyContent: 'center',
+        flexDirection: "column",
     },
     screen: {
-        backgroundColor: colors.white
+        flex: 1,
+        padding: 2,
     },
     songContainer: {
         marginRight: 50,
-        marginTop: 22,
-    }
+    },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 10,
+        marginTop: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+    },
 })
 
 export default ToolboxScreen;

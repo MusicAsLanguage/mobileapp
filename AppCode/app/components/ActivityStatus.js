@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import colors from "../config/colors";
 import Icon from "./Icon";
 
 function ActivityStatus({ value }) {
@@ -14,7 +15,7 @@ function ActivityStatus({ value }) {
       item = (
         <Icon
           name={completed}
-          iconColor="lime"
+          iconColor={colors.yellowgreen}
           backgroudColor="transparent"
           size={60}
           style={styles.status}
@@ -25,7 +26,7 @@ function ActivityStatus({ value }) {
       item = (
         <Icon
           name={notcompleted}
-          iconColor="deepskyblue"
+          iconColor={colors.deepskyblue}
           backgroudColor="transparent"
           size={60}
           style={styles.status}
@@ -38,7 +39,9 @@ function ActivityStatus({ value }) {
 }
 
 const styles = StyleSheet.create({
-  status: {},
+  status: {
+    alignSelf: "flex-start",
+  },
 });
 
 export default ActivityStatus;

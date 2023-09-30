@@ -8,6 +8,8 @@ import {
   View,
 } from "react-native";
 import { Audio, Video } from "expo-av";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ProgressCircle from "react-native-progress-circle";
 
 import AppText from "../components/AppText";
 import ActivityListItem from "../components/ActivityListItem";
@@ -16,7 +18,6 @@ import colors from "../config/colors";
 import routes from "../navigation/routes";
 import BackButton from "../components/BackButton";
 import Screen from "../components/Screen";
-import Icon from "../components/Icon";
 import uistrings from "../config/uistrings";
 import useAuth from "../auth/useAuth";
 import useLesson from "../data/lesson/lessondata";
@@ -25,15 +26,47 @@ import LoadingIndicator from "../components/LoadingIndicator";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
+  const words = lesson.Name.split(" ")
+  const leadingTitle = words.slice(0, 2).join('');
+  const lessonName = words.slice(2, words.length).join(' ');
+
   const { logOut } = useAuth();
   const {
     fetchStatusData,
+    getLessonProgress,
     isLessonCompleted,
     getActivityProgress,
     getActivityRepeats,
     onPlayStateChanged,
     playStateChanged,
   } = useLesson();
+
+  const getProgressColor = () => {
+    let color;
+    if (isLessonCompleted(lesson)) {
+      color = colors.yellowgreen;
+    } else {
+      color = colors.magenta;
+    }
+    return color;
+  };
+
+  const getNumOfActivitiesText = () => {
+    let numActivities = lesson.Activities.length;
+    var numActivitiesText;
+    if (numActivities == 1) {
+      numActivitiesText = uistrings.OneActivity;
+    } else {
+      numActivitiesText = numActivities.toString() + " " + uistrings.Activities;
+    }
+    return numActivitiesText;
+  }
+
+  const getProgress = () => {
+    let percentage = getLessonProgress(lesson);
+    if (percentage == undefined) percentage = 0;
+    return percentage;
+  }
 
   // Need to pause the video when navigate away to a new screen
   const player = useRef(null);
@@ -170,13 +203,17 @@ function LessonDetailsScreen({ navigation, route }) {
 
   return (
     <Screen style={styles.container}>
+      <View style={styles.titleContainer}>
+        <BackButton onPress={() => navigation.navigate(routes.HOME)} />
+        <AppText style={[styles.titleLeading, {color: getProgressColor()}]}>{leadingTitle}</AppText>
+        <AppText style={styles.title}>{lessonName}</AppText>
+      </View>
       <ScrollView
         contentContainerStyle={styles.lessonContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <BackButton onPress={() => navigation.navigate(routes.HOME)} />
         <View style={styles.lessonVideoContainer}>
           {!videoUri ? (
             <LoadingIndicator />
@@ -195,44 +232,42 @@ function LessonDetailsScreen({ navigation, route }) {
             />
           )}
         </View>
+
         <View style={styles.lessonDetail}>
-          <View style={styles.lessonNameDescSect}>
-            <AppText style={styles.lessonName}>{lesson.Name}</AppText>
-            <AppText numberOfLines={1} style={styles.lessonDescription}>
-              {lesson.Description}
-            </AppText>
-          </View>
-          <View style={styles.lessonDurationSect}>
-            <Icon
-              name="volume-medium"
-              backgroudColor="transparent"
-              iconColor="skyblue"
-            />
-            <AppText style={styles.lessonDuration}>
-              {lessonLength} {uistrings.Minutes}
-            </AppText>
+          <MaterialCommunityIcons name="ticket" color={getProgressColor()} size={25} /> 
+          {getNumOfActivitiesText() && <AppText style={styles.subTitle}>{getNumOfActivitiesText()}</AppText>}
+          <View style={styles.progressCircleContainer}>
+            <AppText style={styles.subTitle}>{getProgress()}%</AppText>
+            <ProgressCircle
+              percent={getProgress()}
+              radius={18}
+              borderWidth={5}
+              color={getProgressColor()}
+              shadowColor={colors.lightgrey}
+              bgColor={colors.white}
+            >
+            </ProgressCircle>
           </View>
         </View>
+
         <ListItemSeparator />
-        <View style={styles.activityContainer}>
-          <AppText style={styles.activitySectionTitle}>
-            {uistrings.Activities} ({lesson.Activities.length})
-          </AppText>
-          {lessonData.Activities ? (
-            <ScrollView contentContainerStyle={styles.activityList}>
-              {lessonData.Activities.map((item, index) => (
-                <View style={styles.activityItem} key={index}>
-                  {renderItem(item)}
-                </View>
-              ))}
-            </ScrollView>
-          ) : (
-            <View>
-              <ActivityIndicator size={33}></ActivityIndicator>
-            </View>
-          )}
-        </View>
+
+        {lessonData.Activities ? (
+          <ScrollView contentContainerStyle={styles.activityContainer}>
+            {lessonData.Activities.map((item, index) => (
+              <View style={styles.activityItem} key={index}>
+                {renderItem(item)}
+              </View>
+            ))}
+          </ScrollView>
+        ) : (
+          <View>
+            <ActivityIndicator size={33}></ActivityIndicator>
+          </View>
+        )}
+
         {lessonCompletionNotification(lesson)}
+
       </ScrollView>
     </Screen>
   );
@@ -240,16 +275,13 @@ function LessonDetailsScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   activityContainer: {
-    flex: 4,
-    padding: 10,
-    justifyContent: "flex-start",
-  },
-  activityList: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    flexDirection: "column",
+    alignItems: "center",
+    marginHorizontal: 15,
+    marginTop: 5,
   },
   activityItem: {
-    width: "50%",
+    width: "100%",
   },
   activitySectionTitle: {
     textAlign: "left",
@@ -259,7 +291,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 3,
+    padding: 2,
     justifyContent: "space-evenly",
   },
   lessonContainer: {
@@ -274,22 +306,9 @@ const styles = StyleSheet.create({
   },
   lessonDetail: {
     flexDirection: "row",
-    height: "8%",
-    marginBottom: 13,
-  },
-  lessonDuration: {
-    color: colors.black,
-    fontSize: 12,
-    textAlign: "right",
-    alignSelf: "center",
-  },
-  lessonDurationSect: {
-    width: "30%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingRight: 10,
-    height: "100%",
-    alignItems: "baseline",
+    alignItems: "center",
+    marginHorizontal: 15,
+    marginBot: 10,
   },
   lessonName: {
     fontSize: 20,
@@ -311,8 +330,36 @@ const styles = StyleSheet.create({
   },
   lessonVideoContainer: {
     width: "100%",
-    height: "35%",
-    padding: 10,
+    height: "40%",
+    padding: 15,
+  },
+  progressCircleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  subTitle: {
+    fontSize: 16,
+    color: colors.black,
+    fontWeight: "bold",
+    marginHorizontal: 5,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 10,
+    marginTop: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  titleLeading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginRight: 6,
+    marginLeft: 10,
   },
 });
 

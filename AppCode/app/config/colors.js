@@ -15,7 +15,6 @@ export default {
   medblue: "#4b62f2",
   medium: "#6e6969",
   // color names from n - z
-  primary: "#fc5c65",
   purple: "#5300eb",
   purple1: "#4051bf",
   purple2: "#5666CF",
