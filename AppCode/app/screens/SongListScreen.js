@@ -225,6 +225,7 @@ function SongListScreen({ navigation, route }) {
         return (
           <SongListItem
             songName={item.Name}
+            score={item.Score}
             isPlaying={isPlaying}
             activeListItem={item._id === currentAudioIndex}
             length={item.LengthInSeconds}
