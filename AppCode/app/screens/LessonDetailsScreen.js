@@ -51,6 +51,16 @@ function LessonDetailsScreen({ navigation, route }) {
     return color;
   };
 
+  const getProgressColorShallow = () => {
+    let color;
+    if (isLessonCompleted(lesson)) {
+      color = colors.yellowgreenLight;
+    } else {
+      color = colors.magentaLight;
+    }
+    return color;
+  };
+
   const getNumOfActivitiesText = () => {
     let numActivities = lesson.Activities.length;
     var numActivitiesText;
@@ -173,10 +183,12 @@ function LessonDetailsScreen({ navigation, route }) {
         name={item.Name}
         description={item.Description}
         duration={item.Videos[0].LengthInSeconds}
+        score={item.Score}
         thumbnail={{ uri: item.ImageUrl }}
         status={state}
         repeats={repeats}
         practiceMode={item.PracticeMode}
+        progressColor={getProgressColorShallow()}
         onPress={() =>
           navigation.navigate(routes.ACTIVITI_DETAILS, {
             lessonId: lesson._id,

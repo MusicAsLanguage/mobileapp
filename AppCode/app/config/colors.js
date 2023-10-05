@@ -12,6 +12,7 @@ export default {
   light: "#f8f4f4",
   lightgrey: "#eee",
   magenta: "#ff00ff",
+  magentaLight: "#feb0fe",
   medblue: "#4b62f2",
   medium: "#6e6969",
   // color names from n - z
@@ -29,4 +30,5 @@ export default {
   transparent: "#ffffff00",
   white: "#fff",
   yellowgreen: "#94cf50",
+  yellowgreenLight: "#c2e599",
 };
