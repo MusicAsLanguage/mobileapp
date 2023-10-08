@@ -3,11 +3,11 @@
     "name": "Speak!",
     "slug": "MusicAsLanguageApp",
     "privacy": "public",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./app/assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.northshorescholarshipfoundation.musicaslanguage",
-      "buildNumber": "2.0.6",
+      "buildNumber": "2.0.7",
       "infoPlist": {
         "NSUserActivityTypes": [
           "INSendMessageIntent"
