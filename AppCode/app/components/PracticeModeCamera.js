@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Audio } from "expo-av";
 import { Camera } from "expo-camera";
 import * as FileSystem from "expo-file-system";
@@ -36,6 +36,13 @@ function PracticeModeCamera({ navigation }) {
       const { status } = await Audio.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
+
+    if (Platform.OS === "android") {
+      (async () => {
+        const { status } = await MediaLibrary.requestPermissionsAsync();
+        setHasPermission(status === "granted");
+      })();
+    }
   };
 
   useEffect(() => {
@@ -115,6 +122,7 @@ function PracticeModeCamera({ navigation }) {
 
     return (
       <Camera
+        ratio="1:1"
         style={styles.camera}
         type={type}
         ref={(ref) => setCameraRef(ref)}
