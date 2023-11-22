@@ -36,7 +36,7 @@ function PasswordResetScreen({ navigation }) {
         >
             <Screen style={styles.container}>
                 <BackButton onPress={() => navigation.navigate(routes.LOGIN)} />
-                <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Image style={styles.logo} source={require("../assets/icon_round.png")} />
                 <View style={styles.title}>
                     <Text style={styles.titleText}>{uistrings.ForgottenPassword}</Text>
                     <Text style={styles.titleText}>{uistrings.Recovery}</Text>

@@ -50,7 +50,7 @@ function RegisterScreen({ navigation }) {
         >
             <Screen style={styles.container}>
                 <BackButton onPress={() => navigation.navigate(routes.NAVIGATION)} />
-                <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Image style={styles.logo} source={require("../assets/icon_round.png")} />
                 <Text style={styles.hello}>{uistrings.Hello}</Text>
                 <Text style={styles.hello}>{uistrings.CreateAnAccount}</Text>
 
