@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Alert, Platform, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import Screen from "../components/Screen";
 import SettingListItem from "../components/SettingListItem";
@@ -54,6 +54,13 @@ function SettingScreen({ navigation }) {
           text={uistrings.PrivacyPolicy}
           backgroundColor="white"
           onPress={() => navigation.navigate(routes.PRIVACY_POLICY)}
+        />
+
+        <SettingListItem
+          height={80}
+          text={uistrings.LocalCache}
+          backgroundColor="white"
+          onPress={() => navigation.navigate(routes.LOCAL_CACHE)}
         />
 
         <View style={styles.deleteuserContainer}>
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     color: colors.red,
     marginLeft: 25,
     textAlign: "left",
-    fontFamily: "Avenir",
+    fontFamily: Platform.OS == "android" ? "Roboto" : "Avenir"
   },
 });
 

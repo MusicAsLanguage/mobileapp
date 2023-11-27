@@ -18,6 +18,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import ScoreNotification from "../components/ScoreNotification";
 import useRewardConfig from "../data/config/reward";
 import PracticeModeCamera from "../components/PracticeModeCamera";
+import { getLocalVideoCache } from "../cache/videocache";
 
 function ActivityScreen({ navigation, route }) {
   const {
@@ -81,7 +82,15 @@ function ActivityScreen({ navigation, route }) {
 
       // workaround as the video does not load the second time due to videoUri not getting in time
       wait(500).then(() => {
-        setVideoUri(activityVideo.Url);
+        getLocalVideoCache(activityVideo.Url).then((cachedVideo) => {
+          if (cachedVideo == "") {
+            setVideoUri(activityVideo.Url);
+          } else {
+            setVideoUri(cachedVideo);
+          }
+        });
+        // const fileInfo = FileSystem.getInfoAsync(activityVideo.Url);
+        // console.log(fileInfo)
       });
 
       setRefreshing(false);
@@ -110,7 +119,13 @@ function ActivityScreen({ navigation, route }) {
 
       StatusBar.setHidden(true, "none");
 
-      setVideoUri(activityVideo.Url);
+      getLocalVideoCache(activityVideo.Url).then((cachedVideo) => {
+        if (cachedVideo == "") {
+          setVideoUri(activityVideo.Url);
+        } else {
+          setVideoUri(cachedVideo);
+        }
+      });
 
       fetchRewardConfig(mounted);
       repeatsRef.current = activityRepeats;
@@ -268,7 +283,7 @@ function ActivityScreen({ navigation, route }) {
   };
 
   const showScoreMsg = () => {
-    console.log("score=", score);
+    //console.log("score=", score);
     return <ScoreNotification score={score} />;
   };
 

@@ -13,4 +13,5 @@ export default Object.freeze({
   PROFILE: "Profile",
   TERMS_AND_CONDITIONS: "TermsAndConditions",
   PRIVACY_POLICY: "PrivacyPolicy",
+  LOCAL_CACHE: "LocalCache",
 });

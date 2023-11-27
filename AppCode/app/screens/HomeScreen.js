@@ -22,6 +22,7 @@ import useAuth from "../auth/useAuth";
 import uistrings from "../config/uistrings";
 import useLesson from "../data/lesson/lessondata";
 import { getUserScore } from "../api/score";
+import { getLocalVideoCache } from "../cache/videocache";
 
 function HomeScreen({ navigation }) {
   // get user infomation and scores
@@ -63,7 +64,13 @@ function HomeScreen({ navigation }) {
 
       setVideoUri("");
       fetchLesson(mounted);
-      setVideoUri(intro.IntroVideo.Url);
+      getLocalVideoCache(intro.IntroVideo.Url).then((cachedVideo) => {
+        if (cachedVideo == "") {
+          setVideoUri(intro.IntroVideo.Url);
+        } else {
+          setVideoUri(cachedVideo);
+        }
+      })
       setRefreshing(false);
       mounted = false;
     });
@@ -86,7 +93,14 @@ function HomeScreen({ navigation }) {
               setLessons(allLessons.slice(1));
             }
           }
-          setVideoUri(allLessons[0].IntroVideo.Url);
+
+          getLocalVideoCache(allLessons[0].IntroVideo.Url).then((cachedVideo) => {
+            if (cachedVideo == "") {
+              setVideoUri(allLessons[0].IntroVideo.Url);
+            } else {
+              setVideoUri(cachedVideo);
+            }
+          })
         }
       }
     });

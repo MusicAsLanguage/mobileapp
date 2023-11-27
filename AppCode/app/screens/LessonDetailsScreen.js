@@ -23,6 +23,7 @@ import useAuth from "../auth/useAuth";
 import useLesson from "../data/lesson/lessondata";
 import LessonCompletion from "../components/LessonCompletion";
 import LoadingIndicator from "../components/LoadingIndicator";
+import { getLocalVideoCache } from "../cache/videocache";
 
 function LessonDetailsScreen({ navigation, route }) {
   const lesson = route.params;
@@ -99,7 +100,14 @@ function LessonDetailsScreen({ navigation, route }) {
 
       wait(500).then(() => {
         setLessonData(lesson);
-        setVideoUri(lesson.IntroVideo.Url);
+
+        getLocalVideoCache(lesson.IntroVideo.Url).then((cachedVideo) => {
+          if (cachedVideo == "") {
+            setVideoUri(lesson.IntroVideo.Url);
+          } else {
+            setVideoUri(cachedVideo);
+          }
+        });
       });
 
       setRefreshing(false);
@@ -144,7 +152,14 @@ function LessonDetailsScreen({ navigation, route }) {
             reloginAlert();
           }
           setLessonData(lesson);
-          setVideoUri(lesson.IntroVideo.Url);
+          getLocalVideoCache(lesson.IntroVideo.Url).then((cachedVideo) => {
+            console.log("[cachedVideo] ", cachedVideo);
+            if (cachedVideo == "") {
+              setVideoUri(lesson.IntroVideo.Url);
+            } else {
+              setVideoUri(cachedVideo);
+            }
+          });
         });
       }, 300);
     });
@@ -238,7 +253,7 @@ function LessonDetailsScreen({ navigation, route }) {
               onLoadStart={() =>
                 console.log("load start ", new Date(), " - ", videoUri)
               }
-              onLoad={() => console.log("loaded ", new Date())}
+                onLoad={() => console.log("loaded ", new Date(), " ", videoUri)}
               onError={onError}
               style={styles.lessonVideo}
             />

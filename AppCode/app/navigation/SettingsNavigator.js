@@ -5,6 +5,7 @@ import SettingScreen from "../screens/SettingScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
+import LocalCacheScreen from "../screens/LocalCacheScreen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,11 @@ const SettingsNavigator = () => (
       name="PrivacyPolicy" 
       component={PrivacyPolicyScreen}
       options={{ headerShown: false }} 
+    />
+    <Stack.Screen
+      name="LocalCache"
+      component={LocalCacheScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
