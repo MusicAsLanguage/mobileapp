@@ -16,7 +16,7 @@ function NavigationScreen({ navigation }) {
         >
             <Screen style={styles.container}>
                 <Text style={styles.tagLine}>{uistrings.TagLine}</Text>
-                <Image style={styles.logo} source={require("../assets/MAL_logo.png")} />
+                <Image style={styles.logo} source={require("../assets/icon_round.png")} />
                 
                 <Text style={styles.text}>New to the app? Create your account</Text>
                 <AppButton 
